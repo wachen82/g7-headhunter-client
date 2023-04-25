@@ -1,6 +1,6 @@
 import React from 'react'
-import Avatar from '@mui/material/Avatar'
 import {
+    Avatar,
     Button,
     ClickAwayListener,
     Grow,
@@ -9,6 +9,7 @@ import {
     Popper,
     Typography,
 } from '@mui/material'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import theme from '../../../../theme'
 import { MenuLink } from './MenuLink'
 
@@ -88,9 +89,15 @@ export const MenuBox = (props: Props) => {
                         fontSize: '18px',
                         fontWeight: 'light',
                         textTransform: 'capitalize',
+                        // lineHeight: '18px',
                     }}
                 >
                     {userName}
+                    <ArrowDropDownIcon
+                        sx={{
+                            marginLeft: '12px',
+                        }}
+                    />
                 </Typography>
             </Button>
             <Popper
