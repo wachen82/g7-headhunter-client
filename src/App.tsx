@@ -7,8 +7,7 @@ export const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Box
-                sx={{ backgroundColor: theme.palette.secondary.main }}
-                height="100vh"
+                sx={{ backgroundColor: theme.palette.secondary.main, minHeight:"100vh" }}
             >
                 <AppRoutes />
             </Box>
