@@ -1,16 +1,12 @@
 import * as React from 'react'
-import Button from '@mui/material/Button'
 import {Grid} from "@mui/material";
-import { useState } from 'react'
-import { UserCSV, handleCsvFile, getCsvFile } from '../../utils/csvUtils'
-import { sendCsvToBackend } from '../../utils/sendCsvToBackend'
-import { FileButton } from './FileButton'
-import { UserList } from './UserList'
-import { DropBox } from './DropBox'
+import {useState} from 'react'
+import {getCsvFile, handleCsvFile} from '../../utils/csvUtils'
+import {FileButton} from './FileButton'
+import {DropBox} from './DropBox'
 
 export const DropAndClickBox = () => {
     const [active, setActive] = useState<boolean>(false)
-    const [usersData, setUsersData] = useState<UserCSV[]>([])
 
     const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -19,7 +15,7 @@ export const DropAndClickBox = () => {
         if (!csvFile) {
             return
         }
-        await handleCsvFile(csvFile, setUsersData)
+        await handleCsvFile(csvFile)
     }
     const handleFileInputChange = async (
         e: React.ChangeEvent<HTMLInputElement>
@@ -29,29 +25,22 @@ export const DropAndClickBox = () => {
         if (!csvFile) {
             return
         }
-        await handleCsvFile(csvFile, setUsersData)
-    }
-    const handleSendButtonClick = async () => {
-        await sendCsvToBackend(usersData)
+        await handleCsvFile(csvFile)
     }
 
     return (
         <>
             <Grid container spacing={2} alignItems="center" justifyContent="center">
                 <Grid item>
-                    <FileButton handleFileInputChange={handleFileInputChange} />
+                    <FileButton handleFileInputChange={handleFileInputChange}/>
                 </Grid>
                 <Grid item>
-                    <p style={{ padding: '1rem' }}>lub</p>
+                    <p style={{padding: '1rem'}}>lub</p>
                 </Grid>
                 <Grid item>
-                    <DropBox active={active} setActive={setActive} handleDrop={handleDrop} />
+                    <DropBox active={active} setActive={setActive} handleDrop={handleDrop}/>
                 </Grid>
             </Grid>
-            <UserList usersData={usersData} />
-            <Button onClick={handleSendButtonClick}>
-                Wyślij dane na serwer
-            </Button>
         </>
     )
 }
