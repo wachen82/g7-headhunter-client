@@ -8,5 +8,5 @@ export const logInSchema = yup.object().shape({
     password: yup
         .string()
         .required('Hasło jest wymagane')
-        .min(8, 'Hasło musi mieć co najmniej 8 znaków'),
+        .min(4, 'Hasło musi mieć co najmniej 8 znaków'),
 })
