@@ -10,35 +10,23 @@ import {
     Input,
     InputLabel,
     Link,
-    Snackbar,
     styled,
     Typography,
 } from '@mui/material'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { logInSchema } from './log-in.shema'
 import theme from '../../../theme'
 import { routes } from '../../../routes/routesMap'
 import { LogInFormValues } from '../../../types/logInFormValues'
 import { apiUrl } from '../../../config/api'
 import { ENDPOINTS } from '../../../services/endpoints/endpoints'
+import { CustomSnackBar } from '../../common/SnackBar/CustomSnackBar'
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
-
 export const LoginForm = () => {
-    const [isWrongAccount, setIsWrongAccount] = useState(false)
-
-    const handleClose = () => {
-        setIsWrongAccount(false)
-    }
+    const [isWrongAccount, setIsWrongAccount] = useState<boolean>(false)
 
     const defaultValues = {
         email: '',
@@ -61,11 +49,7 @@ export const LoginForm = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             })
-            if (response.ok) {
-                setIsWrongAccount(false)
-            } else {
-                setIsWrongAccount(true)
-            }
+            setIsWrongAccount(!response.ok)
         } catch (err) {
             throw new Error('Unexpected error occurred')
         }
@@ -205,15 +189,12 @@ export const LoginForm = () => {
                 </Box>
             </Form>
             {isWrongAccount && (
-                <Snackbar
-                    onClose={handleClose}
-                    open={isWrongAccount}
-                    autoHideDuration={4000}
-                >
-                    <Alert onClose={handleClose} severity="error">
-                        Taki użytkownik nie istnieje
-                    </Alert>
-                </Snackbar>
+                <CustomSnackBar
+                    setAction={setIsWrongAccount}
+                    actionState={isWrongAccount}
+                    type="error"
+                    message="Taki użytkownik nie istnieje"
+                />
             )}
         </Box>
     )
