@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { Form, Link as RouterLink } from 'react-router-dom'
@@ -10,24 +10,36 @@ import {
     Input,
     InputLabel,
     Link,
+    Snackbar,
     styled,
     Typography,
 } from '@mui/material'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { logInSchema } from './log-in.shema'
-import { useFormSubmit } from '../../../hooks/useFormSubmit'
 import theme from '../../../theme'
 import { routes } from '../../../routes/routesMap'
+import { LogInFormValues } from '../../../types/logInFormValues'
+import { apiUrl } from '../../../config/api'
+import { ENDPOINTS } from '../../../services/endpoints/endpoints'
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-type LoginData = {
-    email: string
-    password: string
-}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 export const LoginForm = () => {
+    const [isWrongAccount, setIsWrongAccount] = useState(false)
+
+    const handleClose = () => {
+        setIsWrongAccount(false)
+    }
+
     const defaultValues = {
         email: '',
         password: '',
@@ -36,14 +48,28 @@ export const LoginForm = () => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
-    } = useForm<LoginData>({
+    } = useForm<LogInFormValues>({
         resolver: yupResolver(logInSchema),
         defaultValues,
     })
 
-    const { onSubmit } = useFormSubmit<LoginData>({ reset, method: 'post' })
+    const onSubmit = async (data: LogInFormValues): Promise<any> => {
+        try {
+            const response = await fetch(`${apiUrl}${ENDPOINTS.signIn}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            })
+            if (response.ok) {
+                setIsWrongAccount(false)
+            } else {
+                setIsWrongAccount(true)
+            }
+        } catch (err) {
+            throw new Error('Unexpected error occurred')
+        }
+    }
 
     return (
         <Box width="400px" maxWidth="90%">
@@ -104,9 +130,9 @@ export const LoginForm = () => {
                     </InputLabel>
                     <Input
                         sx={{
-                            // marginTop: '1rem',
+                            marginTop: '1rem',
                             color: theme.palette.secondary.contrastText,
-                            // marginLeft: '1rem',
+                            marginLeft: '1rem',
                         }}
                         disableUnderline={true}
                         id="password"
@@ -178,6 +204,17 @@ export const LoginForm = () => {
                     </StyledButton>
                 </Box>
             </Form>
+            {isWrongAccount && (
+                <Snackbar
+                    onClose={handleClose}
+                    open={isWrongAccount}
+                    autoHideDuration={4000}
+                >
+                    <Alert onClose={handleClose} severity="error">
+                        Taki użytkownik nie istnieje
+                    </Alert>
+                </Snackbar>
+            )}
         </Box>
     )
 }
