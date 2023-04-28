@@ -1,7 +1,7 @@
 import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { Form, Link as RouterLink } from 'react-router-dom'
+import { Form } from 'react-router-dom'
 import {
     Box,
     Button,
@@ -9,52 +9,27 @@ import {
     FormHelperText,
     Input,
     InputLabel,
-    Link,
-    MenuItem,
-    Select,
     SelectChangeEvent,
     styled,
-    TextField,
-    Typography,
 } from '@mui/material'
 import { registerSchema } from './register.schema'
 import { useFormSubmit } from '../../../hooks/useFormSubmit'
 import theme from '../../../theme'
-import { routes } from '../../../routes/routesMap'
+import { IUserProfileEntity } from 'types'
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-type RegisterData = {
-    email: string
-    phoneNumber: string
-    firstName: string
-    lastName: string
-    githubUsername: string
-    portfolioUrls: string
-    projectUrls: string
-    bio: string
-    expectedTypeWork: string
-    targetWorkCity: string
-    expectedContractType: string
-    expectedSalary: string
-    canTakeApprenticeship: string
-    monthsOfCommercialExp: number
-    education: string
-    workExperience: string
-    courses: string
-}
-
 export const RegisterForm = () => {
     const defaultValues = {
         email: '',
-        phoneNumber: '',
+        phone: '',
         firstName: '',
         lastName: '',
         githubUsername: '',
-        portfolioUrls: '',
-        projectUrls: '',
+        portfolioUrls: [],
+        projectUrls: ['', ''],
         bio: '',
         expectedTypeWork: 'Bez znaczenia',
         targetWorkCity: '',
@@ -72,12 +47,15 @@ export const RegisterForm = () => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<RegisterData>({
+    } = useForm<IUserProfileEntity>({
         resolver: yupResolver(registerSchema),
         defaultValues,
     })
 
-    const { onSubmit } = useFormSubmit<RegisterData>({ reset, method: 'post' })
+    const { onSubmit } = useFormSubmit<IUserProfileEntity>({
+        reset,
+        method: 'post',
+    })
 
     const [workType, setWorkType] = React.useState('Brak preferencji')
 
@@ -87,7 +65,7 @@ export const RegisterForm = () => {
 
     return (
         <Box width="700px" maxWidth="90%">
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
                 <FormControl
                     sx={{
                         backgroundColor: theme.palette.secondary.light,
@@ -130,7 +108,7 @@ export const RegisterForm = () => {
                         marginTop: '1rem',
                         backgroundColor: theme.palette.secondary.light,
                     }}
-                    error={Boolean(errors.phoneNumber)}
+                    error={Boolean(errors.phone)}
                     variant="outlined"
                     fullWidth
                 >
@@ -149,8 +127,8 @@ export const RegisterForm = () => {
                             // marginLeft: '1rem',
                         }}
                         disableUnderline={true}
-                        id="phoneNumber"
-                        {...register('phoneNumber')}
+                        id="phone"
+                        {...register('phone')}
                         type="number"
                     />
                     <FormHelperText
@@ -160,7 +138,7 @@ export const RegisterForm = () => {
                             backgroundColor: theme.palette.secondary.main,
                         }}
                     >
-                        {errors.phoneNumber?.message}
+                        {errors.phone?.message}
                     </FormHelperText>
                 </FormControl>
                 <FormControl
@@ -328,9 +306,9 @@ export const RegisterForm = () => {
                         sx={{
                             color: theme.palette.secondary.contrastText,
                         }}
-                        htmlFor="projectUrls"
+                        htmlFor="projectUrls-FE"
                     >
-                        Address URL do Projektu *
+                        Address URL do Projektu (Frontend) *
                     </InputLabel>
                     <Input
                         sx={{
@@ -339,8 +317,46 @@ export const RegisterForm = () => {
                             marginLeft: '1rem',
                         }}
                         disableUnderline={true}
-                        id="projectUrls"
-                        {...register('projectUrls')}
+                        id="projectUrls-FE"
+                        {...register('projectUrls.0')}
+                        type="url"
+                    />
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.projectUrls?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.projectUrls)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="projectUrls-BE"
+                    >
+                        Address URL do Projektu (Backend) *
+                    </InputLabel>
+                    <Input
+                        sx={{
+                            marginTop: '1rem',
+                            color: theme.palette.secondary.contrastText,
+                            marginLeft: '1rem',
+                        }}
+                        disableUnderline={true}
+                        id="projectUrls-BE"
+                        {...register('projectUrls.1')}
                         type="url"
                     />
                     <FormHelperText
