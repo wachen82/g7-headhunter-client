@@ -29,7 +29,7 @@ export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
             backgroundColor: active ? theme.palette.primary.main : 'transparent',
             padding: '20px',
             textAlign: 'center',
-            border: '2px dashed #ccc',
+            border: `2px dashed ${theme.palette.primary.main}`,
             borderRadius: '5px',
             cursor: 'pointer',
         }}
