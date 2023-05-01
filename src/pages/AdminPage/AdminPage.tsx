@@ -11,7 +11,7 @@ export const AdminPage = () => {
                 <Typography variant="h2" sx={{ fontSize: 32,  padding: 5}}>Importuj kursantów</Typography>
                 <DropAndClickBox />
                 <Typography variant="h2" sx={{ fontSize: 32,  padding: 5 }}>Dodaj headhunterów</Typography>
-                <Typography variant="body1">Formularz do dodawania hedhunterów</Typography>
+                <Typography variant="body1">Formularz do dodawania headhunterów</Typography>
             </Container>
         </main>
     )

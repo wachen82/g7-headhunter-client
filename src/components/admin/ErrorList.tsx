@@ -31,7 +31,7 @@ const errors: ErrorData[] = [
             projectDegree: 5,
             teamProjectDegree: 5,
             bonusProjectUrls:
-                "https:/example.com/link1;              https://example.com/link2; https://example.com/link3",
+                "https:/example.com/link1; https://example.com/link2; https://example.com/link3",
         },
         errors: {
             bonusProjectUrls: [
@@ -39,7 +39,7 @@ const errors: ErrorData[] = [
                     row: 1,
                     field: "https:/example.com/link1",
                     error: true,
-                    message: "błedny adres url",
+                    message: "błędny adres url",
                 },
             ],
         },
@@ -52,7 +52,7 @@ const errors: ErrorData[] = [
             projectDegree: 2,
             teamProjectDegree: 4,
             bonusProjectUrls:
-                "https://example.com/link1;              https://example.com/link2; https://example.com/link3",
+                "https://example.com/link1;https://example.com/link2; https://example.com/link3",
         },
         errors: {
             courseEngagement: [
