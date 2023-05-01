@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const FileButton = ({ handleFileInputChange }: Props) => (
-    <Button component="label" sx={{ color: theme.palette.primary.main }}>
+    <Button component="label" sx={{ backgroundColor: theme.palette.primary.main, color:theme.palette.text.primary }}>
         Dodaj plik
         <input
             onChange={handleFileInputChange}
