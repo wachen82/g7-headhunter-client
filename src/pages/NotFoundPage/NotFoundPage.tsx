@@ -1,18 +1,6 @@
 import { Box, Container } from '@mui/material'
+import { useTitle } from '../../hooks/useTitle'
 import { NotFoundBox } from '../../components/common/NotFound/NotFoundBox'
-import { useEffect, useState } from 'react'
-
-export const useTitle = (initialTitle: string) => {
-    const [title, setTitle] = useState(initialTitle)
-    const updateTitle = () => {
-        const htmlTitle = document.querySelector('title')
-        // @ts-ignore
-        htmlTitle.innerText = title
-    }
-    useEffect(updateTitle, [title])
-
-    return setTitle
-}
 
 export const NotFoundPage = () => {
     useTitle('Błąd 404')

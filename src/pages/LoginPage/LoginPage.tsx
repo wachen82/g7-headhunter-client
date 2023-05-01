@@ -1,7 +1,10 @@
 import { Box, Container } from '@mui/material'
 import { LoginForm } from '../../components/forms/LoginForm/LoginForm'
+import { useTitle } from '../../hooks/useTitle'
 
 export const LoginPage = () => {
+    useTitle('Logowanie do portalu MegaK Head Hunters')
+
     return (
         <Container
             sx={{
