@@ -1,7 +1,7 @@
 import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { Form } from 'react-router-dom'
+import { Form, Link as RouterLink } from 'react-router-dom'
 import {
     Box,
     Button,
@@ -9,26 +9,32 @@ import {
     FormHelperText,
     Input,
     InputLabel,
+    Link,
+    MenuItem,
+    Select,
     SelectChangeEvent,
     styled,
+    TextField,
 } from '@mui/material'
 import { registerSchema } from './register.schema'
 import { useFormSubmit } from '../../../hooks/useFormSubmit'
 import theme from '../../../theme'
 import { IUserProfileEntity } from 'types'
+import { Simulate } from 'react-dom/test-utils'
+import submit = Simulate.submit
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-export const RegisterForm = () => {
+export const RegisterForm1 = () => {
     const defaultValues = {
         email: '',
         phone: '',
         firstName: '',
         lastName: '',
         githubUsername: '',
-        portfolioUrls: [],
+        portfolioUrls: [''],
         projectUrls: ['', ''],
         bio: '',
         expectedTypeWork: 'Bez znaczenia',
@@ -44,6 +50,7 @@ export const RegisterForm = () => {
 
     const {
         register,
+        control,
         handleSubmit,
         reset,
         formState: { errors },
@@ -52,10 +59,8 @@ export const RegisterForm = () => {
         defaultValues,
     })
 
-    const { onSubmit } = useFormSubmit<IUserProfileEntity>({
-        reset,
-        method: 'post',
-    })
+    const onSubmit = (data: IUserProfileEntity) =>
+        console.log('Form submited', data)
 
     const [workType, setWorkType] = React.useState('Brak preferencji')
 
@@ -73,6 +78,7 @@ export const RegisterForm = () => {
                     error={Boolean(errors.email)}
                     variant="outlined"
                     fullWidth
+                    required
                 >
                     <InputLabel
                         sx={{
@@ -80,7 +86,7 @@ export const RegisterForm = () => {
                         }}
                         htmlFor="email"
                     >
-                        Email *
+                        Email
                     </InputLabel>
                     <Input
                         sx={{
@@ -122,9 +128,9 @@ export const RegisterForm = () => {
                     </InputLabel>
                     <Input
                         sx={{
-                            // marginTop: '1rem',
+                            marginTop: '1rem',
                             color: theme.palette.secondary.contrastText,
-                            // marginLeft: '1rem',
+                            marginLeft: '1rem',
                         }}
                         disableUnderline={true}
                         id="phone"
@@ -149,6 +155,7 @@ export const RegisterForm = () => {
                     error={Boolean(errors.firstName)}
                     variant="outlined"
                     fullWidth
+                    required
                 >
                     <InputLabel
                         sx={{
@@ -156,7 +163,7 @@ export const RegisterForm = () => {
                         }}
                         htmlFor="firstName"
                     >
-                        Imię *
+                        Imię
                     </InputLabel>
                     <Input
                         sx={{
@@ -187,6 +194,7 @@ export const RegisterForm = () => {
                     error={Boolean(errors.lastName)}
                     variant="outlined"
                     fullWidth
+                    required
                 >
                     <InputLabel
                         sx={{
@@ -194,7 +202,7 @@ export const RegisterForm = () => {
                         }}
                         htmlFor="lastName"
                     >
-                        Nazwisko *
+                        Nazwisko
                     </InputLabel>
                     <Input
                         sx={{
@@ -225,6 +233,7 @@ export const RegisterForm = () => {
                     error={Boolean(errors.githubUsername)}
                     variant="outlined"
                     fullWidth
+                    required
                 >
                     <InputLabel
                         sx={{
@@ -232,7 +241,7 @@ export const RegisterForm = () => {
                         }}
                         htmlFor="githubUsername"
                     >
-                        GitHub Login *
+                        GitHub Login
                     </InputLabel>
                     <Input
                         sx={{
@@ -369,6 +378,242 @@ export const RegisterForm = () => {
                         {errors.projectUrls?.message}
                     </FormHelperText>
                 </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        color: theme.palette.secondary.contrastText,
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.bio)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="bio"
+                    ></InputLabel>
+                    <TextField
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        id="bio"
+                        label="Krótkie Bio"
+                        type="text"
+                        fullWidth
+                        multiline
+                    />
+
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.bio?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.githubUsername)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="trybPracy"
+                    >
+                        {' '}
+                        Tryb Pracy
+                    </InputLabel>
+                    <Select
+                        sx={{ color: theme.palette.secondary.contrastText }}
+                        id="trybPracy"
+                        label="tryb Pracy"
+                        value={workType}
+                        onChange={handleChange}
+                        placeholder={defaultValues.expectedTypeWork}
+                    >
+                        <MenuItem value="Na miejsc">Na miejscu</MenuItem>
+                        <MenuItem value="Gotowość do przeprowadzki">
+                            Gotowość do przeprowadzki
+                        </MenuItem>
+                        <MenuItem value="Wyłącznie zdalnie">
+                            Wyłącznie zdalnie
+                        </MenuItem>
+                        <MenuItem value="Hybrydowo">Hybrydowo</MenuItem>
+                        <MenuItem value="Bez znaczenia">Bez znaczenia</MenuItem>
+                    </Select>
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.expectedTypeWork?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.phone)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="targetWorkCity"
+                    >
+                        Oczekiwane Miasto Pracy
+                    </InputLabel>
+                    <Input
+                        sx={{
+                            marginTop: '1rem',
+                            color: theme.palette.secondary.contrastText,
+                            marginLeft: '1rem',
+                        }}
+                        disableUnderline={true}
+                        id="targetWorkCity"
+                        {...register('targetWorkCity')}
+                        type="text"
+                    />
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.targetWorkCity?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.expectedSalary)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="expectedSalary"
+                    >
+                        Oczekiwane wynagrodzenie (zł)
+                    </InputLabel>
+                    <Input
+                        sx={{
+                            marginTop: '1rem',
+                            color: theme.palette.secondary.contrastText,
+                            marginLeft: '1rem',
+                        }}
+                        disableUnderline={true}
+                        id="expectedSalary"
+                        {...register('expectedSalary')}
+                        type="number"
+                    />
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.expectedSalary?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.monthsOfCommercialExp)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="monthsOfCommercialExp"
+                    >
+                        Ilość miesiecy doświadczenia zawodowego
+                    </InputLabel>
+                    <Input
+                        sx={{
+                            marginTop: '1rem',
+                            color: theme.palette.secondary.contrastText,
+                            marginLeft: '1rem',
+                        }}
+                        disableUnderline={true}
+                        id="monthsOfCommercialExp"
+                        {...register('monthsOfCommercialExp')}
+                        type="number"
+                    />
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.monthsOfCommercialExp?.message}
+                    </FormHelperText>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        marginTop: '1rem',
+                        backgroundColor: theme.palette.secondary.light,
+                    }}
+                    error={Boolean(errors.canTakeApprenticeship)}
+                    variant="outlined"
+                    fullWidth
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.secondary.contrastText,
+                        }}
+                        htmlFor="trybPracy"
+                    >
+                        {' '}
+                        Tryb Pracy
+                    </InputLabel>
+                    <Select
+                        sx={{ color: theme.palette.secondary.contrastText }}
+                        id="trybPracy"
+                        label="tryb Pracy"
+                        value={workType}
+                        onChange={handleChange}
+                        placeholder={defaultValues.canTakeApprenticeship}
+                    >
+                        <MenuItem value="NIE">NIE</MenuItem>
+                        <MenuItem value="TAK">TAK</MenuItem>
+                    </Select>
+                    <FormHelperText
+                        sx={{
+                            margin: 0,
+                            paddingX: '1rem',
+                            backgroundColor: theme.palette.secondary.main,
+                        }}
+                    >
+                        {errors.canTakeApprenticeship?.message}
+                    </FormHelperText>
+                </FormControl>
 
                 <Box
                     sx={{
@@ -387,6 +632,7 @@ export const RegisterForm = () => {
                     </StyledButton>
                 </Box>
             </Form>
+            {/*<FormSteper />*/}
         </Box>
     )
 }
