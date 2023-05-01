@@ -25,9 +25,9 @@ const theme = createTheme({
             900: '#202122', // kolor czarnych podkreśleń w 'do rozmowy'
         },
         info: {
-            100: '#0B8BD4', // kolor czcionki linków
-            200: '#C92929', // kolor podkreślenia w menu hr
-            300: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
+            main: '#0B8BD4', // kolor czcionki linków
+            light: '#C92929', // kolor podkreślenia w menu hr
+            dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
         },
     },
 })
