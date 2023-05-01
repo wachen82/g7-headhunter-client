@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { Form, Link as RouterLink } from 'react-router-dom'
@@ -14,20 +14,20 @@ import {
     Typography,
 } from '@mui/material'
 import { logInSchema } from './log-in.shema'
-import { useFormSubmit } from '../../../hooks/useFormSubmit'
 import theme from '../../../theme'
 import { routes } from '../../../routes/routesMap'
+import { LogInFormValues } from '../../../types/logInFormValues'
+import { apiUrl } from '../../../config/api'
+import { ENDPOINTS } from '../../../services/endpoints/endpoints'
+import { CustomSnackBar } from '../../common/SnackBar/CustomSnackBar'
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-type LoginData = {
-    email: string
-    password: string
-}
-
 export const LoginForm = () => {
+    const [isWrongAccount, setIsWrongAccount] = useState<boolean>(false)
+
     const defaultValues = {
         email: '',
         password: '',
@@ -36,14 +36,24 @@ export const LoginForm = () => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
-    } = useForm<LoginData>({
+    } = useForm<LogInFormValues>({
         resolver: yupResolver(logInSchema),
         defaultValues,
     })
 
-    const { onSubmit } = useFormSubmit<LoginData>({ reset, method: 'post' })
+    const onSubmit = async (data: LogInFormValues): Promise<any> => {
+        try {
+            const response = await fetch(`${apiUrl}${ENDPOINTS.signIn}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            })
+            setIsWrongAccount(!response.ok)
+        } catch (err) {
+            throw new Error('Unexpected error occurred')
+        }
+    }
 
     return (
         <Box width="400px" maxWidth="90%">
@@ -104,9 +114,9 @@ export const LoginForm = () => {
                     </InputLabel>
                     <Input
                         sx={{
-                            // marginTop: '1rem',
+                            marginTop: '1rem',
                             color: theme.palette.secondary.contrastText,
-                            // marginLeft: '1rem',
+                            marginLeft: '1rem',
                         }}
                         disableUnderline={true}
                         id="password"
@@ -178,6 +188,14 @@ export const LoginForm = () => {
                     </StyledButton>
                 </Box>
             </Form>
+            {isWrongAccount && (
+                <CustomSnackBar
+                    setAction={setIsWrongAccount}
+                    actionState={isWrongAccount}
+                    type="error"
+                    message="Taki użytkownik nie istnieje"
+                />
+            )}
         </Box>
     )
 }
