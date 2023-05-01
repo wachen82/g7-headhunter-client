@@ -9,10 +9,10 @@ export const FileButton = ({ handleFileInputChange }: Props) => (
     <Button component="label" sx={{ color: theme.palette.primary.main }}>
         Dodaj plik
         <input
-            type="file"
-            hidden
             onChange={handleFileInputChange}
+            type="file"
             accept=".csv"
+            hidden
         />
     </Button>
 )

@@ -9,7 +9,7 @@ type DropBoxProps = {
 }
 
 export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
-    return (<>
+    return (
     <Paper
         variant="outlined"
         square
@@ -38,6 +38,5 @@ export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
             Upuść tutaj
         </Typography>
     </Paper>
-        </>
     )
 }

@@ -4,6 +4,7 @@ import {useState} from 'react'
 import {getCsvFile, handleCsvFile} from '../../utils/csvUtils'
 import {FileButton} from './FileButton'
 import {DropBox} from './DropBox'
+import {ErrorList} from "./ErrorList";
 
 export const DropAndClickBox = () => {
     const [active, setActive] = useState<boolean>(false)
@@ -41,6 +42,7 @@ export const DropAndClickBox = () => {
                     <DropBox active={active} setActive={setActive} handleDrop={handleDrop}/>
                 </Grid>
             </Grid>
+            <ErrorList/>
         </>
     )
 }
