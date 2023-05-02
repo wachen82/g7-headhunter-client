@@ -42,7 +42,7 @@ export const HrForm = () => {
 
     const onSubmit = async (data: HrFormValues): Promise<any> => {
         try {
-            const response = await fetch(`${apiUrl}/register-hr`, {
+            const response = await fetch(`${apiUrl}/admin/register-hr`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
