@@ -1,5 +1,7 @@
 export const ENDPOINTS = {
     signIn: '/auth/login',
-    signUp: '/auth/logout',
+    signOut: '/auth/logout',
     register: '/auth/register',
+    reset: '/auth/reset-password',
+    setNewPwd: '/auth/reset-password/{token}',
 }
