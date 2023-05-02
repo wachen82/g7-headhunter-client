@@ -12,6 +12,7 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import theme from '../../../../theme'
 import { MenuLink } from './MenuLink'
+import { routes } from '../../../../routes/routesMap'
 
 interface Props {
     avatarUrl: string
@@ -58,7 +59,7 @@ export const MenuBox = (props: Props) => {
     }, [open])
 
     return (
-        <div>
+        <>
             <Button
                 ref={anchorRef}
                 id="composition-button"
@@ -89,7 +90,6 @@ export const MenuBox = (props: Props) => {
                         fontSize: '18px',
                         fontWeight: 'light',
                         textTransform: 'capitalize',
-                        // lineHeight: '18px',
                     }}
                 >
                     {userName}
@@ -138,7 +138,7 @@ export const MenuBox = (props: Props) => {
                                     <MenuLink
                                         handleClose={handleClose}
                                         text={'Wyloguj'}
-                                        url={'#'}
+                                        url={routes.home}
                                     />
                                 </MenuList>
                             </ClickAwayListener>
@@ -146,6 +146,6 @@ export const MenuBox = (props: Props) => {
                     </Grow>
                 )}
             </Popper>
-        </div>
+        </>
     )
 }
