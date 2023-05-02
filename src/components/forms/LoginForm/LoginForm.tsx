@@ -1,32 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { Form, Link as RouterLink } from 'react-router-dom'
-import {
-    Box,
-    Button,
-    FormControl,
-    FormHelperText,
-    Input,
-    InputLabel,
-    Link,
-    styled,
-    Typography,
-} from '@mui/material'
+import { Box } from '@mui/material'
 import { logInSchema } from './log-in.shema'
-import theme from '../../../theme'
-import { routes } from '../../../routes/routesMap'
-import { LogInFormValues } from '../../../types/logInFormValues'
+import axios, { isAxiosError } from 'axios'
+import { FormValues, SnackBarEnum } from '../../../types/formValues'
 import { apiUrl } from '../../../config/api'
 import { ENDPOINTS } from '../../../services/endpoints/endpoints'
-import { CustomSnackBar } from '../../common/SnackBar/CustomSnackBar'
-
-const StyledButton = styled(Button)({
-    textTransform: 'none',
-})
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
+import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm'
+import { useSnackBar } from '../../../hooks/useSnackBar'
+import { loginDataArr } from './login-data'
 
 export const LoginForm = () => {
-    const [isWrongAccount, setIsWrongAccount] = useState<boolean>(false)
+    const {
+        snackBarMessage,
+        snackBarType,
+        isSnackBarOpen,
+        showSnackBar,
+        hideSnackBar,
+    } = useSnackBar()
 
     const defaultValues = {
         email: '',
@@ -37,163 +30,55 @@ export const LoginForm = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LogInFormValues>({
+    } = useForm<FormValues>({
         resolver: yupResolver(logInSchema),
         defaultValues,
     })
 
-    const onSubmit = async (data: LogInFormValues): Promise<any> => {
+    const onSubmit = async (data: FormValues): Promise<void> => {
         try {
-            const response = await fetch(`${apiUrl}${ENDPOINTS.signIn}`, {
+            const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
+                data: data,
             })
-            setIsWrongAccount(!response.ok)
-        } catch (err) {
-            throw new Error('Unexpected error occurred')
+            console.log(res)
+            if (res.data.role === 'Admin') {
+                showSnackBar(
+                    'Zalogowałeś się poprawnie jako Admin',
+                    SnackBarEnum.SUCCESS_MESSAGE
+                )
+            } else if (!res.data.active) {
+                showSnackBar(
+                    'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
+                    SnackBarEnum.SUCCESS_MESSAGE
+                )
+            }
+        } catch (err: unknown) {
+            if (isAxiosError(err)) {
+                showSnackBar('Nie znaleziono użytkownika')
+            } else {
+                showSnackBar('Wystąpił niespodziewany błąd')
+            }
         }
     }
 
     return (
         <Box width="400px" maxWidth="90%">
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <FormControl
-                    sx={{
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.email)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                        }}
-                        htmlFor="email"
-                    >
-                        Email
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            marginTop: '1rem',
-                            color: theme.palette.secondary.contrastText,
-                            marginLeft: '1rem',
-                        }}
-                        disableUnderline={true}
-                        id="email"
-                        {...register('email')}
-                        type="email"
-                    />
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.email?.message}
-                    </FormHelperText>
-                </FormControl>
-                <FormControl
-                    sx={{
-                        marginTop: '1rem',
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.password)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                        }}
-                        htmlFor="password"
-                    >
-                        Hasło
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            marginTop: '1rem',
-                            color: theme.palette.secondary.contrastText,
-                            marginLeft: '1rem',
-                        }}
-                        disableUnderline={true}
-                        id="password"
-                        {...register('password')}
-                        type="password"
-                    />
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.password?.message}
-                    </FormHelperText>
-                </FormControl>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        marginTop: '1rem',
-                        marginBottom: '2rem',
-                    }}
-                >
-                    <Link
-                        sx={{
-                            textDecoration: 'none',
-                            fontFamily: 'sans-serif',
-                        }}
-                        color={theme.palette.text.primary}
-                        fontSize="small"
-                        component={RouterLink}
-                        to="#"
-                    >
-                        Zapomniałeś hasła?
-                    </Link>
-                </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginTop: '1rem',
-                    }}
-                >
-                    <Typography
-                        color={theme.palette.text.primary}
-                        fontSize="small"
-                    >
-                        Nie masz konta?
-                        <Link
-                            color={theme.palette.text.primary}
-                            sx={{
-                                marginLeft: '0.5rem',
-                            }}
-                            component={RouterLink}
-                            to={routes.signUp}
-                            fontWeight="bold"
-                        >
-                            Zarejestruj się
-                        </Link>
-                    </Typography>
-                    <StyledButton
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-                        Zaloguj się
-                    </StyledButton>
-                </Box>
-            </Form>
-            {isWrongAccount && (
+            <CustomBasicForm
+                onSubmit={onSubmit}
+                register={register}
+                handleSubmit={handleSubmit}
+                errors={errors}
+                additionalFormInfo={true}
+                dataFormArr={loginDataArr}
+                buttonText="Zaloguj się"
+            />
+            {isSnackBarOpen && (
                 <CustomSnackBar
-                    setAction={setIsWrongAccount}
-                    actionState={isWrongAccount}
-                    type="error"
-                    message="Taki użytkownik nie istnieje"
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
                 />
             )}
         </Box>
