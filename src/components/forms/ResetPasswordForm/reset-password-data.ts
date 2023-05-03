@@ -8,7 +8,7 @@ export const resetPasswordData: InputFormData[] = [
         type: 'password',
     },
     {
-        key: 'password',
+        key: 'passwordConfirmation',
         inputText: 'Powtórz hasło',
         htmlFor: 'password',
         type: 'password',
