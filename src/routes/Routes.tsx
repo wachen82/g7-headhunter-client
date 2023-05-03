@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { LoginPage } from '../pages/LoginPage/LoginPage'
 import { routes } from './routesMap'
+import { AdminPage } from '../pages/AdminPage/AdminPage'
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
+import { RegisterPage } from '../pages/RegisterPage/RegisterPage'
 
 const router = createBrowserRouter([
     {

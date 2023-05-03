@@ -1,12 +1,13 @@
 import { createTheme } from '@mui/material/styles'
+import { isDisabled } from '@testing-library/user-event/dist/utils'
 
 const theme = createTheme({
     components: {
-        MuiInputBase: {
+        MuiTextField: {
             styleOverrides: {
                 root: {
                     backgroundColor: '#292A2B',
-                    color: '#F7F7F7',
+                    color: '#7E7E7E',
                     '&:hover': {
                         backgroundColor: '#292A2B',
                         // Reset on touch devices, it doesn't add specificity
@@ -18,6 +19,12 @@ const theme = createTheme({
                     '&.Mui-focused': {
                         backgroundColor: '#292A2B',
                         color: '#F7F7F7',
+                    },
+                    '& label': {
+                        color: '#7E7E7E',
+                    },
+                    '& .MuiOutlinedInput-root:hover': {
+                        backgroundColor: false,
                     },
                 },
             },
@@ -51,13 +58,11 @@ const theme = createTheme({
             main: '#0B8BD4', // kolor czcionki linków
             light: '#C92929', // kolor podkreślenia w menu hr
             dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
-
         },
         background: {
             default: '#7E7E7E',
             paper: '#1E1E1F',
         },
-
     },
 })
 
