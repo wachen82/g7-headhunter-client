@@ -1,14 +1,3 @@
-import {uploadCsvFile} from "./uploadCsv";
-
-export interface UserCSV {
-    email: string
-    courseCompletion: number
-    courseEngagement: number
-    projectDegree: number
-    teamProjectDegree: number
-    bonusProjectUrls: string
-}
-
 export const getCsvFile = async (files: FileList) => {
     const csvFiles = Array.from(files).filter(
         (file) => file.type === 'text/csv'
@@ -29,13 +18,4 @@ export const getCsvFile = async (files: FileList) => {
         }
         reader.readAsText(file)
     })
-}
-
-export const handleCsvFile = async (csvFile: string) => {
-    try {
-        const response = await uploadCsvFile(csvFile)
-        console.log('CSV file uploaded successfully', response)
-    } catch (error) {
-        console.error('Failed to upload CSV file', error)
-    }
 }
