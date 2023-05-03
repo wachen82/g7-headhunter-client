@@ -54,7 +54,7 @@ export const CustomBasicForm = ({
                         marginTop: '1rem',
                         backgroundColor: theme.palette.secondary.light,
                     }}
-                    error={Boolean(errors[`${key}` as keyof typeof errors])}
+                    error={Boolean(errors[key as keyof typeof errors])}
                     variant="outlined"
                     fullWidth
                 >
@@ -74,7 +74,7 @@ export const CustomBasicForm = ({
                         }}
                         disableUnderline={true}
                         id={type}
-                        {...register(type)}
+                        {...register(key)}
                         type={type}
                     />
                     <FormHelperText
@@ -84,7 +84,7 @@ export const CustomBasicForm = ({
                             backgroundColor: theme.palette.secondary.main,
                         }}
                     >
-                        {errors[`${key}` as keyof typeof errors]?.message}
+                        {errors[key as keyof typeof errors]?.message}
                     </FormHelperText>
                 </FormControl>
             ))}
