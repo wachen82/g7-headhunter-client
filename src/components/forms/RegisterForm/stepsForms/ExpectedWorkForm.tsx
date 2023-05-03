@@ -2,32 +2,24 @@ import * as React from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import {
-    FormHelperText,
-    InputAdornment,
-    MenuItem,
-    RadioGroup,
-} from '@mui/material'
-import theme from '../../../theme'
-import { useForm } from 'react-hook-form'
+import { FormHelperText, InputAdornment, MenuItem } from '@mui/material'
+import theme from '../../../../theme'
+import { useForm, useFormContext } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { registerSchema } from './register.schema'
-import { defaultValues } from '../LoginForm/FormDefaultValues'
-import { IUserProfileEntity } from 'types'
+import { expectedWorkForm } from '../register.schema'
+import { defaultValues } from '../FormDefaultValues'
+
+import { IUserProfileEntity1 } from '../types'
 
 export const ExpectedWorkForm = () => {
     const {
-        register,
-        control,
-        handleSubmit,
-        reset,
         formState: { errors },
-    } = useForm<IUserProfileEntity>({
-        resolver: yupResolver(registerSchema),
+    } = useForm<IUserProfileEntity1>({
+        resolver: yupResolver(expectedWorkForm),
         defaultValues,
     })
+    const { register } = useFormContext()
+
     return (
         <>
             <Typography variant="h6" gutterBottom>
@@ -40,19 +32,11 @@ export const ExpectedWorkForm = () => {
                         label="Miasto"
                         type="text"
                         fullWidth
-                        required
                         variant="outlined"
+                        error={Boolean(errors.targetWorkCity)}
                         {...register('targetWorkCity')}
+                        helperText={errors.targetWorkCity?.message}
                     />
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.targetWorkCity?.message}
-                    </FormHelperText>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField

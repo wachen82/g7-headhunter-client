@@ -2,37 +2,25 @@ import * as React from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import { useForm } from 'react-hook-form'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import theme from '../../../theme'
-import {
-    Box,
-    FormControl,
-    FormHelperText,
-    Input,
-    InputLabel,
-    ThemeProvider,
-} from '@mui/material'
+import { useForm, useFormContext } from 'react-hook-form'
+import theme from '../../../../theme'
+import { Box, FormHelperText } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { registerSchema } from './register.schema'
-import { IUserProfileEntity } from 'types'
-import { defaultValues } from '../LoginForm/FormDefaultValues'
+import { userDataForm } from '../register.schema'
+import { defaultValues } from '../FormDefaultValues'
 import CssBaseline from '@mui/material/CssBaseline'
-import { Form } from 'react-router-dom'
-import { DevTool } from '@hookform/devtools'
+
+import { IUserProfileEntity1 } from '../types'
 
 export const UserDataForm = () => {
     const {
-        register,
-        control,
-        handleSubmit,
-        reset,
         formState: { errors },
-    } = useForm<IUserProfileEntity>({
-        resolver: yupResolver(registerSchema),
+    } = useForm<IUserProfileEntity1>({
+        resolver: yupResolver(userDataForm),
         defaultValues,
     })
+    const { register } = useFormContext()
+
     return (
         <>
             <Box>

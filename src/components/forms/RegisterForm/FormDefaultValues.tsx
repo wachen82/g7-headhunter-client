@@ -4,7 +4,7 @@ export const defaultValues = {
     firstName: '',
     lastName: '',
     githubUsername: '',
-    portfolioUrls: [''],
+    portfolioUrls: [{ url: '' }],
     projectUrls: ['', ''],
     bio: '',
     expectedTypeWork: 'Bez znaczenia',
