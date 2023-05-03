@@ -1,9 +1,15 @@
 import {apiUrl} from "../config/api";
-import {UserCSV} from "./csvUtils";
-
+interface UserCSV {
+    email: string
+    courseCompletion: number
+    courseEngagement: number
+    projectDegree: number
+    teamProjectDegree: number
+    bonusProjectUrls: string[]
+}
 export const saveCsv = async (data: UserCSV) => {
     try {
-        const saveResponse = await fetch(`${apiUrl}/api/save-csv`, {
+        const saveResponse = await fetch(`${apiUrl}/admin/save-csv`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
