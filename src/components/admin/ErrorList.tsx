@@ -1,7 +1,9 @@
 import {List, ListItem, ListItemText} from "@mui/material";
 import theme from "../../theme";
+
 interface ErrorWithField extends ErrorCsv {
     field: string;
+    message: string;
 }
 
 type ErrorOrErrorWithField = ErrorCsv | ErrorWithField;
@@ -25,66 +27,82 @@ export const ErrorList = ({errors}: ErrorListProps) => {
 
     return (
         <>
-            {hasHeaderError && (
-                <p style={{color: theme.palette.error.main}}>
-                    Błędny nagłówek pliku CSV
-                </p>
-            )}
-            <List>
-                {errors.map((error, index) => {
-                    const errorValues = Object.values(error);
-                    const hasErrors = errorValues.some((error) => error !== undefined);
-                    if (!hasErrors) {
-                        return null;
-                    }
-                    return (
-                        <ListItem key={index}>
+            {hasHeaderError ? (
+                    <List style={{color: theme.palette.error.main}}>
+                        {errors.map((error, index) => <ListItem key={index}>
                             <ListItemText
                                 primary={
-                                    <ul style={{color: theme.palette.primary.main, listStyle: "none"}}>
-                                        {`Row ${Object.values(error)[0].row}: `}
-                                    </ul>
+                                    <p style={{color: theme.palette.primary.main, listStyle: "none"}}>
+                                        {`Nazwa nagłówka: ${(error as ErrorWithField).field}`}
+                                    </p>
                                 }
                                 secondary={
                                     <>
-                                        {error.email?.message && (
-                                            <li style={{color: theme.palette.secondary.contrastText}}>
-                                                Email: {error.email.message}
-                                            </li>
-                                        )}
-                                        {error.courseCompletion?.message && (
-                                            <li style={{color: theme.palette.secondary.contrastText}}>
-                                                Course Completion: {error.courseCompletion.message}
-                                            </li>
-                                        )}
-                                        {error.courseEngagement?.message && (
-                                            <li style={{color: theme.palette.secondary.contrastText}}>
-                                                Course Engagement: {error.courseEngagement.message}
-                                            </li>
-                                        )}
-                                        {error.projectDegree?.message && (
-                                            <li style={{color: theme.palette.secondary.contrastText}}>
-                                                Project Degree: {error.projectDegree.message}
-                                            </li>
-                                        )}
-                                        {error.teamProjectDegree?.message && (
-                                            <li style={{color: theme.palette.secondary.contrastText}}>
-                                                Team Project Degree: {error.teamProjectDegree.message}
-                                            </li>
-                                        )}
-                                        {error.bonusProjectUrls?.map((bonusError) => (
-                                            <li style={{color: theme.palette.secondary.contrastText}}
-                                                key={bonusError.field}>
-                                                Bonus Project Url: {bonusError.field} - {bonusError.message}
-                                            </li>
-                                        ))}
+                                        <span style={{color: theme.palette.secondary.contrastText}}>
+                                            {`Błąd: ${(error as ErrorWithField).message}`}
+                                        </span>
                                     </>
                                 }
                             />
-                        </ListItem>
-                    );
-                })}
-            </List>
+
+                        </ListItem>)}
+                    </List>
+                ) :
+                <List>
+                    {errors.map((error, index) => {
+                        const errorValues = Object.values(error);
+                        const hasErrors = errorValues.some((error) => error !== undefined);
+                        if (!hasErrors) {
+                            return null;
+                        }
+                        return (
+                            <ListItem key={index}>
+                                <ListItemText
+                                    primary={
+                                        <ul style={{color: theme.palette.primary.main, listStyle: "none"}}>
+                                            {`Rząd ${Object.values(error)[0].row}: `}
+                                        </ul>
+                                    }
+                                    secondary={
+                                        <>
+                                            {error.email?.message && (
+                                                <li style={{color: theme.palette.secondary.contrastText}}>
+                                                    Email: {error.email.message}
+                                                </li>
+                                            )}
+                                            {error.courseCompletion?.message && (
+                                                <li style={{color: theme.palette.secondary.contrastText}}>
+                                                    Ocena stopnie przejścia kursu: {error.courseCompletion.message}
+                                                </li>
+                                            )}
+                                            {error.courseEngagement?.message && (
+                                                <li style={{color: theme.palette.secondary.contrastText}}>
+                                                    Ocena stopnia zaangażowania w kursie: {error.courseEngagement.message}
+                                                </li>
+                                            )}
+                                            {error.projectDegree?.message && (
+                                                <li style={{color: theme.palette.secondary.contrastText}}>
+                                                    Ocena zadania zaliczeniowego: {error.projectDegree.message}
+                                                </li>
+                                            )}
+                                            {error.teamProjectDegree?.message && (
+                                                <li style={{color: theme.palette.secondary.contrastText}}>
+                                                    Ocena pracy w zespole: {error.teamProjectDegree.message}
+                                                </li>
+                                            )}
+                                            {error.bonusProjectUrls?.map((bonusError) => (
+                                                <li style={{color: theme.palette.secondary.contrastText}}
+                                                    key={bonusError.field}>
+                                                    Linki do bonusowego projektu: {bonusError.field} - {bonusError.message}
+                                                </li>
+                                            ))}
+                                        </>
+                                    }
+                                />
+                            </ListItem>
+                        );
+                    })}
+                </List>}
         </>
     );
 };
