@@ -29,6 +29,7 @@ export const LoginForm = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<FormValues>({
         resolver: yupResolver(logInSchema),
@@ -41,7 +42,6 @@ export const LoginForm = () => {
                 method: 'POST',
                 data: data,
             })
-            console.log(res)
             if (res.data.role === 'Admin') {
                 showSnackBar(
                     'Zalogowałeś się poprawnie jako Admin',
@@ -52,10 +52,11 @@ export const LoginForm = () => {
                     'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
                     SnackBarEnum.SUCCESS_MESSAGE
                 )
+                reset(defaultValues)
             }
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar('Nie znaleziono użytkownika')
+                showSnackBar('Taki użytkownik nie jest zarejestrowany')
             } else {
                 showSnackBar('Wystąpił niespodziewany błąd')
             }
