@@ -4,16 +4,17 @@ export enum SnackBarEnum {
     WARNING_MESSAGE = 'warning',
 }
 
-type InputFormDataType = 'email' | 'password'
+type InputFormDataType = 'email' | 'password' | 'passwordConfirmation'
 
 export interface InputFormData {
-    key: string
+    key: InputFormDataType
     inputText: string
     htmlFor: string
-    type: InputFormDataType
+    type: string
 }
 
 export interface FormValues {
     email: string
     password: string
+    passwordConfirmation?: string
 }
