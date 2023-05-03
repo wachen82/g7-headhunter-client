@@ -35,7 +35,7 @@ export const ResetPasswordEmailForm = () => {
 
     const onSubmit = async (data: FormValues): Promise<void> => {
         try {
-            await axios(`${apiUrl}${ENDPOINTS.reset}`, {
+            await axios(`${apiUrl}${ENDPOINTS.resetPassword}`, {
                 method: 'POST',
                 data: data,
             })
