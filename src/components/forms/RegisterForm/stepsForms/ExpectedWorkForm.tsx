@@ -9,12 +9,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { expectedWorkForm } from '../register.schema'
 import { defaultValues } from '../FormDefaultValues'
 
-import { IUserProfileEntity1 } from '../types'
+// import { IUserProfileEntity1 } from '../types'
+import { IUserProfileEntity } from 'types'
 
 export const ExpectedWorkForm = () => {
     const {
         formState: { errors },
-    } = useForm<IUserProfileEntity1>({
+    } = useForm<IUserProfileEntity>({
         resolver: yupResolver(expectedWorkForm),
         defaultValues,
     })

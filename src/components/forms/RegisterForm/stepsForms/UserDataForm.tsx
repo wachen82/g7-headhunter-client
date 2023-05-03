@@ -10,12 +10,12 @@ import { userDataForm } from '../register.schema'
 import { defaultValues } from '../FormDefaultValues'
 import CssBaseline from '@mui/material/CssBaseline'
 
-import { IUserProfileEntity1 } from '../types'
+import { IUserProfileEntity } from 'types'
 
 export const UserDataForm = () => {
     const {
         formState: { errors },
-    } = useForm<IUserProfileEntity1>({
+    } = useForm<IUserProfileEntity>({
         resolver: yupResolver(userDataForm),
         defaultValues,
     })

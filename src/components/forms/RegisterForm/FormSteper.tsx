@@ -18,6 +18,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import * as yup from 'yup'
 import { string } from 'yup'
 import { IUserProfileEntity1 } from './types'
+import { IUserProfileEntity } from 'types'
 
 export const RegisterForm = () => {
     const [activeStep, setActiveStep] = useState(0)
@@ -79,8 +80,8 @@ export const RegisterForm = () => {
         resolver: yupResolver(currentValidationSchema),
         mode: 'onChange',
     })
-    const onSubmit: SubmitHandler<IUserProfileEntity1> = (
-        data: IUserProfileEntity1
+    const onSubmit: SubmitHandler<IUserProfileEntity> = (
+        data: IUserProfileEntity
     ) => {
         console.log(JSON.stringify(data))
         alert(JSON.stringify(data))
@@ -178,9 +179,7 @@ export const RegisterForm = () => {
                         </>
                     ) : (
                         <FormProvider {...methods}>
-                            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                                {getStepContent(activeStep)}
-                            </Form>
+                            <Form>{getStepContent(activeStep)}</Form>
 
                             <Box
                                 sx={{

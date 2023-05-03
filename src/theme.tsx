@@ -1,36 +1,8 @@
 import { createTheme } from '@mui/material/styles'
 import { isDisabled } from '@testing-library/user-event/dist/utils'
+import { green } from '@mui/material/colors'
 
 const theme = createTheme({
-    components: {
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#292A2B',
-                    color: '#7E7E7E',
-                    '&:hover': {
-                        backgroundColor: '#292A2B',
-                        // Reset on touch devices, it doesn't add specificity
-                        '@media (hover: none)': {
-                            backgroundColor: '#292A2B',
-                            color: '#F7F7F7',
-                        },
-                    },
-                    '&.Mui-focused': {
-                        backgroundColor: '#292A2B',
-                        color: '#F7F7F7',
-                    },
-                    '& label': {
-                        color: '#7E7E7E',
-                    },
-                    '& .MuiOutlinedInput-root:hover': {
-                        backgroundColor: false,
-                    },
-                },
-            },
-        },
-    },
-
     palette: {
         primary: {
             main: '#e02735', // kolor tła buttonów i gwiazdek
@@ -41,7 +13,8 @@ const theme = createTheme({
             contrastText: '#7E7E7E', //kolor tekstu w inputach logowania
         },
         text: {
-            primary: '#F7F7F7', // kolor główny - biała czcionka
+            primary: '#CFCFCF', // kolor główny - kolor czcionki szarej
+            secondary: '#666666', // kolor pomocniczy - szara czcionka
         },
         grey: {
             100: '#CFCFCF', // kolor czcionki szarej
@@ -62,6 +35,43 @@ const theme = createTheme({
         background: {
             default: '#7E7E7E',
             paper: '#1E1E1F',
+        },
+    },
+    components: {
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    color: '#7E7E7E',
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {},
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    color: '#CFCFCF',
+                },
+            },
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#292A2B',
+                    color: '#7E7E7E',
+                    '&:hover': {
+                        backgroundColor: '#292A2B',
+                    },
+                    '&.Mui-focused': {
+                        backgroundColor: '#292A2B',
+                        color: 'green',
+                    },
+                    '& label': {
+                        color: '#7E7E7E',
+                    },
+                },
+            },
         },
     },
 })

@@ -7,15 +7,15 @@ import TextField from '@mui/material/TextField'
 import { useForm, useFieldArray, useFormContext } from 'react-hook-form'
 
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
-import { IUserProfileEntity1 } from '../types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { portfolioForm } from '../register.schema'
 import { defaultValues } from '../FormDefaultValues'
+import { IUserProfileEntity } from 'types'
 
 export const PortfolioForm = () => {
     const {
         formState: { errors },
-    } = useForm<IUserProfileEntity1>({
+    } = useForm<IUserProfileEntity>({
         resolver: yupResolver(portfolioForm),
         defaultValues,
     })
