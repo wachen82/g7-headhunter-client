@@ -16,13 +16,7 @@ export const uploadCsvFile = async (csvFile: string, setErrors: (errors: ErrorCs
         }
         const jsonResponse = await response.json();
         if (jsonResponse && jsonResponse.errors) {
-            if (jsonResponse.errors[0].message === "Błędne nagłówek") {
-                console.log(jsonResponse)
-                setErrors(jsonResponse)
-            } else {
             setErrors(jsonResponse.errors);
-            console.error("Errors during CSV validation:", jsonResponse.errors);
-            }
         } else {
             console.log("CSV file is ready to be saved", jsonResponse.errors);
             await saveCsv(jsonResponse);
