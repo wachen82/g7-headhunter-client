@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <ResetPasswordEmailPage />,
     },
     {
-        path: routes.setNewPwd.replace('{token}', 'tu-bedzie-token'),
+        path: routes.setNewPassword,
         element: <ResetPasswordPage />,
     },
     {
