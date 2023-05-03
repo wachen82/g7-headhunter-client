@@ -4,6 +4,6 @@ export const routes = {
     signUp: '/sign-up',
     admin: '/admin',
     resetPassword: '/reset-password',
-    setNewPwd: '/reset-password/{token}',
+    setNewPassword: '/reset-password/:token',
     notFound: '*',
 }
