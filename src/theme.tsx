@@ -1,6 +1,4 @@
 import { createTheme } from '@mui/material/styles'
-import { Simulate } from 'react-dom/test-utils'
-import input = Simulate.input
 
 const theme = createTheme({
     components: {
@@ -28,20 +26,15 @@ const theme = createTheme({
 
     palette: {
         primary: {
-            main: '#e02735', //kolor buttona
+            main: '#e02735', // kolor tła buttonów i gwiazdek
         },
         secondary: {
             main: '#222224', //tło
             light: '#292A2B', //tło inputów
-            contrastText: '#7E7E7E', // kolor tekstu w inputach, ikonki kiedy brak zdj "do rozmowy"
+            contrastText: '#7E7E7E', //kolor tekstu w inputach logowania
         },
         text: {
-            primary: '#F7F7F7', //kolor linków (zapomniałeś hasła)
-            secondary: '#7E7E7E', //kolor tekstu w inputach logowania
-        },
-        background: {
-            default: '#7E7E7E',
-            paper: '#1E1E1F',
+            primary: '#F7F7F7', // kolor główny - biała czcionka
         },
         grey: {
             100: '#CFCFCF', // kolor czcionki szarej
@@ -58,7 +51,13 @@ const theme = createTheme({
             main: '#0B8BD4', // kolor czcionki linków
             light: '#C92929', // kolor podkreślenia w menu hr
             dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
+
         },
+        background: {
+            default: '#7E7E7E',
+            paper: '#1E1E1F',
+        },
+
     },
 })
 
