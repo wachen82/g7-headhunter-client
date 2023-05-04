@@ -27,12 +27,11 @@ export const CustomSnackBar = ({
             setAction(false)
         }
     }
-
     return (
         <Snackbar
             onClose={handleClose}
             open={actionState}
-            autoHideDuration={4000}
+            autoHideDuration={5000}
         >
             <Alert onClose={handleClose} severity={type as AlertColor}>
                 {message}
