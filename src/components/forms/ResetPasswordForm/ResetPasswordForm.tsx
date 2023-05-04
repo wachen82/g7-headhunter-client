@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
-import { logInSchema } from './log-in.shema'
 import axios, { isAxiosError } from 'axios'
+import { resetPasswordScheme } from './reset-password.shema'
 import { FormValues, SnackBarEnum } from '../../../types/formValues'
 import { apiUrl } from '../../../config/api'
 import { ENDPOINTS } from '../../../services/endpoints/endpoints'
 import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
 import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm'
+import { resetPasswordData } from './reset-password-data'
 import { useSnackBar } from '../../../hooks/useSnackBar'
-import { loginDataArr } from './login-data'
+import { routes } from '../../../routes/routesMap'
 
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false)
+    const { token } = useParams<string>()
     const {
         snackBarMessage,
         snackBarType,
@@ -20,10 +24,18 @@ export const LoginForm = () => {
         showSnackBar,
         hideSnackBar,
     } = useSnackBar()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!isSnackBarOpen && isFormSubmitted) {
+            navigate(routes.signIn, { replace: true })
+        }
+    }, [isFormSubmitted, isSnackBarOpen])
 
     const defaultValues = {
-        email: '',
+        token,
         password: '',
+        passwordConfirmation: '',
     }
 
     const {
@@ -32,33 +44,29 @@ export const LoginForm = () => {
         reset,
         formState: { errors },
     } = useForm<FormValues>({
-        resolver: yupResolver(logInSchema),
+        resolver: yupResolver(resetPasswordScheme),
         defaultValues,
     })
 
     const onSubmit = async (data: FormValues): Promise<void> => {
         try {
-            const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
-                method: 'POST',
-                data: data,
+            delete data.passwordConfirmation
+            const url = `${apiUrl}${ENDPOINTS.updatePassword}`
+            await axios(url, {
+                method: 'PATCH',
+                data,
             })
-            if (res.data.role === 'Admin') {
-                showSnackBar(
-                    'Zalogowałeś się poprawnie jako Admin',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-            } else if (!res.data.active) {
-                showSnackBar(
-                    'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-                reset(defaultValues)
-            }
+            showSnackBar(
+                'Hasło zmienione pomyślnie. Zostaniesz przekierowany na stronę główną',
+                SnackBarEnum.SUCCESS_MESSAGE
+            )
+            reset(defaultValues)
+            setIsFormSubmitted(true)
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar('Taki użytkownik nie jest zarejestrowany')
+                showSnackBar('Nie udało się ustawić nowego hasła. Błędny token')
             } else {
-                showSnackBar('Wystąpił niespodziewany błąd')
+                showSnackBar('Nie udało się ustawić nowego hasła')
             }
         }
     }
@@ -70,9 +78,8 @@ export const LoginForm = () => {
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
-                additionalFormInfo={true}
-                dataFormArr={loginDataArr}
-                buttonText="Zaloguj się"
+                dataFormArr={resetPasswordData}
+                buttonText="Ustaw nowe hasło"
             />
             {isSnackBarOpen && (
                 <CustomSnackBar
