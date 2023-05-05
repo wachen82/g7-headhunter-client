@@ -6,7 +6,7 @@ interface ErrorWithField extends ErrorCsv {
     message: string
 }
 
-type ErrorOrErrorWithField = ErrorCsv | ErrorWithField
+export type ErrorOrErrorWithField = ErrorCsv | ErrorWithField
 
 export interface ErrorCsv {
     email?: { row: number; message: string }
