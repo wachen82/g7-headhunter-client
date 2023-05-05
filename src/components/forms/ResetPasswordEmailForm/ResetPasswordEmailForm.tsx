@@ -2,7 +2,6 @@ import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { Box } from '@mui/material'
-import { logInSchema } from './log-in.shema'
 import axios, { isAxiosError } from 'axios'
 import { FormValues, SnackBarEnum } from '../../../types/formValues'
 import { apiUrl } from '../../../config/api'
@@ -10,9 +9,10 @@ import { ENDPOINTS } from '../../../services/endpoints/endpoints'
 import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
 import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm'
 import { useSnackBar } from '../../../hooks/useSnackBar'
-import { loginDataArr } from './login-data'
+import { resetPasswordEmailScheme } from './reset-password-email.scheme'
+import { resetPasswordEmailData } from './reset-password-email-data'
 
-export const LoginForm = () => {
+export const ResetPasswordEmailForm = () => {
     const {
         snackBarMessage,
         snackBarType,
@@ -20,45 +20,36 @@ export const LoginForm = () => {
         showSnackBar,
         hideSnackBar,
     } = useSnackBar()
-
     const defaultValues = {
         email: '',
-        password: '',
     }
 
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm<FormValues>({
-        resolver: yupResolver(logInSchema),
+        resolver: yupResolver(resetPasswordEmailScheme),
         defaultValues,
     })
 
     const onSubmit = async (data: FormValues): Promise<void> => {
         try {
-            const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
+            await axios(`${apiUrl}${ENDPOINTS.resetPassword}`, {
                 method: 'POST',
                 data: data,
             })
-            if (res.data.role === 'Admin') {
-                showSnackBar(
-                    'Zalogowałeś się poprawnie jako Admin',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-            } else if (!res.data.active) {
-                showSnackBar(
-                    'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-                reset(defaultValues)
-            }
+            showSnackBar(
+                'Wysłano link do resetu hasła na podany email',
+                SnackBarEnum.SUCCESS_MESSAGE
+            )
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar('Taki użytkownik nie jest zarejestrowany')
+                showSnackBar('Nie znaleziono użytkownika o podanym mailu')
             } else {
-                showSnackBar('Wystąpił niespodziewany błąd')
+                showSnackBar(
+                    'Wysłanie linku nie powiodło się. Spróbuj ponownie'
+                )
             }
         }
     }
@@ -70,9 +61,8 @@ export const LoginForm = () => {
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
-                additionalFormInfo={true}
-                dataFormArr={loginDataArr}
-                buttonText="Zaloguj się"
+                dataFormArr={resetPasswordEmailData}
+                buttonText="Przypomnij hasło"
             />
             {isSnackBarOpen && (
                 <CustomSnackBar
