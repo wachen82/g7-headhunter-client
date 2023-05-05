@@ -47,6 +47,7 @@ export const LoginForm = () => {
             const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
                 method: 'POST',
                 data: data,
+                withCredentials: true,
             })
             switch (res.data.role) {
                 case 'Admin':
