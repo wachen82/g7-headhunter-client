@@ -1,28 +1,25 @@
-import React, {useState} from 'react'
-import {yupResolver} from '@hookform/resolvers/yup'
-import {useForm} from 'react-hook-form'
-import {Form} from 'react-router-dom'
-import {
-    Box,
-    Button,
-    FormControl,
-    FormHelperText,
-    Input,
-    InputLabel,
-    styled,
-} from '@mui/material'
-import {hrSchema} from './hr-schema'
-import theme from '../../../theme'
-import {HrFormValues} from '../../../types/hrFormValues'
-import {apiUrl} from "../../../config/api";
-import {CustomSnackBar} from "../../common/SnackBar/CustomSnackBar";
-
-const StyledButton = styled(Button)({
-    textTransform: 'none',
-})
+import React from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { Box } from '@mui/material'
+import { hrSchema } from './hr-schema'
+import { HrFormValues } from '../../../types/hrFormValues'
+import { useSnackBar } from '../../../hooks/useSnackBar'
+import { apiUrl } from '../../../config/api'
+import { ENDPOINTS } from '../../../services/endpoints/endpoints'
+import { SnackBarEnum } from '../../../types/formValues'
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
+import { HrDataArr } from './hr-data'
+import { CustomHrForm } from '../../common/CustomHrForm/CustomHrForm'
 
 export const HrForm = () => {
-    const [isWrongData, setIsWrongData] = useState<boolean>(false)
+    const {
+        snackBarMessage,
+        snackBarType,
+        isSnackBarOpen,
+        showSnackBar,
+        hideSnackBar,
+    } = useSnackBar()
 
     const defaultValues = {
         email: '',
@@ -34,186 +31,53 @@ export const HrForm = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        reset,
+        formState: { errors },
     } = useForm<HrFormValues>({
         resolver: yupResolver(hrSchema),
         defaultValues,
     })
 
-    const onSubmit = async (data: HrFormValues): Promise<any> => {
+    const onSubmit = async (data: HrFormValues): Promise<void> => {
         try {
-            const response = await fetch(`${apiUrl}/admin/register-hr`, {
+            const response = await fetch(`${apiUrl}${ENDPOINTS.sendHrForm}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             })
-            setIsWrongData(!response.ok)
-
-        } catch (err) {
-            throw new Error('Unexpected error occurred')
+            if (!response.ok) {
+                showSnackBar(
+                    'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+                    SnackBarEnum.ERROR_MESSAGE
+                )
+            }
+            const res = await response.json()
+            showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE)
+            reset(defaultValues)
+        } catch (e) {
+            showSnackBar(
+                'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+                SnackBarEnum.ERROR_MESSAGE
+            )
         }
     }
 
     return (
-        <Box width="400px" maxWidth="90%" sx={{margin: "0 auto"}}>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <FormControl
-                    sx={{
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.email)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            padding: ".5rem 0",
-                        }}
-                        htmlFor="email"
-                    >
-                        Email
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            backgroundColor: theme.palette.secondary.main,
-                            padding: ".5rem 1rem 0",
-                            marginBottom: ".5rem"
-                        }}
-                        disableUnderline={true}
-                        id="email"
-                        {...register('email')}
-                        type="email"
-                    />
-                    <FormHelperText>
-                        {errors.email?.message}
-                    </FormHelperText>
-                </FormControl>
-                <FormControl
-                    sx={{
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.fullName)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            padding: ".5rem 0",
-                        }}
-                        htmlFor="fullName"
-                    >
-                        Imię i nazwisko
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            backgroundColor: theme.palette.secondary.main,
-                            padding: ".5rem 1rem 0",
-                            marginBottom: ".5rem"
-                        }}
-                        disableUnderline={true}
-                        id="password"
-                        {...register('fullName')}
-                        type="fullName"
-                    />
-                    <FormHelperText
-                    >
-                        {errors.fullName?.message}
-                    </FormHelperText>
-                </FormControl>
-                <FormControl
-                    sx={{
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.company)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            padding: ".5rem 0",
-                        }}
-                        htmlFor="company"
-                    >
-                        Nazwa firmy
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            backgroundColor: theme.palette.secondary.main,
-                            padding: ".5rem 1rem 0",
-                            marginBottom: ".5rem"
-                        }}
-                        disableUnderline={true}
-                        id="company"
-                        {...register('company')}
-                        type="company"
-                    />
-                    <FormHelperText>
-                        {errors.company?.message}
-                    </FormHelperText>
-                </FormControl>
-                <FormControl
-                    sx={{
-                        backgroundColor: theme.palette.secondary.light,
-                    }}
-                    error={Boolean(errors.email)}
-                    variant="outlined"
-                    fullWidth
-                >
-                    <InputLabel
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            padding: ".5rem 0",
-                        }}
-                        htmlFor="maxReservedStudents"
-                    >
-                        Limit dodawania osób
-                    </InputLabel>
-                    <Input
-                        sx={{
-                            color: theme.palette.secondary.contrastText,
-                            backgroundColor: theme.palette.secondary.main,
-                            padding: ".5rem 1rem 0",
-                            marginBottom: ".5rem"
-                        }}
-                        disableUnderline={true}
-                        id="maxReservedStudents"
-                        {...register('maxReservedStudents')}
-                        type="maxReservedStudents"
-                    />
-                    <FormHelperText>
-                        {errors.maxReservedStudents?.message}
-                    </FormHelperText>
-                </FormControl>
-
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: "1rem",
-                    }}
-                >
-                    <StyledButton
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-                        Dodaj headhuntera
-                    </StyledButton>
-                </Box>
-            </Form>
-            {isWrongData && (
+        <Box width="400px" maxWidth="90%" sx={{ margin: '0 auto' }}>
+            <CustomHrForm
+                onSubmit={onSubmit}
+                register={register}
+                handleSubmit={handleSubmit}
+                errors={errors}
+                dataFormArr={HrDataArr}
+                buttonText="Dodaj headhuntera"
+            />
+            {isSnackBarOpen && (
                 <CustomSnackBar
-                    setAction={setIsWrongData}
-                    actionState={isWrongData}
-                    type="error"
-                    message="Niestety nie udało się zarejestrować head huntera, spróbuj ponownie później"
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
                 />
             )}
         </Box>
