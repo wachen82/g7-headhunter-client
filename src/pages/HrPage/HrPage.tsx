@@ -1,9 +1,11 @@
 import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
 import { useAppSelector } from '../../hooks/reduxHooks'
+import { useParams } from 'react-router-dom'
 
 export const HrPage = () => {
     useTitle('Strona HR')
+    const { id } = useParams<string>()
     const user = useAppSelector((state) => state.user)
 
     if (!user) {
@@ -13,7 +15,7 @@ export const HrPage = () => {
     return (
         <>
             <UsersAppBar avatarUrl={'avatarUrl'} userName={'imię nazwisko'} />
-            {user._id} - {user.role}
+            {id} - {user._id} - {user.role}
         </>
     )
 }
