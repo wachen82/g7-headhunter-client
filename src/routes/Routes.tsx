@@ -6,6 +6,8 @@ import { AdminPage } from '../pages/AdminPage/AdminPage'
 import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage'
 import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage'
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage'
+import { UserPage } from '../pages/UserPage/UserPage'
+import { HrPage } from '../pages/HrPage/HrPage'
 
 const router = createBrowserRouter([
     {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
     {
         path: routes.admin,
         element: <AdminPage />,
+    },
+    {
+        path: routes.user,
+        element: <UserPage />,
+    },
+    {
+        path: routes.hr,
+        element: <HrPage />,
     },
     {
         path: routes.resetPassword,
