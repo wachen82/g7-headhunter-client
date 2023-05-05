@@ -5,6 +5,7 @@ import theme from '../../../../theme'
 
 interface Props {
     handleClose: (event: Event | React.SyntheticEvent) => void
+    onClick?: (data: React.MouseEvent) => void
     text: string
     url: string
 }
@@ -19,6 +20,7 @@ export const MenuLink = (props: Props) => {
                     width: '100%',
                     textAlign: 'left',
                 }}
+                onClick={props.onClick}
             >
                 <Link
                     href={url}

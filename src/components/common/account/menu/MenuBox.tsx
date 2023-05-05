@@ -13,6 +13,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import theme from '../../../../theme'
 import { MenuLink } from './MenuLink'
 import { routes } from '../../../../routes/routesMap'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks'
+import { setLogout } from '../../../../state/authSlice'
+import { persistor } from '../../../../app/store'
 
 interface Props {
     avatarUrl: string
@@ -24,6 +27,15 @@ export const MenuBox = (props: Props) => {
 
     const [open, setOpen] = React.useState(false)
     const anchorRef = React.useRef<HTMLButtonElement>(null)
+    const dispatch = useAppDispatch()
+    const handleLogout = async () => {
+        await dispatch(setLogout())
+
+        persistor.pause()
+        persistor.flush().then(() => {
+            return persistor.purge()
+        })
+    }
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen)
@@ -136,6 +148,7 @@ export const MenuBox = (props: Props) => {
                                         url={'#'}
                                     />
                                     <MenuLink
+                                        onClick={handleLogout}
                                         handleClose={handleClose}
                                         text={'Wyloguj'}
                                         url={routes.home}
