@@ -1,6 +1,6 @@
 import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useAppSelector } from '../../hooks/reduxHooks'
 
 export const UserPage = () => {
     useTitle('Strona Kursanta')
