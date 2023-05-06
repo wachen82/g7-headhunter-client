@@ -1,11 +1,15 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import { routes } from './routesMap'
-import { LoginPage } from '../pages/LoginPage/LoginPage'
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
-import { AdminPage } from '../pages/AdminPage/AdminPage'
-import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage'
-import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage'
-import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage'
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Navigate,
+} from 'react-router-dom';
+import { routes } from './routesMap';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
+import { AdminPage } from '../pages/AdminPage/AdminPage';
+import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage';
+import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage';
+import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage';
 
 const router = createBrowserRouter([
     {
@@ -36,8 +40,8 @@ const router = createBrowserRouter([
         path: routes.notFound,
         element: <NotFoundPage />,
     },
-])
+]);
 
 export const AppRoutes = () => {
-    return <RouterProvider router={router} />
-}
+    return <RouterProvider router={router} />;
+};

@@ -1,4 +1,4 @@
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 export const resetPasswordScheme = yup.object().shape({
     password: yup
@@ -9,4 +9,4 @@ export const resetPasswordScheme = yup.object().shape({
         .string()
         .nullable()
         .oneOf([yup.ref('password'), null], 'Hasła muszą być takie same'),
-})
+});
