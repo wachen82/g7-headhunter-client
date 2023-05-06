@@ -11,13 +11,12 @@ interface Props {
 export const UsersAppBar = (props: Props) => {
     const { userName, avatarUrl } = props
     return (
-        <Box sx={{ flexGrow: 1, paddingLeft: 0 }}>
+        <Box sx={{ margin: '0 auto 26px' }}>
             <AppBar
                 position="static"
                 sx={{
                     backgroundColor: theme.palette.grey['800'],
                     boxShadow: '0',
-                    marginBottom: '26px',
                 }}
             >
                 <Toolbar
@@ -27,7 +26,7 @@ export const UsersAppBar = (props: Props) => {
                 >
                     <Container
                         sx={{
-                            maxWidth: '80%',
+                            width: '80%',
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-between',
