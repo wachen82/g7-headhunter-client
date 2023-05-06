@@ -3,10 +3,9 @@ import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
 import { InfoBox } from '../../components/common/account/info/InfoBox'
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { PortfolioBar } from '../../components/common/StudentPortfolio/PortfolioBar'
 import { PortfolioContent } from '../../components/common/StudentPortfolio/PortfolioContent'
-import theme from '../../theme'
 import { PortfolioGrade } from '../../components/common/StudentPortfolio/PortfolioGrade'
 
 export const StudentPage = () => {
@@ -19,6 +18,7 @@ export const StudentPage = () => {
         phoneNumber,
         mailAddress,
         about,
+        //grades - dodać cząstkowe oceny
         portfolioContent,
     ] = [
         'https://scontent-vie1-1.xx.fbcdn.net/v/t1.6435-9/118124271_10224604112957191_6232217390682151742_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGZRrCSGbBKnDhFLPrmFDMTS0hGwM3YatVLSEbAzdhq1b-F83hHow85cjsPBJIU6GQ&_nc_ohc=LqtPhPwTXoIAX95j5tZ&_nc_ht=scontent-vie1-1.xx&oh=00_AfCPE96i_mxSjn_VTfNdXHh1QkTiVAsn-2h1PlfuPOCM-A&oe=647CDCDE',
@@ -87,15 +87,19 @@ export const StudentPage = () => {
                         >
                             <PortfolioGrade
                                 gradeName={'Ocena przejścia kursu'}
+                                grade={5}
                             />
                             <PortfolioGrade
                                 gradeName={`Ocena aktywności i zaangażowania na kursie`}
+                                grade={4}
                             />
                             <PortfolioGrade
                                 gradeName={'Ocena kodu w projekcie własnym'}
+                                grade={5}
                             />
                             <PortfolioGrade
                                 gradeName={'Ocena pracy w zespole w Scrum'}
+                                grade={4}
                             />
                         </Box>
                         <PortfolioBar
