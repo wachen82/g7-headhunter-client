@@ -20,7 +20,7 @@ export const InfoBox = (props: Props) => {
         props
 
     return (
-        <Box width="250px" height="718px" sx={{ margin: '0 auto' }}>
+        <Box sx={{ width: '250px', height: '718px' }}>
             <Box
                 sx={{
                     display: 'flex',
