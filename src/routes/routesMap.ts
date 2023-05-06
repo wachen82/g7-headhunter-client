@@ -6,4 +6,4 @@ export const routes = {
     resetPassword: '/reset-password',
     setNewPassword: '/reset-password/:token',
     notFound: '*',
-}
+};

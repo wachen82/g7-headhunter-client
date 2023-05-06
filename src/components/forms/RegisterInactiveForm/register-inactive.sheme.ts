@@ -1,4 +1,4 @@
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 export const registerInactiveSchema = yup.object().shape({
     email: yup
@@ -9,4 +9,4 @@ export const registerInactiveSchema = yup.object().shape({
         .string()
         .required('Hasło jest wymagane')
         .min(8, 'Hasło musi mieć co najmniej 8 znaków'),
-})
+});
