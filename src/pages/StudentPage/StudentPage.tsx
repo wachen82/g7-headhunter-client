@@ -3,9 +3,11 @@ import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
 import { InfoBox } from '../../components/common/account/info/InfoBox'
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { PortfolioBar } from '../../components/common/StudentPortfolio/PortfolioBar'
 import { PortfolioContent } from '../../components/common/StudentPortfolio/PortfolioContent'
+import theme from '../../theme'
+import { PortfolioGrade } from '../../components/common/StudentPortfolio/PortfolioGrade'
 
 export const StudentPage = () => {
     useTitle('MegaK HeadHunter - Kursant i jego CV')
@@ -71,6 +73,31 @@ export const StudentPage = () => {
                         }}
                     >
                         <PortfolioBar sectionName={'Oceny'} />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'left',
+                                backgroundColor: '#222324',
+                                width: '1176px',
+                                height: '110px',
+                                padding: '10px 0 0 26px',
+                                margin: '0 0 12px 4px',
+                            }}
+                        >
+                            <PortfolioGrade
+                                gradeName={'Ocena przejścia kursu'}
+                            />
+                            <PortfolioGrade
+                                gradeName={`Ocena aktywności i zaangażowania na kursie`}
+                            />
+                            <PortfolioGrade
+                                gradeName={'Ocena kodu w projekcie własnym'}
+                            />
+                            <PortfolioGrade
+                                gradeName={'Ocena pracy w zespole w Scrum'}
+                            />
+                        </Box>
                         <PortfolioBar
                             sectionName={
                                 'Oczekiwanie w stosunku do zatrudnienia'
