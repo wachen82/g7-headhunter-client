@@ -1,9 +1,10 @@
 import React from 'react'
-import { Avatar, Box, Link, Typography } from '@mui/material'
+import { Avatar, Box } from '@mui/material'
 import theme from '../../../../../src/theme'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { InfoContact } from './InfoContact'
+import { InfoName } from './InfoName'
+import { InfoAbout } from './InfoAbout'
+import { InfoButton } from './InfoButton'
 
 interface Props {
     userName: string
@@ -25,6 +26,7 @@ export const InfoBox = (props: Props) => {
                     display: 'flex',
                     flexDirection: 'column',
                     backgroundColor: theme.palette.secondary.light,
+                    paddingBottom: '22px',
                 }}
             >
                 <Avatar
@@ -36,41 +38,8 @@ export const InfoBox = (props: Props) => {
                     }}
                     src={avatarUrl}
                 />
-                <Typography
-                    sx={{
-                        fontSize: '24px',
-                        lineHeight: '39px',
-                        color: theme.palette.text.primary,
-                        margin: '0 auto',
-                        textTransform: 'capitalize',
-                        fontWeight: 'light',
-                    }}
-                >
-                    {userName}
-                </Typography>
+                <InfoName userName={userName} gitHubName={gitHubName} />
 
-                <Typography
-                    sx={{
-                        fontSize: '16px',
-                        lineHeight: '27px',
-                        textAlign: 'center',
-                        textTransform: 'lowercase',
-                        fontWeight: 'normal',
-                    }}
-                >
-                    <Link
-                        href={`https://github.com/${gitHubName}`}
-                        target={'_blank'}
-                        sx={{
-                            textDecoration: 'none',
-                            color: theme.palette.info.main,
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faGithub} /> {gitHubName}
-                    </Link>
-                </Typography>
-
-                {/*telefon, mail i opis*/}
                 <Box
                     sx={{
                         display: 'flex',
@@ -79,78 +48,19 @@ export const InfoBox = (props: Props) => {
                         margin: '10px 25px',
                     }}
                 >
-                    {/*telefon*/}
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                        }}
-                    >
-                        <Typography
-                            sx={{
-                                fontSize: '16px',
-                                lineHeight: '27px',
-                                color: theme.palette.grey['400'],
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faPhone} />
-                        </Typography>
-                        <Typography
-                            sx={{
-                                marginLeft: '10px',
-                                color: theme.palette.text.primary,
-                                fontWeight: 'lighter',
-                            }}
-                        >
-                            {phoneNumber}
-                        </Typography>
-                    </Box>
+                    <InfoContact
+                        phoneNumber={phoneNumber}
+                        mailAddress={mailAddress}
+                    />
 
-                    {/*mail*/}
-                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                        <Typography
-                            sx={{
-                                fontSize: '16px',
-                                lineHeight: '27px',
-                                color: theme.palette.grey['400'],
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faEnvelope} />
-                        </Typography>
-                        <Typography
-                            sx={{
-                                marginLeft: '10px',
-                                color: theme.palette.text.primary,
-                                fontWeight: 'lighter',
-                            }}
-                        >
-                            {mailAddress}
-                        </Typography>
-                    </Box>
-
-                    {/*o mnie*/}
-                    <Box>
-                        <Typography
-                            sx={{
-                                fontSize: '16px',
-                                lineHeight: '27px',
-                                color: theme.palette.grey['400'],
-                                marginTop: '10px',
-                            }}
-                        >
-                            O mnie
-                        </Typography>
-                        <Typography
-                            sx={{
-                                margin: '0 25px 10px 0',
-                                color: theme.palette.text.primary,
-                                fontWeight: 'lighter',
-                            }}
-                        >
-                            {about}
-                        </Typography>
-                    </Box>
+                    <InfoAbout about={about} />
                 </Box>
+
+                <InfoButton
+                    buttonUrl={'#'}
+                    buttonText={'Brak zainteresowania'}
+                />
+                <InfoButton buttonUrl={'#'} buttonText={'Zatrudniony'} />
             </Box>
         </Box>
     )
