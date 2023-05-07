@@ -14,7 +14,6 @@ import { loginDataArr } from './login-data'
 import { useAppDispatch } from '../../../hooks/reduxHooks'
 import { setLogin } from '../../../state/authSlice'
 import { useNavigate } from 'react-router-dom'
-import { routes } from '../../../routes/routesMap'
 
 export const LoginForm = () => {
     const dispatch = useAppDispatch()
@@ -49,6 +48,9 @@ export const LoginForm = () => {
                 data: data,
                 withCredentials: true,
             })
+            dispatch(setLogin({ user: res.data }))
+            reset(defaultValues)
+
             switch (res.data.role) {
                 case 'Admin':
                     showSnackBar(
@@ -75,9 +77,6 @@ export const LoginForm = () => {
                 default:
                     showSnackBar('Błąd logowania, spróbuj ponownie.')
             }
-
-            dispatch(setLogin({ user: res.data }))
-            reset(defaultValues)
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 if (err.response?.status === 403) {
