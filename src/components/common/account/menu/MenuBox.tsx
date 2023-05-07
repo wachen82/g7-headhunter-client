@@ -16,6 +16,9 @@ import { routes } from '../../../../routes/routesMap'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks'
 import { setLogout } from '../../../../state/authSlice'
 import { persistor } from '../../../../app/store'
+import axios from 'axios'
+import { apiUrl } from '../../../../config/api'
+import { ENDPOINTS } from '../../../../services/endpoints/endpoints'
 
 interface Props {
     avatarUrl: string
@@ -29,7 +32,12 @@ export const MenuBox = (props: Props) => {
     const anchorRef = React.useRef<HTMLButtonElement>(null)
     const dispatch = useAppDispatch()
     const handleLogout = async () => {
-        await dispatch(setLogout())
+        await axios(`${apiUrl}${ENDPOINTS.signOut}`, {
+            method: 'GET',
+            withCredentials: true,
+        })
+
+        dispatch(setLogout())
 
         persistor.pause()
         persistor.flush().then(() => {
