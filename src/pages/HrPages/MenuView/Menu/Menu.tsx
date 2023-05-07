@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Box } from '@mui/material'
 import { BasicPanel } from './BasicPanel'
-import { HrPage1 } from '../HrPage1/HrPage1'
-import { HrPage2 } from '../HrPage2/HrPage2'
+import { AvailableStudents } from '../AvailableStudents/AvailableStudents'
+import { ForConversation } from '../ForConversation/ForConversation'
 import { CustomTabs } from './CustomTabs'
 
 export const Menu = () => {
@@ -40,10 +40,10 @@ export const Menu = () => {
                 />
             </Box>
             <BasicPanel value={value} index={0}>
-                <HrPage1 />
+                <AvailableStudents />
             </BasicPanel>
             <BasicPanel value={value} index={1}>
-                <HrPage2 />
+                <ForConversation />
             </BasicPanel>
         </Box>
     )

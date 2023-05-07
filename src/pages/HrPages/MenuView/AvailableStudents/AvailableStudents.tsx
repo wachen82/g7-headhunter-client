@@ -1,11 +1,11 @@
 import { ButtonsAndInputView } from '../ButtonAndInputView/ButtonsAndInputView'
-import { MainPage2 } from './MainPage2'
+import { AvailableStudentsMain } from './AvailableStudentsMain'
 
-export const HrPage2 = () => {
+export const AvailableStudents = () => {
     return (
         <>
             <ButtonsAndInputView />
-            <MainPage2 />
+            <AvailableStudentsMain />
         </>
     )
 }

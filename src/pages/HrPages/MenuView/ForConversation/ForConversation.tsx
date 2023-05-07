@@ -1,11 +1,11 @@
 import { ButtonsAndInputView } from '../ButtonAndInputView/ButtonsAndInputView'
-import { MainPage1 } from './MainPage1'
+import { ForConversationMain } from './ForConversationMain'
 
-export const HrPage1 = () => {
+export const ForConversation = () => {
     return (
         <>
             <ButtonsAndInputView />
-            <MainPage1 />
+            <ForConversationMain />
         </>
     )
 }
