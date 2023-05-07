@@ -21,7 +21,6 @@ export const StudentPage = () => {
         phone,
         email,
         bio,
-        //grades - dodać cząstkowe oceny
         workExpectations,
         portfolioContent,
         portfolioUrl,
@@ -51,7 +50,7 @@ export const StudentPage = () => {
         ],
         [
             'https://Loremipsum/dolor/sit/amet',
-            'https://Loremipsum/dolor/sit/amet',
+            'https://Loremipsum/dolor/sit/amet2',
         ],
     ]
 
@@ -151,7 +150,7 @@ export const StudentPage = () => {
                             }}
                         >
                             {portfolioUrl.map((link) => (
-                                <PortfolioLink url={link} />
+                                <PortfolioLink url={link} key={link} />
                             ))}
                         </Box>
 
@@ -169,7 +168,7 @@ export const StudentPage = () => {
                             }}
                         >
                             {scrumUrl.map((link) => (
-                                <PortfolioLink url={link} />
+                                <PortfolioLink url={link} key={link} />
                             ))}
                         </Box>
 
@@ -185,7 +184,7 @@ export const StudentPage = () => {
                             }}
                         >
                             {finalProjectUrl.map((link) => (
-                                <PortfolioLink url={link} />
+                                <PortfolioLink url={link} key={link} />
                             ))}
                         </Box>
                     </Box>

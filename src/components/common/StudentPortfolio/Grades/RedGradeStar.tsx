@@ -4,13 +4,12 @@ import theme from '../../../../theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
-export const GradeStar = () => {
+export const RedGradeStar = () => {
     return (
         <Typography
             sx={{
                 fontSize: '20px',
-                // color: theme.palette.primary.main, //red
-                color: theme.palette.grey['400'], //grey
+                color: theme.palette.primary.main,
             }}
         >
             <FontAwesomeIcon icon={faStar} />
