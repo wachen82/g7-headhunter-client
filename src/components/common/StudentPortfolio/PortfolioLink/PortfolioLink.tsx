@@ -15,10 +15,8 @@ export const PortfolioLink = (props: Props) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'left',
-                backgroundColor: '#222324',
-                width: '1176px',
-                padding: '17px 26px 15px 26px',
-                margin: '0 0 12px 4px',
+                paddingBottom: '11px',
+                '&:last-child': { paddingBottom: '19px' },
             }}
         >
             <Typography
