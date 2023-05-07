@@ -1,12 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { UserRespons, HrRespons, AdminRespons } from 'types'
 
-interface User {
-    _id: string
-    email: string
-    role: string
-}
 interface AuthState {
-    user: User | null
+    user: UserRespons | HrRespons | AdminRespons | null
 }
 
 const initialState: AuthState = {

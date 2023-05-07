@@ -55,14 +55,14 @@ export const LoginForm = () => {
                         'Zalogowałeś się poprawnie jako Admin',
                         SnackBarEnum.SUCCESS_MESSAGE
                     )
-                    navigate(routes.admin)
+                    navigate(`/admin/${res.data._id}`)
                     break
                 case 'Kursant':
                     showSnackBar(
                         'Zalogowałeś się poprawnie jako Kursant',
                         SnackBarEnum.SUCCESS_MESSAGE
                     )
-                    navigate(routes.user)
+                    navigate(`/user/${res.data._id}`)
 
                     break
                 case 'HR':
@@ -70,7 +70,7 @@ export const LoginForm = () => {
                         'Zalogowałeś się poprawnie jako HR',
                         SnackBarEnum.SUCCESS_MESSAGE
                     )
-                    navigate(routes.hr)
+                    navigate(`/hr/${res.data._id}`)
                     break
                 default:
                     showSnackBar('Błąd logowania, spróbuj ponownie.')
