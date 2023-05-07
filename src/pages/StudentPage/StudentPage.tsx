@@ -3,10 +3,11 @@ import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
 import { InfoBox } from '../../components/common/account/info/InfoBox'
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { PortfolioBar } from '../../components/common/StudentPortfolio/PortfolioBar'
 import { PortfolioContent } from '../../components/common/StudentPortfolio/PortfolioContent'
-import { PortfolioGrade } from '../../components/common/StudentPortfolio/PortfolioGrade'
+import theme from '../../theme'
+import { GradesBox } from '../../components/common/StudentPortfolio/Grades/GradesBox'
 
 export const StudentPage = () => {
     useTitle('MegaK HeadHunter - Kursant i jego CV')
@@ -73,40 +74,50 @@ export const StudentPage = () => {
                         }}
                     >
                         <PortfolioBar sectionName={'Oceny'} />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'left',
-                                backgroundColor: '#222324',
-                                width: '1176px',
-                                height: '110px',
-                                padding: '10px 0 0 26px',
-                                margin: '0 0 12px 4px',
-                            }}
-                        >
-                            <PortfolioGrade
-                                gradeName={'Ocena przejścia kursu'}
-                                grade={5}
-                            />
-                            <PortfolioGrade
-                                gradeName={`Ocena aktywności i zaangażowania na kursie`}
-                                grade={4}
-                            />
-                            <PortfolioGrade
-                                gradeName={'Ocena kodu w projekcie własnym'}
-                                grade={5}
-                            />
-                            <PortfolioGrade
-                                gradeName={'Ocena pracy w zespole w Scrum'}
-                                grade={4}
-                            />
-                        </Box>
+                        <GradesBox />
                         <PortfolioBar
                             sectionName={
                                 'Oczekiwanie w stosunku do zatrudnienia'
                             }
                         />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'left',
+                                alignItems: 'center',
+                                backgroundColor: '#222324',
+                                width: '1176px',
+                                height: '41px',
+                                padding: '10px 0 0 26px',
+                                margin: '0 0 12px 4px',
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontSize: '14px',
+                                    lineHeight: '18px',
+                                    color: theme.palette.grey['100'],
+                                }}
+                            >
+                                Preferowane miejsce pracy
+                            </Typography>
+                            <Typography>
+                                Docelowe miasto, gdzie chce pracować kandydat
+                            </Typography>
+                            <Typography>Oczekiwany typ kontraktu</Typography>
+                            <Typography>
+                                Oczekiwane wynagrodzenie miesięczne netto
+                            </Typography>
+                            <Typography>
+                                Zgoda na odbycie bezpłatnych praktyk/stażu na
+                                początek
+                            </Typography>
+                            <Typography>
+                                Komercyjne doświadczenie w programowaniu
+                            </Typography>
+                        </Box>
+
                         <PortfolioBar sectionName={'Edukacja'} />
                         <PortfolioContent content={portfolioContent} />
                         <PortfolioBar sectionName={'Kursy'} />
