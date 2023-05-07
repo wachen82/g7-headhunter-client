@@ -15,7 +15,7 @@ import { MenuLink } from './MenuLink'
 import { routes } from '../../../../routes/routesMap'
 import { useAppDispatch } from '../../../../hooks/reduxHooks'
 import { setLogout } from '../../../../state/authSlice'
-import { persistor } from '../../../../app/store'
+import { clearPersistedState } from '../../../../app/store'
 import axios from 'axios'
 import { apiUrl } from '../../../../config/api'
 import { ENDPOINTS } from '../../../../services/endpoints/endpoints'
@@ -37,12 +37,8 @@ export const MenuBox = (props: Props) => {
             withCredentials: true,
         })
 
+        await clearPersistedState()
         dispatch(setLogout())
-
-        persistor.pause()
-        persistor.flush().then(() => {
-            return persistor.purge()
-        })
     }
 
     const handleToggle = () => {

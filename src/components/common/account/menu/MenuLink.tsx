@@ -5,7 +5,7 @@ import theme from '../../../../theme'
 
 interface Props {
     handleClose: (event: Event | React.SyntheticEvent) => void
-    onClick?: (data: React.MouseEvent) => void
+    onClick?: () => void
     text: string
     url: string
 }
