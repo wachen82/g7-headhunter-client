@@ -12,7 +12,7 @@ export const PortfolioContent = (props: Props) => {
             sx={{
                 backgroundColor: '#222324',
                 width: '1176px',
-                padding: '17px 26px',
+                padding: '17px 26px 31px',
                 margin: '0 0 12px 4px',
             }}
         >
