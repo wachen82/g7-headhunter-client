@@ -7,5 +7,6 @@ export const routes = {
     hr: '/hr/:id',
     resetPassword: '/reset-password',
     setNewPassword: '/reset-password/:token',
+    registerUser: '/register/:id/:token',
     notFound: '*',
 }
