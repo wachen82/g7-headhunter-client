@@ -10,6 +10,7 @@ import { AdminPage } from '../pages/AdminPage/AdminPage';
 import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage';
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage';
+import { HrPages } from '../pages/HrPages/HrPages';
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     {
         path: routes.admin,
         element: <AdminPage />,
+    },
+    {
+        path: routes.hrPage,
+        element: <HrPages />,
     },
     {
         path: routes.resetPassword,
