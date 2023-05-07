@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
-import theme from '../../../theme'
+import theme from '../../../../theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,7 +9,7 @@ interface Props {
     grade: number
 }
 
-export const PortfolioGrade = (props: Props) => {
+export const SingleGrade = (props: Props) => {
     const { gradeName, grade } = props
     let starColor
     switch (grade) {
