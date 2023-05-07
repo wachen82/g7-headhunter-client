@@ -2,7 +2,25 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { SingleExpectation } from './SingleExpectation'
 
-export const ExpectationsBox = () => {
+interface Props {
+    preferredWorkPlace: string
+    preferredCity: string
+    preferredContract: string
+    preferredSalary: number
+    freeInternship: string
+    experience: number
+}
+
+export const ExpectationsBox = (props: Props) => {
+    const {
+        preferredWorkPlace,
+        preferredCity,
+        preferredContract,
+        preferredSalary,
+        freeInternship,
+        experience,
+    } = props
+
     return (
         <Box
             sx={{
@@ -20,31 +38,31 @@ export const ExpectationsBox = () => {
         >
             <SingleExpectation
                 expectationName={'Preferowane miejsce pracy'}
-                userExpectation={'Biuro'}
+                userExpectation={preferredWorkPlace}
             />
             <SingleExpectation
                 expectationName={
                     'Docelowe miasto, gdzie chce pracować kandydat'
                 }
-                userExpectation={'Warszawa'}
+                userExpectation={preferredCity}
             />
             <SingleExpectation
                 expectationName={'Oczekiwany typ kontraktu'}
-                userExpectation={'Umowa o pracę'}
+                userExpectation={preferredContract}
             />
             <SingleExpectation
                 expectationName={'Oczekiwane wynagrodzenie miesięczne netto'}
-                userExpectation={'8 000 zł'}
+                userExpectation={`${preferredSalary} zł`}
             />
             <SingleExpectation
                 expectationName={
                     'Zgoda na odbycie bezpłatnych praktyk/stażu na początek'
                 }
-                userExpectation={'TAK'}
+                userExpectation={freeInternship}
             />
             <SingleExpectation
                 expectationName={'Komercyjne doświadczenie w programowaniu'}
-                userExpectation={'6 miesięcy'}
+                userExpectation={`${experience} miesięcy`}
             />
         </Box>
     )

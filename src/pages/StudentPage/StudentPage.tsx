@@ -20,6 +20,7 @@ export const StudentPage = () => {
         mailAddress,
         about,
         //grades - dodać cząstkowe oceny
+        workExpectations,
         portfolioContent,
     ] = [
         'https://scontent-vie1-1.xx.fbcdn.net/v/t1.6435-9/118124271_10224604112957191_6232217390682151742_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGZRrCSGbBKnDhFLPrmFDMTS0hGwM3YatVLSEbAzdhq1b-F83hHow85cjsPBJIU6GQ&_nc_ohc=LqtPhPwTXoIAX95j5tZ&_nc_ht=scontent-vie1-1.xx&oh=00_AfCPE96i_mxSjn_VTfNdXHh1QkTiVAsn-2h1PlfuPOCM-A&oe=647CDCDE',
@@ -28,8 +29,25 @@ export const StudentPage = () => {
         '+48 999 999 999',
         'xkrsx@gmail.com',
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet aperiam beatae cupiditate dignissimos explicabo illum laudantium magnam maxime modi nihil officiis provident reiciendis, sequi sit, tempora, ut voluptate!',
+        {
+            preferredWorkPlace: 'Biuro',
+            preferredCity: 'Warszawa',
+            preferredContract: 'Umowa o pracę',
+            preferredSalary: 8000,
+            freeInternship: 'TAK',
+            experience: 6,
+        },
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     ]
+
+    const {
+        preferredWorkPlace,
+        preferredCity,
+        preferredContract,
+        preferredSalary,
+        freeInternship,
+        experience,
+    } = workExpectations
 
     return (
         <main
@@ -80,7 +98,14 @@ export const StudentPage = () => {
                                 'Oczekiwanie w stosunku do zatrudnienia'
                             }
                         />
-                        <ExpectationsBox />
+                        <ExpectationsBox
+                            preferredWorkPlace={preferredWorkPlace}
+                            preferredCity={preferredCity}
+                            preferredContract={preferredContract}
+                            preferredSalary={preferredSalary}
+                            freeInternship={freeInternship}
+                            experience={experience}
+                        />
 
                         <PortfolioBar sectionName={'Edukacja'} />
                         <PortfolioContent content={portfolioContent} />
