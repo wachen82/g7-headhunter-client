@@ -3,11 +3,11 @@ import { useTitle } from '../../hooks/useTitle'
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
 import { InfoBox } from '../../components/common/account/info/InfoBox'
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { PortfolioBar } from '../../components/common/StudentPortfolio/PortfolioBar'
 import { PortfolioContent } from '../../components/common/StudentPortfolio/PortfolioContent'
-import theme from '../../theme'
 import { GradesBox } from '../../components/common/StudentPortfolio/Grades/GradesBox'
+import { ExpectationsBox } from '../../components/common/StudentPortfolio/Expectations/ExpectationsBox'
 
 export const StudentPage = () => {
     useTitle('MegaK HeadHunter - Kursant i jego CV')
@@ -80,43 +80,7 @@ export const StudentPage = () => {
                                 'Oczekiwanie w stosunku do zatrudnienia'
                             }
                         />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'left',
-                                alignItems: 'center',
-                                backgroundColor: '#222324',
-                                width: '1176px',
-                                height: '41px',
-                                padding: '10px 0 0 26px',
-                                margin: '0 0 12px 4px',
-                            }}
-                        >
-                            <Typography
-                                sx={{
-                                    fontSize: '14px',
-                                    lineHeight: '18px',
-                                    color: theme.palette.grey['100'],
-                                }}
-                            >
-                                Preferowane miejsce pracy
-                            </Typography>
-                            <Typography>
-                                Docelowe miasto, gdzie chce pracować kandydat
-                            </Typography>
-                            <Typography>Oczekiwany typ kontraktu</Typography>
-                            <Typography>
-                                Oczekiwane wynagrodzenie miesięczne netto
-                            </Typography>
-                            <Typography>
-                                Zgoda na odbycie bezpłatnych praktyk/stażu na
-                                początek
-                            </Typography>
-                            <Typography>
-                                Komercyjne doświadczenie w programowaniu
-                            </Typography>
-                        </Box>
+                        <ExpectationsBox />
 
                         <PortfolioBar sectionName={'Edukacja'} />
                         <PortfolioContent content={portfolioContent} />
