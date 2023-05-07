@@ -4,9 +4,10 @@ import { Button, Link } from '@mui/material';
 import theme from '../../../../theme';
 
 interface Props {
-    handleClose: (event: Event | React.SyntheticEvent) => void;
-    text: string;
-    url: string;
+    handleClose: (event: Event | React.SyntheticEvent) => void
+    onClick?: () => void
+    text: string
+    url: string
 }
 
 export const MenuLink = (props: Props) => {
@@ -19,6 +20,7 @@ export const MenuLink = (props: Props) => {
                     width: '100%',
                     textAlign: 'left',
                 }}
+                onClick={props.onClick}
             >
                 <Link
                     href={url}

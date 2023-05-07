@@ -13,6 +13,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import theme from '../../../../theme';
 import { MenuLink } from './MenuLink';
 import { routes } from '../../../../routes/routesMap';
+import { useAppDispatch } from '../../../../hooks/reduxHooks'
+import { setLogout } from '../../../../state/authSlice'
+import { clearPersistedState } from '../../../../app/store'
+import axios from 'axios'
+import { apiUrl } from '../../../../config/api'
+import { ENDPOINTS } from '../../../../services/endpoints/endpoints'
 
 interface Props {
     avatarUrl: string;
@@ -22,8 +28,19 @@ interface Props {
 export const MenuBox = (props: Props) => {
     const { avatarUrl, userName } = props;
 
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef<HTMLButtonElement>(null);
+    const [open, setOpen] = React.useState(false)
+    const anchorRef = React.useRef<HTMLButtonElement>(null)
+    const dispatch = useAppDispatch()
+    const handleLogout = async () => {
+        await axios(`${apiUrl}${ENDPOINTS.signOut}`, {
+            method: 'GET',
+            withCredentials: true,
+        })
+
+        await clearPersistedState()
+        dispatch(setLogout())
+    }
+
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -136,6 +153,7 @@ export const MenuBox = (props: Props) => {
                                         url={'#'}
                                     />
                                     <MenuLink
+                                        onClick={handleLogout}
                                         handleClose={handleClose}
                                         text={'Wyloguj'}
                                         url={routes.home}

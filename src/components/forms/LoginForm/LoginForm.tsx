@@ -1,18 +1,23 @@
-import React from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import { Box } from '@mui/material';
-import { logInSchema } from './log-in.shema';
-import axios, { isAxiosError } from 'axios';
-import { FormValues, SnackBarEnum } from '../../../types/formValues';
-import { apiUrl } from '../../../config/api';
-import { ENDPOINTS } from '../../../services/endpoints/endpoints';
-import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
-import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm';
-import { useSnackBar } from '../../../hooks/useSnackBar';
-import { loginDataArr } from './login-data';
+import React from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { Box } from '@mui/material'
+import { logInSchema } from './log-in.shema'
+import axios, { isAxiosError } from 'axios'
+import { FormValues, SnackBarEnum } from '../../../types/formValues'
+import { apiUrl } from '../../../config/api'
+import { ENDPOINTS } from '../../../services/endpoints/endpoints'
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
+import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm'
+import { useSnackBar } from '../../../hooks/useSnackBar'
+import { loginDataArr } from './login-data'
+import { useAppDispatch } from '../../../hooks/reduxHooks'
+import { setLogin } from '../../../state/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginForm = () => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const {
         snackBarMessage,
         snackBarType,
@@ -41,22 +46,46 @@ export const LoginForm = () => {
             const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
                 method: 'POST',
                 data: data,
-            });
-            if (res.data.role === 'Admin') {
-                showSnackBar(
-                    'Zalogowałeś się poprawnie jako Admin',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                );
-            } else if (!res.data.active) {
-                showSnackBar(
-                    'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                );
-                reset(defaultValues);
+                withCredentials: true,
+            })
+            dispatch(setLogin({ user: res.data }))
+            reset(defaultValues)
+
+            switch (res.data.role) {
+                case 'Admin':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako Admin',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/admin/${res.data._id}`)
+                    break
+                case 'Kursant':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako Kursant',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/user/${res.data._id}`)
+
+                    break
+                case 'HR':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako HR',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/hr/${res.data._id}`)
+                    break
+                default:
+                    showSnackBar('Błąd logowania, spróbuj ponownie.')
             }
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar('Taki użytkownik nie jest zarejestrowany');
+                if (err.response?.status === 403) {
+                    showSnackBar(
+                        'Logujesz się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora'
+                    )
+                } else {
+                    showSnackBar('Taki użytkownik nie jest zarejestrowany')
+                }
             } else {
                 showSnackBar('Wystąpił niespodziewany błąd');
             }
