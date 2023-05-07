@@ -1,7 +1,7 @@
+import { IUserSkills } from 'types';
 import { apiUrl } from '../config/api';
-import { UserCSV } from './csvUtils';
 
-export const saveCsv = async (data: UserCSV) => {
+export const saveCsv = async (data: IUserSkills) => {
     try {
         const saveResponse = await fetch(`${apiUrl}/api/save-csv`, {
             method: 'POST',
