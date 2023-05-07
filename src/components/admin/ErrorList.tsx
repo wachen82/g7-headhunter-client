@@ -1,5 +1,5 @@
-import React from "react";
-import {List, ListItem, ListItemText} from "@mui/material";
+import React from 'react';
+import { List, ListItem, ListItemText } from '@mui/material';
 
 interface RowData {
     email: string;
@@ -25,42 +25,42 @@ export interface ErrorData {
 const errors: ErrorData[] = [
     {
         row: {
-            email: "milena@gmail.com",
+            email: 'milena@gmail.com',
             courseCompletion: 5,
             courseEngagement: 5,
             projectDegree: 5,
             teamProjectDegree: 5,
             bonusProjectUrls:
-                "https:/example.com/link1; https://example.com/link2; https://example.com/link3",
+                'https:/example.com/link1; https://example.com/link2; https://example.com/link3',
         },
         errors: {
             bonusProjectUrls: [
                 {
                     row: 1,
-                    field: "https:/example.com/link1",
+                    field: 'https:/example.com/link1',
                     error: true,
-                    message: "błędny adres url",
+                    message: 'błędny adres url',
                 },
             ],
         },
     },
     {
         row: {
-            email: "milena@gmail.com",
+            email: 'milena@gmail.com',
             courseCompletion: 2,
             courseEngagement: 22,
             projectDegree: 2,
             teamProjectDegree: 4,
             bonusProjectUrls:
-                "https://example.com/link1;https://example.com/link2; https://example.com/link3",
+                'https://example.com/link1;https://example.com/link2; https://example.com/link3',
         },
         errors: {
             courseEngagement: [
                 {
                     row: 2,
-                    field: "22",
+                    field: '22',
                     error: true,
-                    message: "zła wartosc",
+                    message: 'zła wartosc',
                 },
             ],
         },
@@ -73,19 +73,25 @@ export const ErrorList: React.FC = () => {
             {errors.map((error, index) => (
                 <ListItem key={index}>
                     <ListItemText
-                        primary={`Rząd ${index + 1}: ${error.errors ? Object.keys(error.errors).join(", ") : ""}`}
+                        primary={`Rząd ${index + 1}: ${
+                            error.errors
+                                ? Object.keys(error.errors).join(', ')
+                                : ''
+                        }`}
                         secondary={
                             <React.Fragment>
-                                {Object.entries(error.errors).map(([key, value], index) => (
-                                    <React.Fragment key={index}>
-                                        {value.map((errorItem) => (
-                                            <div key={errorItem.row}>
-                                                <span>{`${key} - Rząd ${errorItem.row}: `}</span>
-                                                <span>{`${errorItem.message}`}</span>
-                                            </div>
-                                        ))}
-                                    </React.Fragment>
-                                ))}
+                                {Object.entries(error.errors).map(
+                                    ([key, value], index) => (
+                                        <React.Fragment key={index}>
+                                            {value.map((errorItem) => (
+                                                <div key={errorItem.row}>
+                                                    <span>{`${key} - Rząd ${errorItem.row}: `}</span>
+                                                    <span>{`${errorItem.message}`}</span>
+                                                </div>
+                                            ))}
+                                        </React.Fragment>
+                                    )
+                                )}
                             </React.Fragment>
                         }
                     />

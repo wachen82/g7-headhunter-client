@@ -24,12 +24,12 @@ export const LoginForm = () => {
         isSnackBarOpen,
         showSnackBar,
         hideSnackBar,
-    } = useSnackBar()
+    } = useSnackBar();
 
     const defaultValues = {
         email: '',
         password: '',
-    }
+    };
 
     const {
         register,
@@ -39,7 +39,7 @@ export const LoginForm = () => {
     } = useForm<FormValues>({
         resolver: yupResolver(logInSchema),
         defaultValues,
-    })
+    });
 
     const onSubmit = async (data: FormValues): Promise<void> => {
         try {
@@ -87,10 +87,10 @@ export const LoginForm = () => {
                     showSnackBar('Taki użytkownik nie jest zarejestrowany')
                 }
             } else {
-                showSnackBar('Wystąpił niespodziewany błąd')
+                showSnackBar('Wystąpił niespodziewany błąd');
             }
         }
-    }
+    };
 
     return (
         <Box width="400px" maxWidth="90%">
@@ -112,5 +112,5 @@ export const LoginForm = () => {
                 />
             )}
         </Box>
-    )
-}
+    );
+};

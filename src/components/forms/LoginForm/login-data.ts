@@ -1,4 +1,4 @@
-import { InputFormData } from '../../../types/formValues'
+import { InputFormData } from '../../../types/formValues';
 
 export const loginDataArr: InputFormData[] = [
     {
@@ -13,4 +13,4 @@ export const loginDataArr: InputFormData[] = [
         htmlFor: 'password',
         type: 'password',
     },
-]
+];

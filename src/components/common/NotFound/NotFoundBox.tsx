@@ -1,11 +1,11 @@
-import React from 'react'
-import { Box, Button, Link, styled, Typography } from '@mui/material'
-import theme from '../../../theme'
-import { routes } from '../../../routes/routesMap'
+import React from 'react';
+import { Box, Button, Link, styled, Typography } from '@mui/material';
+import theme from '../../../theme';
+import { routes } from '../../../routes/routesMap';
 
 const StyledButton = styled(Button)({
     textTransform: 'none',
-})
+});
 
 export const NotFoundBox = () => {
     return (
@@ -58,5 +58,5 @@ export const NotFoundBox = () => {
                 </StyledButton>
             </Box>
         </Box>
-    )
-}
+    );
+};

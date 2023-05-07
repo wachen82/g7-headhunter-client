@@ -1,7 +1,7 @@
-import MenuItem from '@mui/material/MenuItem'
-import React from 'react'
-import { Button, Link } from '@mui/material'
-import theme from '../../../../theme'
+import MenuItem from '@mui/material/MenuItem';
+import React from 'react';
+import { Button, Link } from '@mui/material';
+import theme from '../../../../theme';
 
 interface Props {
     handleClose: (event: Event | React.SyntheticEvent) => void
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const MenuLink = (props: Props) => {
-    const { handleClose, text, url } = props
+    const { handleClose, text, url } = props;
     return (
         <MenuItem onClick={handleClose}>
             <Button
@@ -37,5 +37,5 @@ export const MenuLink = (props: Props) => {
                 </Link>
             </Button>
         </MenuItem>
-    )
-}
+    );
+};
