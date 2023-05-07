@@ -1,24 +1,25 @@
 import React from 'react'
 import { Box } from '@mui/material'
 import { SingleExpectation } from './SingleExpectation'
+import { IUserProfileEntity } from 'types'
 
 interface Props {
-    preferredWorkPlace: string
-    preferredCity: string
-    preferredContract: string
-    preferredSalary: number
-    freeInternship: string
-    experience: number
+    expectedTypeWork: IUserProfileEntity['expectedTypeWork']
+    targetWorkCity: IUserProfileEntity['targetWorkCity']
+    expectedContractType: IUserProfileEntity['expectedContractType']
+    expectedSalary: IUserProfileEntity['expectedSalary']
+    canTakeApprenticeship: IUserProfileEntity['canTakeApprenticeship']
+    monthsOfCommercialExp: IUserProfileEntity['monthsOfCommercialExp']
 }
 
 export const ExpectationsBox = (props: Props) => {
     const {
-        preferredWorkPlace,
-        preferredCity,
-        preferredContract,
-        preferredSalary,
-        freeInternship,
-        experience,
+        expectedTypeWork,
+        targetWorkCity,
+        expectedContractType,
+        expectedSalary,
+        canTakeApprenticeship,
+        monthsOfCommercialExp,
     } = props
 
     return (
@@ -38,31 +39,31 @@ export const ExpectationsBox = (props: Props) => {
         >
             <SingleExpectation
                 expectationName={'Preferowane miejsce pracy'}
-                userExpectation={preferredWorkPlace}
+                userExpectation={expectedTypeWork}
             />
             <SingleExpectation
                 expectationName={
                     'Docelowe miasto, gdzie chce pracować kandydat'
                 }
-                userExpectation={preferredCity}
+                userExpectation={targetWorkCity}
             />
             <SingleExpectation
                 expectationName={'Oczekiwany typ kontraktu'}
-                userExpectation={preferredContract}
+                userExpectation={expectedContractType}
             />
             <SingleExpectation
                 expectationName={'Oczekiwane wynagrodzenie miesięczne netto'}
-                userExpectation={`${preferredSalary} zł`}
+                userExpectation={`${expectedSalary} zł`}
             />
             <SingleExpectation
                 expectationName={
                     'Zgoda na odbycie bezpłatnych praktyk/stażu na początek'
                 }
-                userExpectation={freeInternship}
+                userExpectation={canTakeApprenticeship}
             />
             <SingleExpectation
                 expectationName={'Komercyjne doświadczenie w programowaniu'}
-                userExpectation={`${experience} miesięcy`}
+                userExpectation={`${monthsOfCommercialExp} miesięcy`}
             />
         </Box>
     )

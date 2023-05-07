@@ -1,16 +1,18 @@
+import React from 'react'
 import { Link, Typography } from '@mui/material'
 import theme from '../../../../theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import React from 'react'
+import { IUserProfileEntity } from 'types'
 
 interface Props {
-    userName: string
-    gitHubName: string
+    firstName: IUserProfileEntity['firstName']
+    lastName: IUserProfileEntity['lastName']
+    githubUsername: IUserProfileEntity['githubUsername']
 }
 
 export const InfoName = (props: Props) => {
-    const { userName, gitHubName } = props
+    const { firstName, lastName, githubUsername } = props
 
     return (
         <>
@@ -24,7 +26,7 @@ export const InfoName = (props: Props) => {
                     fontWeight: 'light',
                 }}
             >
-                {userName}
+                {firstName} {lastName}
             </Typography>
 
             <Typography
@@ -37,14 +39,14 @@ export const InfoName = (props: Props) => {
                 }}
             >
                 <Link
-                    href={`https://github.com/${gitHubName}`}
+                    href={`https://github.com/${githubUsername}`}
                     target={'_blank'}
                     sx={{
                         textDecoration: 'none',
                         color: theme.palette.info.main,
                     }}
                 >
-                    <FontAwesomeIcon icon={faGithub} /> {gitHubName}
+                    <FontAwesomeIcon icon={faGithub} /> {githubUsername}
                 </Link>
             </Typography>
         </>

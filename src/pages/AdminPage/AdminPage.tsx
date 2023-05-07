@@ -15,7 +15,8 @@ export const AdminPage = () => {
             <Box sx={{ width: '100%' }}>
                 <UsersAppBar
                     avatarUrl={'avatarUrl'}
-                    userName={'imię nazwisko'}
+                    firstName={'imię'}
+                    lastName={'nazwisko'}
                 />
             </Box>
             <Container

@@ -3,21 +3,30 @@ import { Avatar, Box } from '@mui/material'
 import theme from '../../../../../src/theme'
 import { InfoContact } from './InfoContact'
 import { InfoName } from './InfoName'
-import { InfoAbout } from './InfoAbout'
+import { InfoBio } from './InfoBio'
 import { InfoButton } from './InfoButton'
+import { IUserProfileEntity } from 'types'
 
 interface Props {
-    userName: string
+    firstName: IUserProfileEntity['firstName']
+    lastName: IUserProfileEntity['lastName']
     avatarUrl: string
-    gitHubName: string
-    phoneNumber: string
-    mailAddress: string
-    about: string
+    githubUsername: IUserProfileEntity['githubUsername']
+    phone: IUserProfileEntity['phone']
+    email: IUserProfileEntity['email']
+    bio: IUserProfileEntity['bio']
 }
 
 export const InfoBox = (props: Props) => {
-    const { userName, avatarUrl, gitHubName, phoneNumber, mailAddress, about } =
-        props
+    const {
+        firstName,
+        lastName,
+        avatarUrl,
+        githubUsername,
+        phone,
+        email,
+        bio,
+    } = props
 
     return (
         <Box sx={{ width: '250px', height: '718px' }}>
@@ -30,7 +39,7 @@ export const InfoBox = (props: Props) => {
                 }}
             >
                 <Avatar
-                    alt={userName}
+                    alt={`${firstName} ${lastName}`}
                     sx={{
                         width: 150,
                         height: 150,
@@ -38,7 +47,11 @@ export const InfoBox = (props: Props) => {
                     }}
                     src={avatarUrl}
                 />
-                <InfoName userName={userName} gitHubName={gitHubName} />
+                <InfoName
+                    firstName={firstName}
+                    lastName={lastName}
+                    githubUsername={githubUsername}
+                />
 
                 <Box
                     sx={{
@@ -48,12 +61,9 @@ export const InfoBox = (props: Props) => {
                         margin: '10px 25px',
                     }}
                 >
-                    <InfoContact
-                        phoneNumber={phoneNumber}
-                        mailAddress={mailAddress}
-                    />
+                    <InfoContact phone={phone} email={email} />
 
-                    <InfoAbout about={about} />
+                    <InfoBio bio={bio} />
                 </Box>
 
                 <InfoButton

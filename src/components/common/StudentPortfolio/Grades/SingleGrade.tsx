@@ -1,8 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import theme from '../../../../theme'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { GradeStar } from './GradeStar'
 
 interface Props {
     gradeName: string
@@ -12,24 +11,6 @@ interface Props {
 //@TODO handle grades into number of red/grey stars
 export const SingleGrade = (props: Props) => {
     const { gradeName, grade } = props
-    let starColor
-    switch (grade) {
-        case 1:
-            starColor = 'theme.palette.primary.main'
-            break
-        case 2:
-            starColor = 'theme.palette.primary.main'
-            break
-        case 3:
-            starColor = 'theme.palette.primary.main'
-            break
-        case 4:
-            starColor = 'theme.palette.primary.main'
-            break
-        case 5:
-            starColor = 'theme.palette.primary.main'
-            break
-    }
 
     return (
         <Box
@@ -87,51 +68,13 @@ export const SingleGrade = (props: Props) => {
                 >
                     /5
                 </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '20px',
-                        // color: theme.palette.primary.main,
-                        color: theme.palette.grey['400'],
-                    }}
-                >
-                    <FontAwesomeIcon icon={faStar} id="star1" />
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '20px',
-                        // color: theme.palette.primary.main,
-                        color: theme.palette.grey['400'],
-                    }}
-                >
-                    <FontAwesomeIcon icon={faStar} id="star2" />
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '20px',
-                        // color: theme.palette.primary.main,
-                        color: theme.palette.grey['400'],
-                    }}
-                >
-                    <FontAwesomeIcon icon={faStar} id="star3" />
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '20px',
-                        // color: theme.palette.primary.main,
-                        color: theme.palette.grey['400'],
-                    }}
-                >
-                    <FontAwesomeIcon icon={faStar} id="star4" />
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '20px',
-                        // color: theme.palette.primary.main,
-                        color: theme.palette.grey['400'],
-                    }}
-                >
-                    <FontAwesomeIcon icon={faStar} id="star5" />
-                </Typography>
+                <GradeStar />
+                <GradeStar />
+                <GradeStar />
+                <GradeStar />
+                <GradeStar />
+
+                {/*{${ grade } * <GradeStar />}*/}
             </Box>
         </Box>
     )

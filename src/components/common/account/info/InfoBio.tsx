@@ -3,11 +3,11 @@ import theme from '../../../../theme'
 import React from 'react'
 
 interface Props {
-    about: string
+    bio: string
 }
 
-export const InfoAbout = (props: Props) => {
-    const { about } = props
+export const InfoBio = (props: Props) => {
+    const { bio } = props
 
     return (
         <>
@@ -28,7 +28,7 @@ export const InfoAbout = (props: Props) => {
                     fontWeight: 'lighter',
                 }}
             >
-                {about}
+                {bio}
             </Typography>
         </>
     )

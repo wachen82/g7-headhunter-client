@@ -3,14 +3,15 @@ import theme from '../../../../theme'
 import { Box, Typography } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { IUserProfileEntity } from 'types'
 
 interface Props {
-    phoneNumber: string
-    mailAddress: string
+    phone: IUserProfileEntity['phone']
+    email: IUserProfileEntity['email']
 }
 
 export const InfoContact = (props: Props) => {
-    const { phoneNumber, mailAddress } = props
+    const { phone, email } = props
 
     return (
         <>
@@ -36,7 +37,7 @@ export const InfoContact = (props: Props) => {
                         fontWeight: 'lighter',
                     }}
                 >
-                    {phoneNumber}
+                    {phone}
                 </Typography>
             </Box>
 
@@ -57,7 +58,7 @@ export const InfoContact = (props: Props) => {
                         fontWeight: 'lighter',
                     }}
                 >
-                    {mailAddress}
+                    {email}
                 </Typography>
             </Box>
         </>

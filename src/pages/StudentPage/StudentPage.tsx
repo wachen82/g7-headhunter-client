@@ -15,11 +15,12 @@ export const StudentPage = () => {
 
     const [
         avatarUrl,
-        userName,
-        gitHubName,
-        phoneNumber,
-        mailAddress,
-        about,
+        firstName,
+        lastName,
+        githubUsername,
+        phone,
+        email,
+        bio,
         //grades - dodać cząstkowe oceny
         workExpectations,
         portfolioContent,
@@ -28,18 +29,19 @@ export const StudentPage = () => {
         finalProjectUrl,
     ] = [
         'https://scontent-vie1-1.xx.fbcdn.net/v/t1.6435-9/118124271_10224604112957191_6232217390682151742_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGZRrCSGbBKnDhFLPrmFDMTS0hGwM3YatVLSEbAzdhq1b-F83hHow85cjsPBJIU6GQ&_nc_ohc=LqtPhPwTXoIAX95j5tZ&_nc_ht=scontent-vie1-1.xx&oh=00_AfCPE96i_mxSjn_VTfNdXHh1QkTiVAsn-2h1PlfuPOCM-A&oe=647CDCDE',
-        'Jakub Markiewicz',
+        'Jakub',
+        'Markiewicz',
         'xkrsx',
         '+48 999 999 999',
         'xkrsx@gmail.com',
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet aperiam beatae cupiditate dignissimos explicabo illum laudantium magnam maxime modi nihil officiis provident reiciendis, sequi sit, tempora, ut voluptate!',
         {
-            preferredWorkPlace: 'Biuro',
-            preferredCity: 'Warszawa',
-            preferredContract: 'Umowa o pracę',
-            preferredSalary: 8000,
-            freeInternship: 'TAK',
-            experience: 6,
+            expectedTypeWork: 'Biuro',
+            targetWorkCity: 'Warszawa',
+            expectedContractType: 'Umowa o pracę',
+            expectedSalary: '8000',
+            canTakeApprenticeship: 'TAK',
+            monthsOfCommercialExp: 6,
         },
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         ['https://Loremipsum/dolor/sit/amet'],
@@ -54,12 +56,12 @@ export const StudentPage = () => {
     ]
 
     const {
-        preferredWorkPlace,
-        preferredCity,
-        preferredContract,
-        preferredSalary,
-        freeInternship,
-        experience,
+        expectedTypeWork,
+        targetWorkCity,
+        expectedContractType,
+        expectedSalary,
+        canTakeApprenticeship,
+        monthsOfCommercialExp,
     } = workExpectations
 
     return (
@@ -71,7 +73,11 @@ export const StudentPage = () => {
             }}
         >
             <Box sx={{ width: '100%' }}>
-                <UsersAppBar avatarUrl={avatarUrl} userName={userName} />
+                <UsersAppBar
+                    avatarUrl={avatarUrl}
+                    firstName={firstName}
+                    lastName={lastName}
+                />
             </Box>
 
             <Box
@@ -92,11 +98,12 @@ export const StudentPage = () => {
                     <Box>
                         <InfoBox
                             avatarUrl={avatarUrl}
-                            userName={userName}
-                            gitHubName={gitHubName}
-                            phoneNumber={phoneNumber}
-                            mailAddress={mailAddress}
-                            about={about}
+                            firstName={firstName}
+                            lastName={lastName}
+                            githubUsername={githubUsername}
+                            phone={phone}
+                            email={email}
+                            bio={bio}
                         />
                     </Box>
 
@@ -115,12 +122,12 @@ export const StudentPage = () => {
                             }
                         />
                         <ExpectationsBox
-                            preferredWorkPlace={preferredWorkPlace}
-                            preferredCity={preferredCity}
-                            preferredContract={preferredContract}
-                            preferredSalary={preferredSalary}
-                            freeInternship={freeInternship}
-                            experience={experience}
+                            expectedTypeWork={expectedTypeWork}
+                            targetWorkCity={targetWorkCity}
+                            expectedContractType={expectedContractType}
+                            expectedSalary={expectedSalary}
+                            canTakeApprenticeship={canTakeApprenticeship}
+                            monthsOfCommercialExp={monthsOfCommercialExp}
                         />
 
                         <PortfolioBar sectionName={'Edukacja'} />
