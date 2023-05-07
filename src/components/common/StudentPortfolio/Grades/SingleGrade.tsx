@@ -1,8 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import theme from '../../../../theme'
-import { RedGradeStar } from './RedGradeStar'
-import { GreyGradeStar } from './GreyGradeStar'
+import { GradeStar } from './GradeStar'
 
 interface Props {
     gradeName: string
@@ -13,17 +12,17 @@ interface Props {
 export const SingleGrade = (props: Props) => {
     const { gradeName, grade } = props
 
-    const redStars = (grade: number) => {
+    const stars = (grade: number) => {
         const redArray = Array.from({ length: grade }, (_, index) => index)
         const greyArray = Array.from({ length: 5 - grade }, (_, index) => index)
 
         return (
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 {redArray.map((i) => (
-                    <RedGradeStar key={i} />
+                    <GradeStar key={i} color={theme.palette.primary.main} />
                 ))}
                 {greyArray.map((i) => (
-                    <GreyGradeStar key={i} />
+                    <GradeStar key={i} color={theme.palette.grey['400']} />
                 ))}
             </div>
         )
@@ -86,7 +85,7 @@ export const SingleGrade = (props: Props) => {
                     /5
                 </Typography>
 
-                {redStars(grade)}
+                {stars(grade)}
             </Box>
         </Box>
     )
