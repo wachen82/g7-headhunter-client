@@ -26,6 +26,7 @@ export const ButtonsAndInputView = () => {
                         fontWeight: 'normal',
                         color: theme.palette.text.primary,
                         bgcolor: theme.palette.grey['800'],
+                        borderRadius: '0'
                     }}
                 />
             </Container>
