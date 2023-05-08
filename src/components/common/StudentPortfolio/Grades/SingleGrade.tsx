@@ -8,7 +8,6 @@ interface Props {
     grade: number
 }
 
-//@TODO handle grades into number of red/grey stars
 export const SingleGrade = (props: Props) => {
     const { gradeName, grade } = props
 
