@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { authReducer } from '../state/authSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import { authReducer } from '../state/authSlice';
 
 import {
     persistReducer,
@@ -10,11 +10,11 @@ import {
     PERSIST,
     PURGE,
     REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const persistConfig = { key: 'user', storage, version: 1, keyPrefix: '' }
-const persistedReducer = persistReducer(persistConfig, authReducer)
+const persistConfig = { key: 'user', storage, version: 1, keyPrefix: '' };
+const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
@@ -31,16 +31,16 @@ export const store = configureStore({
                 ],
             },
         }),
-})
+});
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
 
 export const clearPersistedState = async () => {
-    await persistor.purge()
-    await persistor.flush()
-    await storage.removeItem('user')
-    await persistor.persist()
-}
+    await persistor.purge();
+    await persistor.flush();
+    await storage.removeItem('user');
+    await persistor.persist();
+};
 
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
