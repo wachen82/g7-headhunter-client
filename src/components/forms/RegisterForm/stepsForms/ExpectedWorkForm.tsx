@@ -74,13 +74,13 @@ export const ExpectedWorkForm = () => {
                     <Controller
                         name="expectedContractType"
                         control={control}
-                        defaultValue={defaultValues.expectedContractType}
                         render={({ ...field }) => (
                             <TextField
                                 {...field}
                                 id="expectedContractType"
                                 label="Rodzaj Kontractu"
                                 type="text"
+                                defaultValue="Brak preferencji"
                                 fullWidth
                                 required
                                 select
@@ -89,15 +89,15 @@ export const ExpectedWorkForm = () => {
                                 error={!!errors.expectedContractType}
                                 helperText={errors.expectedContractType?.message?.toString()}
                             >
-                                <MenuItem value="Hybrydowo">
-                                    Brak preferencji
-                                </MenuItem>
                                 <MenuItem value="Tylko UoP">Tylko UoP</MenuItem>
                                 <MenuItem value="Możliwe B2B">
                                     Możliwe B2B
                                 </MenuItem>
                                 <MenuItem value="Możliwe UZ/UoD">
                                     Możliwe UZ/UoD
+                                </MenuItem>
+                                <MenuItem value="Brak preferencji">
+                                    Brak preferencji
                                 </MenuItem>
                             </TextField>
                         )}
@@ -107,7 +107,6 @@ export const ExpectedWorkForm = () => {
                     <Controller
                         name="expectedTypeWork"
                         control={control}
-                        defaultValue={defaultValues.expectedTypeWork}
                         render={({ ...field }) => (
                             <TextField
                                 {...field}
@@ -115,6 +114,7 @@ export const ExpectedWorkForm = () => {
                                 label="Rodzaj pracy"
                                 type="text"
                                 fullWidth
+                                defaultValue="Bez znaczenia"
                                 required
                                 select
                                 variant="outlined"
@@ -143,7 +143,6 @@ export const ExpectedWorkForm = () => {
                     <Controller
                         name="canTakeApprenticeship"
                         control={control}
-                        defaultValue={defaultValues.canTakeApprenticeship}
                         render={({ ...field }) => (
                             <TextField
                                 {...field}
@@ -151,6 +150,7 @@ export const ExpectedWorkForm = () => {
                                 label="Mogę odbyć praktyki/staż"
                                 type="text"
                                 fullWidth
+                                defaultValue="NIE"
                                 required
                                 select
                                 variant="outlined"
@@ -158,7 +158,7 @@ export const ExpectedWorkForm = () => {
                                 error={!!errors.canTakeApprenticeship}
                                 helperText={errors.canTakeApprenticeship?.message?.toString()}
                             >
-                                <MenuItem value="Nie">Nie</MenuItem>
+                                <MenuItem value="NIE">NIE</MenuItem>
                                 <MenuItem value="TAK">TAK</MenuItem>
                             </TextField>
                         )}

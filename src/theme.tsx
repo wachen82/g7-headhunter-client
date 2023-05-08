@@ -1,6 +1,4 @@
 import { createTheme } from '@mui/material/styles'
-import { isDisabled } from '@testing-library/user-event/dist/utils'
-import { green } from '@mui/material/colors'
 
 const theme = createTheme({
     palette: {

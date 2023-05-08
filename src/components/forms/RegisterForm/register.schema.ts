@@ -23,9 +23,7 @@ export const validationSchema = [
     yup.object().shape({
         portfolioUrls: yup.array(object()),
         projectUrls: yup.array(
-            string()
-                .required('Address url do projektu jest wymagany')
-                .url('Adress URL jest nieprawidłowy')
+            string().url().required('Address url do projektu jest wymagany')
         ),
         bio: yup.string(),
         education: yup.string(),
@@ -45,10 +43,7 @@ export const validationSchema = [
         expectedContractType: yup
             .string()
             .required('Rodzaj kontraktu jest wymagany'),
-        expectedSalary: yup.number().positive(),
-        canTakeApprenticeship: yup
-            .string()
-            .required('Odpowiedz TAK lub NIE')
-            .default('NIE'),
+        expectedSalary: yup.string().min(0),
+        canTakeApprenticeship: yup.string().required('Odpowiedz TAK lub NIE'),
     }),
 ]

@@ -14,7 +14,7 @@ export const PortfolioForm = () => {
         register,
         watch,
         control,
-        formState: { errors, isValid },
+        formState: { errors },
     } = useFormContext()
 
     const { fields, append, remove } = useFieldArray({

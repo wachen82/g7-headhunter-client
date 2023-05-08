@@ -23,12 +23,11 @@ export const RegisterForm = () => {
     const [activeStep, setActiveStep] = useState(0)
     const steps = ['Dane Osobowe', 'Portfolio', 'Preferowane Zatrudnienie']
 
-    const currentValidationSchema = validationSchema[activeStep]
     const methods = useForm({
         shouldUnregister: false,
         defaultValues,
-        resolver: yupResolver(currentValidationSchema),
-        mode: 'all',
+        resolver: yupResolver(validationSchema[activeStep]),
+        mode: 'onSubmit',
     })
 
     const formSubmitHandler: SubmitHandler<IUserProfileEntity1> = (
