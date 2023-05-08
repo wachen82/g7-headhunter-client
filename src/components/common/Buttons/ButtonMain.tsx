@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 
 interface ButtonProps {
     variant?: 'contained' | 'outlined' | 'text'
-    icon: React.ReactNode
+    icon?: React.ReactNode
     text: string
     path?: string
     backgroundColor?: string
@@ -10,7 +10,7 @@ interface ButtonProps {
     sx?: Record<string, any>
 }
 
-export const ButtonWithIconAndText = ({
+export const ButtonMain = ({
     icon,
     text,
     onClick,
