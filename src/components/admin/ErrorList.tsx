@@ -1,5 +1,5 @@
-import { List, ListItem, ListItemText } from '@mui/material'
-import theme from '../../theme'
+import { List, ListItem, ListItemText } from '@mui/material';
+import theme from '../../theme';
 
 interface ErrorWithField extends ErrorCsv {
     field: string

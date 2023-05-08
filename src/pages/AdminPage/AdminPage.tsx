@@ -1,8 +1,9 @@
-import { Container, Divider, Typography } from '@mui/material'
-import { DropAndClickBox } from '../../components/admin/DropAndClickBox'
-import theme from '../../theme'
-import { HrForm } from '../../components/forms/HrForm/HrForm'
-import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
+import { Container, Divider, Typography } from '@mui/material';
+import { DropAndClickBox } from '../../components/admin/DropAndClickBox';
+import theme from '../../theme';
+import { HrForm } from '../../components/forms/HrForm/HrForm';
+import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
+
 
 export const AdminPage = () => {
     return (
@@ -52,5 +53,5 @@ export const AdminPage = () => {
                 <HrForm />
             </Container>
         </main>
-    )
-}
+    );
+};

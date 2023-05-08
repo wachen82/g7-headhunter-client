@@ -1,9 +1,9 @@
-import { Box, Container } from '@mui/material'
-import { useTitle } from '../../hooks/useTitle'
-import { NotFoundBox } from '../../components/common/NotFound/NotFoundBox'
+import { Box, Container } from '@mui/material';
+import { useTitle } from '../../hooks/useTitle';
+import { NotFoundBox } from '../../components/common/NotFound/NotFoundBox';
 
 export const NotFoundPage = () => {
-    useTitle('Błąd 404')
+    useTitle('Błąd 404');
 
     return (
         <Container
@@ -32,5 +32,5 @@ export const NotFoundPage = () => {
                 <NotFoundBox />
             </Box>
         </Container>
-    )
-}
+    );
+};

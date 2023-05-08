@@ -1,4 +1,4 @@
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 export const logInSchema = yup.object().shape({
     email: yup
@@ -6,4 +6,4 @@ export const logInSchema = yup.object().shape({
         .required('Email jest wymagany')
         .email('Podaj prawidłowy adres e-mail'),
     password: yup.string().required('Hasło jest wymagane'),
-})
+});

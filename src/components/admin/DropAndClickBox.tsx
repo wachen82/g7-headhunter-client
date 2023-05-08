@@ -13,24 +13,28 @@ export const DropAndClickBox = () => {
     const [errors, setErrors] = useState<ErrorOrErrorWithField[]>([])
 
     const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setActive(false)
-        const csvFile = await getCsvFile(e.dataTransfer.files)
+        e.preventDefault();
+        setActive(false);
+        const csvFile = await getCsvFile(e.dataTransfer.files);
         if (!csvFile) {
-            return
+            return;
         }
+
         await uploadCsvFile(csvFile, setErrors)
     }
+
     const handleFileInputChange = async (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
-        e.preventDefault()
-        const csvFile = await getCsvFile((e.target.files as FileList) || [])
+        e.preventDefault();
+        const csvFile = await getCsvFile((e.target.files as FileList) || []);
         if (!csvFile) {
-            return
+            return;
         }
+
         await uploadCsvFile(csvFile, setErrors)
     }
+
 
     return (
         <>
@@ -44,6 +48,7 @@ export const DropAndClickBox = () => {
                     <FileButton handleFileInputChange={handleFileInputChange} />
                 </Grid>
                 <Grid item>
+
                     <p
                         style={{
                             padding: '1rem',
@@ -52,6 +57,7 @@ export const DropAndClickBox = () => {
                     >
                         lub
                     </p>
+
                 </Grid>
                 <Grid item>
                     <DropBox
@@ -61,7 +67,9 @@ export const DropAndClickBox = () => {
                     />
                 </Grid>
             </Grid>
+
             {errors.length > 0 && <ErrorList errors={errors} />}
+
         </>
-    )
-}
+    );
+};

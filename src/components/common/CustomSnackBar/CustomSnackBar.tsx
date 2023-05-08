@@ -1,19 +1,19 @@
-import React from 'react'
-import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert'
-import { Snackbar } from '@mui/material'
+import React from 'react';
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
 ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 interface Props {
-    setAction?: React.Dispatch<React.SetStateAction<boolean>>
-    actionState?: boolean
-    type: string
-    message: string
+    setAction?: React.Dispatch<React.SetStateAction<boolean>>;
+    actionState?: boolean;
+    type: string;
+    message: string;
 }
 
 export const CustomSnackBar = ({
@@ -24,9 +24,9 @@ export const CustomSnackBar = ({
 }: Props) => {
     const handleClose = () => {
         if (setAction) {
-            setAction(false)
+            setAction(false);
         }
-    }
+    };
     return (
         <Snackbar
             onClose={handleClose}
@@ -37,5 +37,5 @@ export const CustomSnackBar = ({
                 {message}
             </Alert>
         </Snackbar>
-    )
-}
+    );
+};

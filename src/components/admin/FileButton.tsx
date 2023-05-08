@@ -1,9 +1,9 @@
-import Button from '@mui/material/Button'
-import theme from '../../theme'
-import React from 'react'
+import Button from '@mui/material/Button';
+import theme from '../../theme';
+import React from 'react';
 
 interface Props {
-    handleFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    handleFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const FileButton = ({ handleFileInputChange }: Props) => (
@@ -22,4 +22,4 @@ export const FileButton = ({ handleFileInputChange }: Props) => (
             hidden
         />
     </Button>
-)
+);

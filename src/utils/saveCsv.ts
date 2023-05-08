@@ -1,5 +1,5 @@
-import { apiUrl } from '../config/api'
-import { ENDPOINTS } from '../services/endpoints/endpoints'
+import { apiUrl } from '../config/api';
+import { ENDPOINTS } from '../services/endpoints/endpoints';
 interface UserCSV {
     email: string
     courseCompletion: number
@@ -8,6 +8,7 @@ interface UserCSV {
     teamProjectDegree: number
     bonusProjectUrls: string[]
 }
+
 export const saveCsv = async (data: UserCSV) => {
     try {
         const saveResponse = await fetch(`${apiUrl}${ENDPOINTS.saveCsv}`, {
@@ -16,12 +17,12 @@ export const saveCsv = async (data: UserCSV) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
+        });
         if (!saveResponse.ok) {
             console.error('Failed to save data')
         }
         await saveResponse.json()
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
+};
