@@ -1,14 +1,5 @@
 import { uploadCsvFile } from './uploadCsv';
 
-export interface UserCSV {
-    email: string;
-    courseCompletion: number;
-    courseEngagement: number;
-    projectDegree: number;
-    teamProjectDegree: number;
-    bonusProjectUrls: string;
-}
-
 export const getCsvFile = async (files: FileList) => {
     const csvFiles = Array.from(files).filter(
         (file) => file.type === 'text/csv'
