@@ -9,6 +9,7 @@ import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPas
 import { UserPage } from '../pages/UserPage/UserPage'
 import { HrPage } from '../pages/HrPage/HrPage'
 import { useAppSelector } from '../hooks/reduxHooks'
+import { RegisterPage } from '../pages/RegisterPage/RegisterPage'
 
 const router = (user: string) =>
     createBrowserRouter([
@@ -23,6 +24,10 @@ const router = (user: string) =>
         {
             path: routes.signUp,
             element: <RegisterInactivePage />,
+        },
+        {
+            path: routes.register,
+            element: <RegisterPage />,
         },
         {
             path: routes.admin,

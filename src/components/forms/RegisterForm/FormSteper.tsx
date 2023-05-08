@@ -1,63 +1,98 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { PortfolioForm } from './stepsForms/PortfolioForm'
-import { ExpectedWorkForm } from './stepsForms/ExpectedWorkForm'
-import { UserDataForm } from './stepsForms/UserDataForm'
-import { Form } from 'react-router-dom'
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { defaultValues } from './FormDefaultValues'
-import { useState } from 'react'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import { IUserProfileEntity } from 'types'
-import { validationSchema } from './register.schema'
-import { IUserProfileEntity1 } from './types'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { PortfolioForm } from './stepsForms/PortfolioForm';
+import { ExpectedWorkForm } from './stepsForms/ExpectedWorkForm';
+import { UserDataForm } from './stepsForms/UserDataForm';
+import { useSnackBar } from '../../../hooks/useSnackBar';
+import { Form } from 'react-router-dom';
+import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { defaultValues } from './FormDefaultValues';
+import { useState } from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { IUserProfileEntity } from 'types';
+import { validationSchema } from './register.schema';
+import { IUserProfileEntity1 } from './types';
+import { HrFormValues } from '../../../types/hrFormValues';
+import { apiUrl } from '../../../config/api';
+import { ENDPOINTS } from '../../../services/endpoints/endpoints';
+import { SnackBarEnum } from '../../../types/formValues';
 
 export const RegisterForm = () => {
-    const [activeStep, setActiveStep] = useState(0)
-    const steps = ['Dane Osobowe', 'Portfolio', 'Preferowane Zatrudnienie']
+    const [activeStep, setActiveStep] = useState(0);
+    const steps = ['Dane Osobowe', 'Portfolio', 'Preferowane Zatrudnienie'];
+
+    const currentValidationSchema = validationSchema[activeStep];
 
     const methods = useForm({
         shouldUnregister: false,
         defaultValues,
-        resolver: yupResolver(validationSchema[activeStep]),
-        mode: 'onSubmit',
-    })
+        resolver: yupResolver(currentValidationSchema),
+        mode: 'all',
+    });
+    const { showSnackBar } = useSnackBar();
 
     const formSubmitHandler: SubmitHandler<IUserProfileEntity1> = (
         data: Partial<IUserProfileEntity1>
     ) => {
-        console.log('form data is ', JSON.stringify(data))
+        console.log('form data is ', JSON.stringify(data));
 
-        handleNext()
-    }
+        handleNext();
+    };
+
+    // const formSubmitHandler = async (
+    //     data: IUserProfileEntity1
+    // ): Promise<void> => {
+    //     try {
+    //         const response = await fetch(`${apiUrl}${ENDPOINTS.register}`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(data),
+    //         });
+    //         if (!response.ok) {
+    //             showSnackBar(
+    //                 'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+    //                 SnackBarEnum.ERROR_MESSAGE
+    //             );
+    //         }
+    //         const res = await response.json();
+    //         showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE);
+    //         methods.reset(defaultValues);
+    //     } catch (e) {
+    //         showSnackBar(
+    //             'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+    //             SnackBarEnum.ERROR_MESSAGE
+    //         );
+    //     }
+    //     handleNext();
+    // };
 
     const handleNext = () => {
-        setActiveStep(activeStep + 1)
-    }
+        setActiveStep(activeStep + 1);
+    };
 
     const handleBack = () => {
-        setActiveStep(activeStep - 1)
-    }
+        setActiveStep(activeStep - 1);
+    };
 
     const getStepContent = (step: number) => {
         switch (step) {
             case 0:
-                return <UserDataForm />
+                return <UserDataForm />;
             case 1:
-                return <PortfolioForm />
+                return <PortfolioForm />;
             case 2:
-                return <ExpectedWorkForm />
+                return <ExpectedWorkForm />;
             default:
-                throw new Error('Niewłaściwy krok')
+                throw new Error('Niewłaściwy krok');
         }
-    }
+    };
 
     return (
         <>
@@ -181,5 +216,5 @@ export const RegisterForm = () => {
                 </Paper>
             </Box>
         </>
-    )
-}
+    );
+};
