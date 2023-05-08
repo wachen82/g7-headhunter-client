@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import {
     UseFormRegister,
     SubmitHandler,
     FieldErrors,
     UseFormHandleSubmit,
-} from 'react-hook-form'
+} from 'react-hook-form';
 
-import { Form, Link as RouterLink } from 'react-router-dom'
+import { Form, Link as RouterLink } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -17,23 +17,23 @@ import {
     Link,
     styled,
     Typography,
-} from '@mui/material'
-import { FormValues, InputFormData } from '../../../types/formValues'
-import theme from '../../../theme'
-import { routes } from '../../../routes/routesMap'
+} from '@mui/material';
+import { FormValues, InputFormData } from '../../../types/formValues';
+import theme from '../../../theme';
+import { routes } from '../../../routes/routesMap';
 
-const StyledButton = styled(Button)({
+export const StyledButton = styled(Button)({
     textTransform: 'none',
-})
+});
 
 interface CustomBasicFormProps {
-    additionalFormInfo?: boolean
-    onSubmit: SubmitHandler<FormValues>
-    register: UseFormRegister<FormValues>
-    handleSubmit: UseFormHandleSubmit<FormValues>
-    errors: FieldErrors<FormValues>
-    buttonText: string
-    dataFormArr: InputFormData[]
+    additionalFormInfo?: boolean;
+    onSubmit: SubmitHandler<FormValues>;
+    register: UseFormRegister<FormValues>;
+    handleSubmit: UseFormHandleSubmit<FormValues>;
+    errors: FieldErrors<FormValues>;
+    buttonText: string;
+    dataFormArr: InputFormData[];
 }
 
 export const CustomBasicForm = ({
@@ -145,5 +145,5 @@ export const CustomBasicForm = ({
                 </StyledButton>
             </Box>
         </Form>
-    )
-}
+    );
+};

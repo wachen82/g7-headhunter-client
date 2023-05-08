@@ -1,4 +1,4 @@
-import { InputFormData } from '../../../types/formValues'
+import { InputFormData } from '../../../types/formValues';
 
 export const resetPasswordEmailData: InputFormData[] = [
     {
@@ -7,4 +7,4 @@ export const resetPasswordEmailData: InputFormData[] = [
         htmlFor: 'email',
         type: 'email',
     },
-]
+];

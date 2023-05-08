@@ -1,8 +1,8 @@
-import { Box, Container } from '@mui/material'
-import React from 'react'
+import { Box, Container } from '@mui/material';
+import React from 'react';
 
 interface Props {
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
 export const AuthPage = ({ children }: Props) => {
@@ -33,5 +33,5 @@ export const AuthPage = ({ children }: Props) => {
                 {children}
             </Box>
         </Container>
-    )
-}
+    );
+};

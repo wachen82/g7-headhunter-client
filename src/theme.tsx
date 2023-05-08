@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
@@ -6,13 +6,12 @@ const theme = createTheme({
             main: '#e02735', // kolor tła buttonów i gwiazdek
         },
         secondary: {
-            main: '#222224', //tło
-            light: '#292A2B', //tło inputów
-            contrastText: '#7E7E7E', //kolor tekstu w inputach logowania
+            main: '#222224', // kolor główny tła widoków
+            light: '#292A2B', // kolor tła inputów, tła wydzielonego na środku i CV
+            contrastText: '#7E7E7E', // kolor tekstu w inputach, ikonki kiedy brak zdj "do rozmowy"
         },
         text: {
-            primary: '#CFCFCF', // kolor główny - kolor czcionki szarej
-            secondary: '#666666', // kolor pomocniczy - szara czcionka
+            primary: '#F7F7F7', // kolor główny - biała czcionka
         },
         grey: {
             100: '#CFCFCF', // kolor czcionki szarej
@@ -72,6 +71,6 @@ const theme = createTheme({
             },
         },
     },
-})
+});
 
-export default theme
+export default theme;

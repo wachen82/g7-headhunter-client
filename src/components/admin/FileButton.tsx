@@ -1,12 +1,19 @@
-import Button from '@mui/material/Button'
-import theme from "../../theme";
+import Button from '@mui/material/Button';
+import theme from '../../theme';
+import React from 'react';
 
 interface Props {
-    handleFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    handleFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const FileButton = ({ handleFileInputChange }: Props) => (
-    <Button component="label" sx={{ color: theme.palette.primary.main }}>
+    <Button
+        component="label"
+        sx={{
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.text.primary,
+        }}
+    >
         Dodaj plik
         <input
             onChange={handleFileInputChange}
@@ -15,4 +22,4 @@ export const FileButton = ({ handleFileInputChange }: Props) => (
             hidden
         />
     </Button>
-)
+);
