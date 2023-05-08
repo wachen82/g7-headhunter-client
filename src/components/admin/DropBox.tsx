@@ -2,6 +2,7 @@ import { Paper, Typography } from '@mui/material';
 import * as React from 'react';
 import theme from '../../theme';
 
+
 type DropBoxProps = {
     active: boolean;
     setActive: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,28 +15,30 @@ export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
             variant="outlined"
             square
             onDragEnter={() => {
-                setActive(true);
+                setActive(true)
             }}
             onDragLeave={() => {
-                setActive(false);
+                setActive(false)
             }}
             onDragOver={(e) => {
-                e.preventDefault();
-                setActive(true);
+                e.preventDefault()
+                setActive(true)
+
             }}
             onDrop={handleDrop}
             sx={{
                 backgroundColor: active
                     ? theme.palette.primary.main
                     : 'transparent',
-                padding: '20px',
+                padding: '5px',
                 textAlign: 'center',
-                border: '2px dashed #ccc',
+                border: `2px dashed ${theme.palette.primary.main}`,
+
                 borderRadius: '5px',
                 cursor: 'pointer',
             }}
         >
-            <Typography variant="body1">Upuść tutaj</Typography>
+            <Typography variant="body1">UPUŚĆ TUTAJ</Typography>
         </Paper>
     );
 };

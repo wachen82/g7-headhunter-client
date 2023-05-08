@@ -1,13 +1,16 @@
-import * as React from 'react';
-import { Grid } from '@mui/material';
-import { useState } from 'react';
-import { getCsvFile, handleCsvFile } from '../../utils/csvUtils';
-import { FileButton } from './FileButton';
-import { DropBox } from './DropBox';
-import { ErrorList } from './ErrorList';
+import * as React from 'react'
+import { Grid } from '@mui/material'
+import { useState } from 'react'
+import { getCsvFile } from '../../utils/csvUtils'
+import { FileButton } from './FileButton'
+import { DropBox } from './DropBox'
+import { uploadCsvFile } from '../../utils/uploadCsv'
+import { ErrorList, ErrorOrErrorWithField } from './ErrorList'
+import theme from '../../theme'
 
 export const DropAndClickBox = () => {
-    const [active, setActive] = useState<boolean>(false);
+    const [active, setActive] = useState<boolean>(false)
+    const [errors, setErrors] = useState<ErrorOrErrorWithField[]>([])
 
     const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -16,8 +19,10 @@ export const DropAndClickBox = () => {
         if (!csvFile) {
             return;
         }
-        await handleCsvFile(csvFile);
-    };
+
+        await uploadCsvFile(csvFile, setErrors)
+    }
+
     const handleFileInputChange = async (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -26,8 +31,10 @@ export const DropAndClickBox = () => {
         if (!csvFile) {
             return;
         }
-        await handleCsvFile(csvFile);
-    };
+
+        await uploadCsvFile(csvFile, setErrors)
+    }
+
 
     return (
         <>
@@ -41,7 +48,16 @@ export const DropAndClickBox = () => {
                     <FileButton handleFileInputChange={handleFileInputChange} />
                 </Grid>
                 <Grid item>
-                    <p style={{ padding: '1rem' }}>lub</p>
+
+                    <p
+                        style={{
+                            padding: '1rem',
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        lub
+                    </p>
+
                 </Grid>
                 <Grid item>
                     <DropBox
@@ -51,7 +67,9 @@ export const DropAndClickBox = () => {
                     />
                 </Grid>
             </Grid>
-            <ErrorList />
+
+            {errors.length > 0 && <ErrorList errors={errors} />}
+
         </>
     );
 };

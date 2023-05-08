@@ -22,7 +22,7 @@ import { FormValues, InputFormData } from '../../../types/formValues';
 import theme from '../../../theme';
 import { routes } from '../../../routes/routesMap';
 
-const StyledButton = styled(Button)({
+export const StyledButton = styled(Button)({
     textTransform: 'none',
 });
 
