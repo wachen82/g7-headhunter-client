@@ -1,13 +1,12 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { routes } from './routesMap'
 import { LoginPage } from '../pages/LoginPage/LoginPage'
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
+
 import { AdminPage } from '../pages/AdminPage/AdminPage'
 import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage'
 import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage'
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage'
 
-import { AdminPage } from '../pages/AdminPage/AdminPage'
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage'
 

@@ -2,25 +2,21 @@ import * as React from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import { FormHelperText, InputAdornment, MenuItem } from '@mui/material'
-import theme from '../../../../theme'
-import { useForm, useFormContext } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { expectedWorkForm } from '../register.schema'
-import { defaultValues } from '../FormDefaultValues'
+import { InputAdornment, MenuItem } from '@mui/material'
 
-// import { IUserProfileEntity1 } from '../types'
-import { IUserProfileEntity } from 'types'
+import { useFormContext, Controller } from 'react-hook-form'
+import { defaultValues } from '../FormDefaultValues'
 
 export const ExpectedWorkForm = () => {
     const {
+        register,
+        watch,
+        control,
         formState: { errors },
-    } = useForm<IUserProfileEntity>({
-        resolver: yupResolver(expectedWorkForm),
-        defaultValues,
-    })
-    const { register } = useFormContext()
+    } = useFormContext()
 
+    console.log(watch('expectedTypeWork'))
+    console.log('errors:', errors)
     return (
         <>
             <Typography variant="h6" gutterBottom>
@@ -28,125 +24,145 @@ export const ExpectedWorkForm = () => {
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <TextField
-                        id="targetWorkCity"
-                        label="Miasto"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        error={Boolean(errors.targetWorkCity)}
-                        {...register('targetWorkCity')}
-                        helperText={errors.targetWorkCity?.message}
+                    <Controller
+                        name="targetWorkCity"
+                        control={control}
+                        defaultValue={defaultValues.targetWorkCity}
+                        render={({ ...field }) => (
+                            <TextField
+                                {...field}
+                                id="targetWorkCity"
+                                label="Miasto"
+                                type="text"
+                                fullWidth
+                                variant="outlined"
+                                {...register('targetWorkCity')}
+                                error={!!errors.targetWorkCity}
+                                helperText={errors.targetWorkCity?.message?.toString()}
+                            />
+                        )}
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        id="expectedSalary"
-                        label="Oczekiwane wynagrodzenie"
-                        type="number"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    zł
-                                </InputAdornment>
-                            ),
-                        }}
-                        fullWidth
-                        variant="outlined"
-                        {...register('expectedSalary')}
+                    <Controller
+                        name="expectedSalary"
+                        control={control}
+                        defaultValue={defaultValues.expectedSalary}
+                        render={({ ...field }) => (
+                            <TextField
+                                {...field}
+                                id="expectedSalary"
+                                label="Oczekiwane wynagrodzenie"
+                                type="number"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            zł
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                fullWidth
+                                variant="outlined"
+                                {...register('expectedSalary')}
+                                error={!!errors.expectedSalary}
+                                helperText={errors.expectedSalary?.message?.toString()}
+                            />
+                        )}
                     />
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.expectedSalary?.message}
-                    </FormHelperText>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        id="expectedContractType"
-                        label="Rodzaj Kontractu"
-                        type="text"
-                        fullWidth
-                        required
-                        select
-                        variant="outlined"
-                        {...register('expectedContractType')}
-                    >
-                        <MenuItem value="Hybrydowo">Brak preferencji</MenuItem>
-                        <MenuItem value="Tylko UoP">Tylko UoP</MenuItem>
-                        <MenuItem value="Możliwe B2B">Możliwe B2B</MenuItem>
-                        <MenuItem value="Możliwe UZ/UoD">
-                            Możliwe UZ/UoD
-                        </MenuItem>
-                    </TextField>
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.expectedContractType?.message}
-                    </FormHelperText>
+                    <Controller
+                        name="expectedContractType"
+                        control={control}
+                        defaultValue={defaultValues.expectedContractType}
+                        render={({ ...field }) => (
+                            <TextField
+                                {...field}
+                                id="expectedContractType"
+                                label="Rodzaj Kontractu"
+                                type="text"
+                                fullWidth
+                                required
+                                select
+                                variant="outlined"
+                                {...register('expectedContractType')}
+                                error={!!errors.expectedContractType}
+                                helperText={errors.expectedContractType?.message?.toString()}
+                            >
+                                <MenuItem value="Hybrydowo">
+                                    Brak preferencji
+                                </MenuItem>
+                                <MenuItem value="Tylko UoP">Tylko UoP</MenuItem>
+                                <MenuItem value="Możliwe B2B">
+                                    Możliwe B2B
+                                </MenuItem>
+                                <MenuItem value="Możliwe UZ/UoD">
+                                    Możliwe UZ/UoD
+                                </MenuItem>
+                            </TextField>
+                        )}
+                    />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        id="expectedTypeWork"
-                        label="Rodzaj pracy"
-                        type="text"
-                        fullWidth
-                        required
-                        select
-                        variant="outlined"
-                        {...register('expectedTypeWork')}
-                    >
-                        <MenuItem value="Na miejsc">Na miejscu</MenuItem>
-                        <MenuItem value="Gotowość do przeprowadzki">
-                            Gotowość do przeprowadzki
-                        </MenuItem>
-                        <MenuItem value="Wyłącznie zdalnie">
-                            Wyłącznie zdalnie
-                        </MenuItem>
-                        <MenuItem value="Hybrydowo">Hybrydowo</MenuItem>
-                        <MenuItem value="Bez znaczenia">Bez znaczenia</MenuItem>
-                    </TextField>
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.expectedTypeWork?.message}
-                    </FormHelperText>
+                    <Controller
+                        name="expectedTypeWork"
+                        control={control}
+                        defaultValue={defaultValues.expectedTypeWork}
+                        render={({ ...field }) => (
+                            <TextField
+                                {...field}
+                                id="expectedTypeWork"
+                                label="Rodzaj pracy"
+                                type="text"
+                                fullWidth
+                                required
+                                select
+                                variant="outlined"
+                                {...register('expectedTypeWork')}
+                                error={!!errors.expectedTypeWork}
+                                helperText={errors.expectedTypeWork?.message?.toString()}
+                            >
+                                <MenuItem value="Na miejsc">
+                                    Na miejscu
+                                </MenuItem>
+                                <MenuItem value="Gotowość do przeprowadzki">
+                                    Gotowość do przeprowadzki
+                                </MenuItem>
+                                <MenuItem value="Wyłącznie zdalnie">
+                                    Wyłącznie zdalnie
+                                </MenuItem>
+                                <MenuItem value="Hybrydowo">Hybrydowo</MenuItem>
+                                <MenuItem value="Bez znaczenia">
+                                    Bez znaczenia
+                                </MenuItem>
+                            </TextField>
+                        )}
+                    />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        id="canTakeApprenticeship"
-                        label="Mogę odbyć praktyki/staż"
-                        type="text"
-                        fullWidth
-                        required
-                        select
-                        variant="outlined"
-                        {...register('canTakeApprenticeship')}
-                    >
-                        <MenuItem value="Nie">Nie</MenuItem>
-                        <MenuItem value="TAK">TAK</MenuItem>
-                    </TextField>
-                    <FormHelperText
-                        sx={{
-                            margin: 0,
-                            paddingX: '1rem',
-                            backgroundColor: theme.palette.secondary.main,
-                        }}
-                    >
-                        {errors.canTakeApprenticeship?.message}
-                    </FormHelperText>
+                    <Controller
+                        name="canTakeApprenticeship"
+                        control={control}
+                        defaultValue={defaultValues.canTakeApprenticeship}
+                        render={({ ...field }) => (
+                            <TextField
+                                {...field}
+                                id="canTakeApprenticeship"
+                                label="Mogę odbyć praktyki/staż"
+                                type="text"
+                                fullWidth
+                                required
+                                select
+                                variant="outlined"
+                                {...register('canTakeApprenticeship')}
+                                error={!!errors.canTakeApprenticeship}
+                                helperText={errors.canTakeApprenticeship?.message?.toString()}
+                            >
+                                <MenuItem value="Nie">Nie</MenuItem>
+                                <MenuItem value="TAK">TAK</MenuItem>
+                            </TextField>
+                        )}
+                    />
                 </Grid>
             </Grid>
         </>
