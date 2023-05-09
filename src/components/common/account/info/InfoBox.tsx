@@ -1,20 +1,21 @@
-import React from 'react'
-import { Avatar, Box } from '@mui/material'
-import theme from '../../../../../src/theme'
-import { InfoContact } from './InfoContact'
-import { InfoName } from './InfoName'
-import { InfoBio } from './InfoBio'
-import { InfoButton } from './InfoButton'
-import { IUserProfileEntity } from 'types'
+import React from 'react';
+import { Avatar, Box } from '@mui/material';
+import theme from '../../../../../src/theme';
+import { InfoContact } from './InfoContact';
+import { InfoName } from './InfoName';
+import { InfoBio } from './InfoBio';
+import { InfoButton } from './InfoButton';
+import { IUserProfileEntity, UserProfilResponse } from 'types';
 
 interface Props {
-    firstName: IUserProfileEntity['firstName']
-    lastName: IUserProfileEntity['lastName']
-    avatarUrl: string
-    githubUsername: IUserProfileEntity['githubUsername']
-    phone: IUserProfileEntity['phone']
-    email: IUserProfileEntity['email']
-    bio: IUserProfileEntity['bio']
+    firstName: IUserProfileEntity['firstName'];
+    lastName: IUserProfileEntity['lastName'];
+    avatarUrl: string;
+    githubUsername: IUserProfileEntity['githubUsername'];
+    phone: IUserProfileEntity['phone'];
+    email: IUserProfileEntity['email'];
+    bio: IUserProfileEntity['bio'];
+    jobStatus: UserProfilResponse['info']['status'];
 }
 
 export const InfoBox = (props: Props) => {
@@ -26,7 +27,8 @@ export const InfoBox = (props: Props) => {
         phone,
         email,
         bio,
-    } = props
+        jobStatus,
+    } = props;
 
     return (
         <Box sx={{ width: '250px', height: '718px' }}>
@@ -70,8 +72,8 @@ export const InfoBox = (props: Props) => {
                     buttonUrl={'#'}
                     buttonText={'Brak zainteresowania'}
                 />
-                <InfoButton buttonUrl={'#'} buttonText={'Zatrudniony'} />
+                <InfoButton buttonUrl={'#'} buttonText={jobStatus} />
             </Box>
         </Box>
-    )
-}
+    );
+};

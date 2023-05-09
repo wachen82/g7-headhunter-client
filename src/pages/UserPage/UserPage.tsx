@@ -81,6 +81,10 @@ export const UserPage = () => {
                             phone={userProfile?.info.phone as string}
                             email={userProfile?.info.email as string}
                             bio={userProfile?.info.bio as string}
+                            jobStatus={
+                                userProfile?.info
+                                    .status as UserProfilResponse['info']['status']
+                            }
                         />
                     </Box>
 
