@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "types": [
-        "../g7-headhunter-server/types"
+        "../project-head-hunter/types"
       ]
     }
   }
