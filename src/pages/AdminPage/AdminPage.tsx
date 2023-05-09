@@ -1,7 +1,9 @@
-import { Container, Divider, Typography } from '@mui/material'
-import { DropAndClickBox } from '../../components/admin/DropAndClickBox'
-import theme from '../../theme'
-import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar'
+import { Container, Divider, Typography } from '@mui/material';
+import { DropAndClickBox } from '../../components/admin/DropAndClickBox';
+import theme from '../../theme';
+import { HrForm } from '../../components/forms/HrForm/HrForm';
+import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
+
 
 export const AdminPage = () => {
     return (
@@ -21,21 +23,35 @@ export const AdminPage = () => {
                     backgroundColor: theme.palette.secondary.light,
                 }}
             >
-                <Typography variant="h1" sx={{ fontSize: 48, padding: 5 }}>
+                <Typography
+                    variant="h1"
+                    color={theme.palette.text.primary}
+                    sx={{ fontSize: '18px', padding: 3, textAlign: 'left' }}
+                >
                     Panel administratora
                 </Typography>
                 <Divider sx={{ backgroundColor: theme.palette.primary.main }} />
-                <Typography variant="h2" sx={{ fontSize: 32, padding: 5 }}>
+                <Typography
+                    variant="h2"
+                    color={theme.palette.text.primary}
+                    sx={{ fontSize: '18px', padding: 3, textAlign: 'center' }}
+                >
                     Importuj kursantów
                 </Typography>
                 <DropAndClickBox />
-                <Typography variant="h2" sx={{ fontSize: 32, padding: 5 }}>
+                <Typography
+                    variant="h2"
+                    color={theme.palette.text.primary}
+                    sx={{
+                        fontSize: '18px',
+                        textAlign: 'center',
+                        padding: 3,
+                    }}
+                >
                     Dodaj headhunterów
                 </Typography>
-                <Typography variant="body1">
-                    Formularz do dodawania headhunterów
-                </Typography>
+                <HrForm />
             </Container>
         </main>
-    )
-}
+    );
+};

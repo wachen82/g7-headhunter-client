@@ -11,20 +11,25 @@ import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
 import { CustomBasicForm } from '../../common/CustomBasicForm/CustomBasicForm'
 import { useSnackBar } from '../../../hooks/useSnackBar'
 import { loginDataArr } from './login-data'
+import { useAppDispatch } from '../../../hooks/reduxHooks'
+import { setLogin } from '../../../state/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginForm = () => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const {
         snackBarMessage,
         snackBarType,
         isSnackBarOpen,
         showSnackBar,
         hideSnackBar,
-    } = useSnackBar()
+    } = useSnackBar();
 
     const defaultValues = {
         email: '',
         password: '',
-    }
+    };
 
     const {
         register,
@@ -34,34 +39,58 @@ export const LoginForm = () => {
     } = useForm<FormValues>({
         resolver: yupResolver(logInSchema),
         defaultValues,
-    })
+    });
 
     const onSubmit = async (data: FormValues): Promise<void> => {
         try {
             const res = await axios(`${apiUrl}${ENDPOINTS.signIn}`, {
                 method: 'POST',
                 data: data,
+                withCredentials: true,
             })
-            if (res.data.role === 'Admin') {
-                showSnackBar(
-                    'Zalogowałeś się poprawnie jako Admin',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-            } else if (!res.data.active) {
-                showSnackBar(
-                    'Zalogowałeś się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
-                    SnackBarEnum.SUCCESS_MESSAGE
-                )
-                reset(defaultValues)
+            dispatch(setLogin({ user: res.data }))
+            reset(defaultValues)
+
+            switch (res.data.role) {
+                case 'Admin':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako Admin',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/admin/${res.data._id}`)
+                    break
+                case 'Kursant':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako Kursant',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/user/${res.data._id}`)
+
+                    break
+                case 'HR':
+                    showSnackBar(
+                        'Zalogowałeś się poprawnie jako HR',
+                        SnackBarEnum.SUCCESS_MESSAGE
+                    )
+                    navigate(`/hr/${res.data._id}`)
+                    break
+                default:
+                    showSnackBar('Błąd logowania, spróbuj ponownie.')
             }
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar('Taki użytkownik nie jest zarejestrowany')
+                if (err.response?.status === 403) {
+                    showSnackBar(
+                        'Logujesz się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora'
+                    )
+                } else {
+                    showSnackBar('Taki użytkownik nie jest zarejestrowany')
+                }
             } else {
-                showSnackBar('Wystąpił niespodziewany błąd')
+                showSnackBar('Wystąpił niespodziewany błąd');
             }
         }
-    }
+    };
 
     return (
         <Box width="400px" maxWidth="90%">
@@ -83,5 +112,5 @@ export const LoginForm = () => {
                 />
             )}
         </Box>
-    )
-}
+    );
+};

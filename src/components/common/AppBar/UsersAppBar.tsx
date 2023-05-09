@@ -1,15 +1,15 @@
-import React from 'react'
-import { AppBar, Box, Container, Toolbar } from '@mui/material'
-import { MenuBox } from '../account/menu/MenuBox'
-import theme from '../../../theme'
+import React from 'react';
+import { AppBar, Box, Container, Toolbar } from '@mui/material';
+import { MenuBox } from '../account/menu/MenuBox';
+import theme from '../../../theme';
 
 interface Props {
-    userName: string
-    avatarUrl: string
+    userName: string;
+    avatarUrl: string;
 }
 
 export const UsersAppBar = (props: Props) => {
-    const { userName, avatarUrl } = props
+    const { userName, avatarUrl } = props;
     return (
         <Box sx={{ flexGrow: 1, paddingLeft: 0 }}>
             <AppBar
@@ -48,5 +48,5 @@ export const UsersAppBar = (props: Props) => {
                 </Toolbar>
             </AppBar>
         </Box>
-    )
-}
+    );
+};

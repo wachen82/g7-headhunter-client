@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     Avatar,
     Button,
@@ -8,55 +8,71 @@ import {
     Paper,
     Popper,
     Typography,
-} from '@mui/material'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import theme from '../../../../theme'
-import { MenuLink } from './MenuLink'
-import { routes } from '../../../../routes/routesMap'
+} from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import theme from '../../../../theme';
+import { MenuLink } from './MenuLink';
+import { routes } from '../../../../routes/routesMap';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { setLogout } from '../../../../state/authSlice';
+import { clearPersistedState } from '../../../../app/store';
+import axios from 'axios';
+import { apiUrl } from '../../../../config/api';
+import { ENDPOINTS } from '../../../../services/endpoints/endpoints';
 
 interface Props {
-    avatarUrl: string
-    userName: string
+    avatarUrl: string;
+    userName: string;
 }
 
 export const MenuBox = (props: Props) => {
-    const { avatarUrl, userName } = props
+    const { avatarUrl, userName } = props;
 
-    const [open, setOpen] = React.useState(false)
-    const anchorRef = React.useRef<HTMLButtonElement>(null)
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef<HTMLButtonElement>(null);
+    const dispatch = useAppDispatch();
+    const handleLogout = async () => {
+        await clearPersistedState();
+        await axios(`${apiUrl}${ENDPOINTS.signOut}`, {
+            method: 'GET',
+            withCredentials: true,
+        });
+
+        dispatch(setLogout());
+    };
 
     const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen)
-    }
+        setOpen((prevOpen) => !prevOpen);
+    };
 
     const handleClose = (event: Event | React.SyntheticEvent) => {
         if (
             anchorRef.current &&
             anchorRef.current.contains(event.target as HTMLElement)
         ) {
-            return
+            return;
         }
 
-        setOpen(false)
-    }
+        setOpen(false);
+    };
 
     function handleListKeyDown(event: React.KeyboardEvent) {
         if (event.key === 'Tab') {
-            event.preventDefault()
-            setOpen(false)
+            event.preventDefault();
+            setOpen(false);
         } else if (event.key === 'Escape') {
-            setOpen(false)
+            setOpen(false);
         }
     }
 
-    const prevOpen = React.useRef(open)
+    const prevOpen = React.useRef(open);
     React.useEffect(() => {
         if (prevOpen.current && !open) {
-            anchorRef.current!.focus()
+            anchorRef.current!.focus();
         }
 
-        prevOpen.current = open
-    }, [open])
+        prevOpen.current = open;
+    }, [open]);
 
     return (
         <>
@@ -136,6 +152,7 @@ export const MenuBox = (props: Props) => {
                                         url={'#'}
                                     />
                                     <MenuLink
+                                        onClick={handleLogout}
                                         handleClose={handleClose}
                                         text={'Wyloguj'}
                                         url={routes.home}
@@ -147,5 +164,5 @@ export const MenuBox = (props: Props) => {
                 )}
             </Popper>
         </>
-    )
-}
+    );
+};

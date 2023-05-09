@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
@@ -30,6 +30,6 @@ const theme = createTheme({
             dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
         },
     },
-})
+});
 
-export default theme
+export default theme;
