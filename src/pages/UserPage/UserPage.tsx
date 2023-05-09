@@ -21,6 +21,8 @@ export const UserPage = () => {
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
 
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
+
+    //@TODO dodać githubUsername do userProfile
     const githubUsername = 'xkrsx';
 
     useEffect(() => {
@@ -202,6 +204,7 @@ export const UserPage = () => {
                                 margin: '0 0 12px 4px',
                             }}
                         >
+                            {/* //@TODO problem z linkami: każdy url tworzy osobny obiekt w tablicy, problem z iteracją po tych obiektach */}
                             {/*{(userProfile?.profile.projectUrls[0][*/}
                             {/*    'url'*/}
                             {/*] as any)!.map((link: string) => (*/}
