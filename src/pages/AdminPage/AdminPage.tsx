@@ -1,4 +1,4 @@
-import { Container, Divider, Typography } from '@mui/material';
+import { Box, Container, Divider, Typography } from '@mui/material';
 import { DropAndClickBox } from '../../components/admin/DropAndClickBox';
 import theme from '../../theme';
 import { HrForm } from '../../components/forms/HrForm/HrForm';
@@ -14,7 +14,12 @@ export const AdminPage = () => {
                 justifyContent: 'center',
             }}
         >
-            <UsersAppBar avatarUrl={'avatarUrl'} userName={'imię nazwisko'} />
+            <Box sx={{ width: '100%' }}>
+                <UsersAppBar
+                    avatarUrl={'avatarUrl'}
+                    userName={'imię nazwisko'}
+                />
+            </Box>
             <Container
                 sx={{
                     maxWidth: '80%',
