@@ -3,7 +3,7 @@ export const routes = {
     signIn: '/sign-in',
     signUp: '/sign-up',
     admin: '/admin',
-    student: '/student',
+    student: '/user',
     resetPassword: '/reset-password',
     setNewPassword: '/reset-password/:token',
     notFound: '*',

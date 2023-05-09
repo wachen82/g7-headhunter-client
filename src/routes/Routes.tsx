@@ -6,7 +6,7 @@ import { AdminPage } from '../pages/AdminPage/AdminPage'
 import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage'
 import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage'
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage'
-import { StudentPage } from '../pages/StudentPage/StudentPage'
+import { UserPage } from '../pages/UserPage/UserPage'
 
 const router = createBrowserRouter([
     {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     },
     {
         path: routes.student,
-        element: <StudentPage />,
+        element: <UserPage />,
     },
     {
         path: routes.notFound,

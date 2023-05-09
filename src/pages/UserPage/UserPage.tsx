@@ -11,7 +11,7 @@ import { ExpectationsBox } from '../../components/common/StudentPortfolio/Expect
 import { PortfolioLink } from '../../components/common/StudentPortfolio/PortfolioLink/PortfolioLink'
 import { IUserProfileEntity } from 'types'
 
-export const StudentPage = () => {
+export const UserPage = () => {
     useTitle('MegaK HeadHunter - Kursant i jego CV')
 
     const [
