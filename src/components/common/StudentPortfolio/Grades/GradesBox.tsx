@@ -1,8 +1,23 @@
-import React from 'react'
-import { SingleGrade } from './SingleGrade'
-import { Box } from '@mui/material'
+import React from 'react';
+import { SingleGrade } from './SingleGrade';
+import { Box } from '@mui/material';
+import { UserProfilResponse } from 'types';
 
-export const GradesBox = () => {
+interface Props {
+    courseCompletion: UserProfilResponse['profile']['skills']['courseCompletion'];
+    courseEngagement: UserProfilResponse['profile']['skills']['courseEngagement'];
+    projectDegree: UserProfilResponse['profile']['skills']['projectDegree'];
+    teamProjectDegree: UserProfilResponse['profile']['skills']['teamProjectDegree'];
+}
+
+export const GradesBox = (props: Props) => {
+    const {
+        courseCompletion,
+        courseEngagement,
+        projectDegree,
+        teamProjectDegree,
+    } = props;
+
     return (
         <Box
             sx={{
@@ -16,19 +31,22 @@ export const GradesBox = () => {
                 margin: '0 0 12px 4px',
             }}
         >
-            <SingleGrade gradeName={'Ocena przejścia kursu'} grade={5} />
+            <SingleGrade
+                gradeName={'Ocena przejścia kursu'}
+                grade={courseCompletion}
+            />
             <SingleGrade
                 gradeName={`Ocena aktywności i zaangażowania na kursie`}
-                grade={4}
+                grade={courseEngagement}
             />
             <SingleGrade
                 gradeName={'Ocena kodu w projekcie własnym'}
-                grade={5}
+                grade={projectDegree}
             />
             <SingleGrade
                 gradeName={'Ocena pracy w zespole w Scrum'}
-                grade={4}
+                grade={teamProjectDegree}
             />
         </Box>
-    )
-}
+    );
+};
