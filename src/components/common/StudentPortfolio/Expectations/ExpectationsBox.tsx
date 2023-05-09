@@ -45,7 +45,7 @@ export const ExpectationsBox = (props: Props) => {
                 expectationName={
                     'Docelowe miasto, gdzie chce pracować kandydat'
                 }
-                userExpectation={targetWorkCity}
+                userExpectation={targetWorkCity as string}
             />
             <SingleExpectation
                 expectationName={'Oczekiwany typ kontraktu'}

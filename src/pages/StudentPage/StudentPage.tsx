@@ -9,6 +9,7 @@ import { PortfolioContent } from '../../components/common/StudentPortfolio/Portf
 import { GradesBox } from '../../components/common/StudentPortfolio/Grades/GradesBox'
 import { ExpectationsBox } from '../../components/common/StudentPortfolio/Expectations/ExpectationsBox'
 import { PortfolioLink } from '../../components/common/StudentPortfolio/PortfolioLink/PortfolioLink'
+import { IUserProfileEntity } from 'types'
 
 export const StudentPage = () => {
     useTitle('MegaK HeadHunter - Kursant i jego CV')
@@ -121,11 +122,17 @@ export const StudentPage = () => {
                             }
                         />
                         <ExpectationsBox
-                            expectedTypeWork={expectedTypeWork}
+                            expectedTypeWork={
+                                expectedTypeWork as IUserProfileEntity['expectedTypeWork']
+                            }
                             targetWorkCity={targetWorkCity}
-                            expectedContractType={expectedContractType}
+                            expectedContractType={
+                                expectedContractType as IUserProfileEntity['expectedContractType']
+                            }
                             expectedSalary={expectedSalary}
-                            canTakeApprenticeship={canTakeApprenticeship}
+                            canTakeApprenticeship={
+                                canTakeApprenticeship as IUserProfileEntity['canTakeApprenticeship']
+                            }
                             monthsOfCommercialExp={monthsOfCommercialExp}
                         />
 

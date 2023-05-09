@@ -63,7 +63,7 @@ export const InfoBox = (props: Props) => {
                 >
                     <InfoContact phone={phone} email={email} />
 
-                    <InfoBio bio={bio} />
+                    <InfoBio bio={bio as string} />
                 </Box>
 
                 <InfoButton
