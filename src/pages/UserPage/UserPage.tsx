@@ -9,11 +9,11 @@ import { IUserProfileEntity, UserProfilResponse, UserRespons } from 'types';
 import { Box } from '@mui/material';
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink';
 import { InfoBox } from '../../components/common/account/info/InfoBox';
-import { PortfolioBar } from '../../components/common/StudentPortfolio/PortfolioBar';
-import { PortfolioContent } from '../../components/common/StudentPortfolio/PortfolioContent';
-import { GradesBox } from '../../components/common/StudentPortfolio/Grades/GradesBox';
-import { ExpectationsBox } from '../../components/common/StudentPortfolio/Expectations/ExpectationsBox';
-import { PortfolioLink } from '../../components/common/StudentPortfolio/PortfolioLink/PortfolioLink';
+import { PortfolioBar } from '../../components/common/UserPortfolio/PortfolioBar';
+import { PortfolioContent } from '../../components/common/UserPortfolio/PortfolioContent';
+import { GradesBox } from '../../components/common/UserPortfolio/Grades/GradesBox';
+import { ExpectationsBox } from '../../components/common/UserPortfolio/Expectations/ExpectationsBox';
+import { PortfolioLink } from '../../components/common/UserPortfolio/PortfolioLink/PortfolioLink';
 
 export const UserPage = () => {
     useTitle('Strona Kursanta');
