@@ -64,6 +64,8 @@ export const UserPage = () => {
         monthsOfCommercialExp,
     } = workExpectations
 
+    const userName = `${firstName} ${lastName}`
+
     return (
         <main
             style={{
@@ -73,11 +75,7 @@ export const UserPage = () => {
             }}
         >
             <Box sx={{ width: '100%' }}>
-                <UsersAppBar
-                    avatarUrl={avatarUrl}
-                    firstName={firstName}
-                    lastName={lastName}
-                />
+                <UsersAppBar avatarUrl={avatarUrl} userName={userName} />
             </Box>
 
             <Box

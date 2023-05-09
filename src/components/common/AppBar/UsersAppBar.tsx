@@ -2,16 +2,14 @@ import React from 'react'
 import { AppBar, Box, Container, Toolbar } from '@mui/material'
 import { MenuBox } from '../account/menu/MenuBox'
 import theme from '../../../theme'
-import { IUserProfileEntity } from 'types'
 
 interface Props {
-    firstName: IUserProfileEntity['firstName']
-    lastName: IUserProfileEntity['lastName']
+    userName: string
     avatarUrl: string
 }
 
 export const UsersAppBar = (props: Props) => {
-    const { firstName, lastName, avatarUrl } = props
+    const { userName, avatarUrl } = props
     return (
         <Box sx={{ margin: '0 auto 26px' }}>
             <AppBar
@@ -44,11 +42,7 @@ export const UsersAppBar = (props: Props) => {
                             alt="Logo megak"
                             src={process.env.PUBLIC_URL + '/mega-k.png'}
                         />
-                        <MenuBox
-                            firstName={firstName}
-                            lastName={lastName}
-                            avatarUrl={avatarUrl}
-                        />
+                        <MenuBox userName={userName} avatarUrl={avatarUrl} />
                     </Container>
                 </Toolbar>
             </AppBar>

@@ -13,16 +13,14 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import theme from '../../../../theme'
 import { MenuLink } from './MenuLink'
 import { routes } from '../../../../routes/routesMap'
-import { IUserProfileEntity } from 'types'
 
 interface Props {
-    firstName: IUserProfileEntity['firstName']
-    lastName: IUserProfileEntity['lastName']
+    userName: string
     avatarUrl: string
 }
 
 export const MenuBox = (props: Props) => {
-    const { firstName, lastName, avatarUrl } = props
+    const { userName, avatarUrl } = props
 
     const [open, setOpen] = React.useState(false)
     const anchorRef = React.useRef<HTMLButtonElement>(null)
@@ -81,7 +79,7 @@ export const MenuBox = (props: Props) => {
                 }}
             >
                 <Avatar
-                    alt={`${firstName} ${lastName}`}
+                    alt={`${userName}`}
                     sx={{ width: 45, height: 45 }}
                     src={avatarUrl}
                 />
@@ -94,7 +92,7 @@ export const MenuBox = (props: Props) => {
                         textTransform: 'capitalize',
                     }}
                 >
-                    {firstName} {lastName}
+                    {userName}
                     <ArrowDropDownIcon
                         sx={{
                             marginLeft: '12px',
