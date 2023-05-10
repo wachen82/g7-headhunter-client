@@ -33,7 +33,7 @@ export const Menu = () => {
     const { id } = useParams();
     const fetchReservedUsers = async (userId: string | undefined) => {
         try {
-            const response = await axios.get(`/reserved-users/${userId}`);
+            const response = await axios.get(`${apiUrl}${ENDPOINTS.reservedUsers}${userId}`);
             const reservedUsers = response.data;
             console.log(reservedUsers);
             setReservedUsers(reservedUsers)
@@ -41,7 +41,6 @@ export const Menu = () => {
             console.error(error);
         }
     };
-
     fetchReservedUsers(id);
 
     const [value, setValue] = React.useState(0)
