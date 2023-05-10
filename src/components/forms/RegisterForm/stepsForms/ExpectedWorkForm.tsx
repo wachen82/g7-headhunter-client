@@ -1,11 +1,11 @@
-import * as React from 'react'
-import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
-import { InputAdornment, MenuItem } from '@mui/material'
+import * as React from 'react';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import { InputAdornment, MenuItem } from '@mui/material';
 
-import { useFormContext, Controller } from 'react-hook-form'
-import { defaultValues } from '../FormDefaultValues'
+import { useFormContext, Controller } from 'react-hook-form';
+import { defaultValues } from '../FormDefaultValues';
 
 export const ExpectedWorkForm = () => {
     const {
@@ -13,10 +13,10 @@ export const ExpectedWorkForm = () => {
         watch,
         control,
         formState: { errors },
-    } = useFormContext()
+    } = useFormContext();
 
-    console.log(watch('expectedTypeWork'))
-    console.log('errors:', errors)
+    console.log(watch('expectedTypeWork'));
+    console.log('errors:', errors);
     return (
         <>
             <Typography variant="h6" gutterBottom>
@@ -122,7 +122,7 @@ export const ExpectedWorkForm = () => {
                                 error={!!errors.expectedTypeWork}
                                 helperText={errors.expectedTypeWork?.message?.toString()}
                             >
-                                <MenuItem value="Na miejsc">
+                                <MenuItem value="Na miejscu">
                                     Na miejscu
                                 </MenuItem>
                                 <MenuItem value="Gotowość do przeprowadzki">
@@ -166,5 +166,5 @@ export const ExpectedWorkForm = () => {
                 </Grid>
             </Grid>
         </>
-    )
-}
+    );
+};
