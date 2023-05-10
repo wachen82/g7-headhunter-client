@@ -1,18 +1,18 @@
-import {useTitle} from '../../hooks/useTitle';
-import {UsersAppBar} from '../../components/common/AppBar/UsersAppBar';
-import {useAppSelector} from '../../hooks/reduxHooks';
-import {HrRespons} from 'types';
-import {Box, Container} from '@mui/material';
+import { useTitle } from '../../hooks/useTitle';
+import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { HrRespons } from 'types';
+import { Box, Container } from '@mui/material';
 import theme from '../../theme';
-import {Menu} from "../../components/hr/MenuView/Menu/Menu";
+import { Menu } from '../../components/hr/MenuView/Menu/Menu';
 
 
 export const HrPage = () => {
-    useTitle('Strona HR')
-    const user = useAppSelector((state) => state.user) as HrRespons
+    useTitle('Strona HR');
+    const user = useAppSelector((state) => state.user) as HrRespons;
 
     if (!user) {
-        return null
+        return null;
     }
 
     return (
@@ -24,7 +24,7 @@ export const HrPage = () => {
                     justifyContent: 'center',
                 }}
             >
-                <Box sx={{width: '100%'}}>
+                <Box sx={{ width: '100%' }}>
                     <UsersAppBar
                         avatarUrl={'avatarUrl'}
                         userName={'Milena Pieńkosz'}
@@ -42,9 +42,9 @@ export const HrPage = () => {
                         bgcolor: theme.palette.secondary.light,
                     }}
                 >
-                    <Menu/>
+                    <Menu />
                 </Container>
             </main>
         </>
-    )
-}
+    );
+};
