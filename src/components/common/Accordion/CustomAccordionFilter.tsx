@@ -35,7 +35,7 @@ export const CustomAccordionFilter = ({ users }: UserListProps) => {
     );
     return (<>
             {users.map(user => (
-                <Accordion key={user.email}
+                <Accordion key={user.id}
                            expanded={expanded === user.id}
                            onChange={handleChange(user.id)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>

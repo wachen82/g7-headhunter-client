@@ -27,7 +27,7 @@ export const HrPage = () => {
                 <Box sx={{ width: '100%' }}>
                     <UsersAppBar
                         avatarUrl={'avatarUrl'}
-                        userName={'Milena Pieńkosz'}
+                        userName={'Test Test'}
                     />
                 </Box>
                 <Container

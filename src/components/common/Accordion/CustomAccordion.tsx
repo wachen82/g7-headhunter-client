@@ -9,10 +9,8 @@ import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 
 export interface UserAndSkills {
     id: string;
-    email: string;
     firstName: string;
     lastName: string;
-    avatar: string;
     courseCompletion: number;
     courseEngagement: number;
     projectDegree: number;
@@ -64,7 +62,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
     );
     return (<>
             {users.map(user => (
-                <Accordion key={user.email}
+                <Accordion key={user.id}
                            expanded={expanded === user.id}
                            onChange={handleChange(user.id)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
@@ -94,7 +92,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                             },
                         }}>
                         <Grid container
-                              spacing={{ xs: 1, md: 3 }}
+                              spacing={{ xs: 1, md: 1 }}
                               sx={{
                                   gap: 1,
                                   paddingLeft: 1,
