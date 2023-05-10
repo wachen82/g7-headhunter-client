@@ -3,11 +3,16 @@ import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
 import { useState } from 'react';
+import axios from 'axios';
+import { apiUrl } from '../../../config/api';
+import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 
 export interface UserAndSkills {
     id: string;
+    email: string;
     firstName: string;
     lastName: string;
+    avatar: string;
     courseCompletion: number;
     courseEngagement: number;
     projectDegree: number;
@@ -26,6 +31,15 @@ interface UserListProps {
 
 export const CustomAccordion = ({ users }: UserListProps) => {
     const [expanded, setExpanded] = useState<string | false>(false);
+    const handleButtonClick = async (userId:string, email:string, status:string) => {
+        try {
+            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status });
+            const updatedUser = response.data;
+            console.log(updatedUser);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
@@ -50,7 +64,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
     );
     return (<>
             {users.map(user => (
-                <Accordion key={user.id}
+                <Accordion key={user.email}
                            expanded={expanded === user.id}
                            onChange={handleChange(user.id)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
@@ -63,7 +77,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName.charAt(0)}.`}</Typography>
-                        <ButtonMain text='Zarezerwuj rozmowę' sx={{
+                        <ButtonMain text='Zarezerwuj rozmowę' onClick={(userId, userEmail, userStatus) => handleButtonClick(userId, userEmail, userStatus)} sx={{
                             fontSize: '1rem',
                             borderRadius: '0',
                             textTransform: 'none',
