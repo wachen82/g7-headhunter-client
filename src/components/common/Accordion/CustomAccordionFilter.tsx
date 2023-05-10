@@ -1,24 +1,9 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Box } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
 import React, { useState } from 'react';
-
-export interface UserAndSkills {
-    id: string;
-    firstName: string;
-    lastName: string;
-    courseCompletion: number;
-    courseEngagement: number;
-    projectDegree: number;
-    teamProjectDegree: number;
-    expectedTypeWork: string;
-    targetWorkCity: string;
-    expectedContractType: string;
-    expectedSalary: string;
-    canTakeApprenticeship: string;
-    monthsOfCommercialExp: number;
-}
+import { UserAndSkills } from './CustomAccordion';
 
 interface UserListProps {
     users: UserAndSkills[];
@@ -50,7 +35,7 @@ export const CustomAccordionFilter = ({ users }: UserListProps) => {
     );
     return (<>
             {users.map(user => (
-                <Accordion key={user.id}
+                <Accordion key={user.email}
                            expanded={expanded === user.id}
                            onChange={handleChange(user.id)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
@@ -60,6 +45,11 @@ export const CustomAccordionFilter = ({ users }: UserListProps) => {
                         display: 'flex',
                         alignItems: 'center',
                     }} expandIcon={<ExpandMore sx={{ color: theme.palette.grey['300'], height: '70px' }} />}>
+                        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', padding: '0 2px', marginRight: '20px'}}>
+                            <p style={{fontSize: '12px', fontWeight: 'normal', fontFamily: 'sans-serif'}}>Rezerwacja do</p>
+                            <p style={{fontSize: '14px'}}>23.05.2023</p>
+                        </Box>
+                        {/*@TODO: user.reservationDate*/}
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName}`}</Typography>
