@@ -1,12 +1,12 @@
 import { apiUrl } from '../config/api';
 import { ENDPOINTS } from '../services/endpoints/endpoints';
 interface UserCSV {
-    email: string
-    courseCompletion: number
-    courseEngagement: number
-    projectDegree: number
-    teamProjectDegree: number
-    bonusProjectUrls: string[]
+    email: string;
+    courseCompletion: number;
+    courseEngagement: number;
+    projectDegree: number;
+    teamProjectDegree: number;
+    bonusProjectUrls: string[];
 }
 
 export const saveCsv = async (data: UserCSV) => {
@@ -17,11 +17,12 @@ export const saveCsv = async (data: UserCSV) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
         if (!saveResponse.ok) {
-            console.error('Failed to save data')
+            console.error('Failed to save data');
         }
-        await saveResponse.json()
+        await saveResponse.json();
     } catch (error) {
         console.error(error);
     }
