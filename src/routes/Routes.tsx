@@ -14,6 +14,7 @@ import { UserPage } from '../pages/UserPage/UserPage';
 import { HrPage } from '../pages/HrPage/HrPage';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+import { ROLES } from '../types/router';
 
 const router = (user: string) =>
     createBrowserRouter([
@@ -35,15 +36,15 @@ const router = (user: string) =>
         },
         {
             path: routes.admin,
-            element: user === 'Admin' ? <AdminPage /> : <Navigate to="/" />,
+            element: user === ROLES.ADMIN ? <AdminPage /> : <Navigate to="/" />,
         },
         {
             path: routes.user,
-            element: user === 'Kursant' ? <UserPage /> : <Navigate to="/" />,
+            element: user === ROLES.USER ? <UserPage /> : <Navigate to="/" />,
         },
         {
             path: routes.hr,
-            element: user === 'HR' ? <HrPage /> : <Navigate to="/" />,
+            element: user === ROLES.HR ? <HrPage /> : <Navigate to="/" />,
         },
         {
             path: routes.resetPassword,
