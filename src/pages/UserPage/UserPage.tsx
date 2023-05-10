@@ -22,9 +22,6 @@ export const UserPage = () => {
 
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
 
-    //@TODO dodać githubUsername do userProfile
-    const githubUsername = 'xkrsx';
-
     useEffect(() => {
         (async () => {
             if (!user) return null;
@@ -39,8 +36,6 @@ export const UserPage = () => {
     if (!user) {
         return null;
     }
-
-    // console.log(userProfile?.profile.projectUrls[1].url);
 
     return (
         <main
@@ -77,7 +72,9 @@ export const UserPage = () => {
                             avatarUrl={userProfile?.info.avatar as string}
                             firstName={userProfile?.info.firstName as string}
                             lastName={userProfile?.info.lastName as string}
-                            githubUsername={githubUsername}
+                            githubUsername={
+                                userProfile?.info.githubUsername as string
+                            }
                             phone={userProfile?.info.phone as string}
                             email={userProfile?.info.email as string}
                             bio={userProfile?.info.bio as string}
@@ -208,12 +205,10 @@ export const UserPage = () => {
                                 margin: '0 0 12px 4px',
                             }}
                         >
-                            {/* //@TODO problem z linkami: każdy url tworzy osobny obiekt w tablicy, problem z iteracją po tych obiektach */}
-                            {/*{(userProfile?.profile.projectUrls[0][*/}
-                            {/*    'url'*/}
-                            {/*] as any)!.map((link: string) => (*/}
-                            {/*    <PortfolioLink url={link} key={link} />*/}
-                            {/*))}*/}
+                            {/* //@TODO problem z linkami: każdy url tworzy osobny obiekt w tablicy, problem z iteracją po tych obiektach. Rafał ma poprawić formularz rejestracji */}
+                            {userProfile?.profile.projectUrls!.map((link) => (
+                                <PortfolioLink url={link} key={link} />
+                            ))}
                         </Box>
                     </Box>
                 </Box>
