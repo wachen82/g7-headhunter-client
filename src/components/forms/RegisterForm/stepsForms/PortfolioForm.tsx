@@ -1,27 +1,24 @@
-import * as React from 'react'
-import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import { Button, IconButton } from '@mui/material'
-import theme from '../../../../theme'
-import TextField from '@mui/material/TextField'
-import { useFieldArray, useFormContext, Controller } from 'react-hook-form'
+import * as React from 'react';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import { Button, IconButton } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import { useFieldArray, useFormContext, Controller } from 'react-hook-form';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
-import { defaultValues } from '../FormDefaultValues'
+import theme from '../../../../theme';
+import { defaultValues } from '../FormDefaultValues';
 
 export const PortfolioForm = () => {
     const {
         register,
-        watch,
         control,
         formState: { errors },
-    } = useFormContext()
+    } = useFormContext();
 
     const { fields, append, remove } = useFieldArray({
         name: 'portfolioUrls',
-    })
-    console.log(watch('portfolioUrls'))
-    console.log('errors:', errors)
+    });
 
     return (
         <>
@@ -205,7 +202,7 @@ export const PortfolioForm = () => {
                                             fullWidth
                                             variant="outlined"
                                             {...register(
-                                                `portfolioUrls.${index}.url`
+                                                `portfolioUrls.${index}`
                                             )}
                                             error={!!errors.portfolioUrls}
                                             helperText={errors.portfolioUrls?.message?.toString()}
@@ -225,9 +222,7 @@ export const PortfolioForm = () => {
                                     sx={{
                                         color: theme.palette.primary.main,
                                     }}
-                                    onClick={() => {
-                                        remove(index)
-                                    }}
+                                    onClick={() => remove(index)}
                                     disabled={index === 0}
                                 >
                                     <DeleteForeverOutlinedIcon />
@@ -240,12 +235,12 @@ export const PortfolioForm = () => {
                         size="small"
                         sx={{ mt: 1, ml: 1, textTransform: 'none' }}
                         type="button"
-                        onClick={() => append({ url: '' })}
+                        onClick={() => append('')}
                     >
                         Dodaj nowy url
                     </Button>
                 </Grid>
             </Grid>
         </>
-    )
-}
+    );
+};
