@@ -9,7 +9,6 @@ export const App = () => {
             <Box
                 sx={{
                     backgroundColor: theme.palette.secondary.main,
-                    height: '100vh',
                 }}
             >
                 <AppRoutes />
