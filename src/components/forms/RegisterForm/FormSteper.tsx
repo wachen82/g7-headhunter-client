@@ -10,23 +10,22 @@ import { PortfolioForm } from './stepsForms/PortfolioForm';
 import { ExpectedWorkForm } from './stepsForms/ExpectedWorkForm';
 import { UserDataForm } from './stepsForms/UserDataForm';
 import { useSnackBar } from '../../../hooks/useSnackBar';
-import { Form } from 'react-router-dom';
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import { Form, useParams } from 'react-router-dom';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { defaultValues } from './FormDefaultValues';
 import { useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { IUserProfileEntity } from 'types';
 import { validationSchema } from './register.schema';
 import { IUserProfileEntity1 } from './types';
-import { HrFormValues } from '../../../types/hrFormValues';
 import { apiUrl } from '../../../config/api';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 import { SnackBarEnum } from '../../../types/formValues';
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
 
 export const RegisterForm = () => {
-    const [activeStep, setActiveStep] = useState(0);
     const steps = ['Dane Osobowe', 'Portfolio', 'Preferowane Zatrudnienie'];
+    const [activeStep, setActiveStep] = useState(0);
 
     const currentValidationSchema = validationSchema[activeStep];
 
@@ -36,42 +35,56 @@ export const RegisterForm = () => {
         resolver: yupResolver(currentValidationSchema),
         mode: 'all',
     });
-    const { showSnackBar } = useSnackBar();
+    const {
+        snackBarMessage,
+        snackBarType,
+        isSnackBarOpen,
+        showSnackBar,
+        hideSnackBar,
+    } = useSnackBar();
+    const { id, token } = useParams();
 
-    const formSubmitHandler: SubmitHandler<IUserProfileEntity1> = (
-        data: Partial<IUserProfileEntity1>
-    ) => {
-        console.log('form data is ', JSON.stringify(data));
-
+    const formSubmitHandler = async (
+        data: IUserProfileEntity1
+    ): Promise<void> => {
+        try {
+            const response = await fetch(
+                `${apiUrl}${ENDPOINTS.register}`
+                    .replace('{userId}', `${id}`)
+                    .replace('{token}', `${token}`),
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                    credentials: 'include',
+                }
+            );
+            if (response.status === 400) {
+                const resData = await response.json();
+                const message = await resData.message;
+                showSnackBar(
+                    `Sprawdź poprawność danych, headhunter nie został dodany do bazy. ${message}`,
+                    SnackBarEnum.ERROR_MESSAGE
+                );
+                return;
+            }
+            if (!response.ok) {
+                showSnackBar(
+                    'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+                    SnackBarEnum.ERROR_MESSAGE
+                );
+            }
+            const res = await response.json();
+            showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE);
+            methods.reset(defaultValues);
+        } catch (e) {
+            showSnackBar(
+                'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+                SnackBarEnum.ERROR_MESSAGE
+            );
+        }
         handleNext();
     };
-
-    // const formSubmitHandler = async (
-    //     data: IUserProfileEntity1
-    // ): Promise<void> => {
-    //     try {
-    //         const response = await fetch(`${apiUrl}${ENDPOINTS.register}`, {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify(data),
-    //         });
-    //         if (!response.ok) {
-    //             showSnackBar(
-    //                 'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
-    //                 SnackBarEnum.ERROR_MESSAGE
-    //             );
-    //         }
-    //         const res = await response.json();
-    //         showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE);
-    //         methods.reset(defaultValues);
-    //     } catch (e) {
-    //         showSnackBar(
-    //             'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
-    //             SnackBarEnum.ERROR_MESSAGE
-    //         );
-    //     }
-    //     handleNext();
-    // };
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
@@ -201,7 +214,7 @@ export const RegisterForm = () => {
                                         <Button
                                             variant="contained"
                                             onClick={handleNext}
-                                            sx={{ mt: 3, ml: 1 }}
+                                            sx={{ mt: 3, ml: 1, opacity: 0.5 }}
                                             disabled={
                                                 !methods.formState.isValid
                                             }
@@ -215,6 +228,14 @@ export const RegisterForm = () => {
                     )}
                 </Paper>
             </Box>
+            {isSnackBarOpen && (
+                <CustomSnackBar
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
+                />
+            )}
         </>
     );
 };
