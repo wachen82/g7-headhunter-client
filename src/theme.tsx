@@ -33,6 +33,10 @@ const theme = createTheme({
             default: '#7E7E7E',
             paper: '#1E1E1F',
         },
+        action: {
+            disabledBackground: '#292A2B',
+            disabledOpacity: 0.7,
+        },
     },
     components: {
         MuiInputLabel: {
