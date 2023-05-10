@@ -7,7 +7,7 @@ const StyledTablePagination = styled(TablePagination)<TablePaginationProps>`
     background-color: #CFCFCF;
   }
 
-  button:nth-child(1) .MuiSvgIcon-root {
+  button:nth-of-type(1) .MuiSvgIcon-root {
     background-color: #666666;
   }
 
