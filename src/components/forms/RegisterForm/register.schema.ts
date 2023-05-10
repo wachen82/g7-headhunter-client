@@ -1,8 +1,8 @@
-import * as yup from 'yup'
-import { object, string } from 'yup'
+import * as yup from 'yup';
+import { string } from 'yup';
 
 export const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export const validationSchema = [
     yup.object().shape({
@@ -21,7 +21,7 @@ export const validationSchema = [
     }),
 
     yup.object().shape({
-        portfolioUrls: yup.array(object()),
+        portfolioUrls: yup.array(string()),
         projectUrls: yup.array(
             string().url().required('Address url do projektu jest wymagany')
         ),
@@ -46,4 +46,4 @@ export const validationSchema = [
         expectedSalary: yup.string().min(0),
         canTakeApprenticeship: yup.string().required('Odpowiedz TAK lub NIE'),
     }),
-]
+];
