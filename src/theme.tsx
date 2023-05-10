@@ -30,6 +30,21 @@ const theme = createTheme({
             dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
         },
     },
+    components: {
+        MuiGrid: {
+            styleOverrides: {
+                item: {
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    height: '130px',
+                    padding: '0'
+                },
+            },
+        },
+    },
 });
 
 export default theme;
