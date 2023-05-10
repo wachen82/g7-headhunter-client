@@ -33,7 +33,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
     const [expanded, setExpanded] = useState<string | false>(false);
     const handleButtonClick = async (userId:string, email:string, status:string) => {
         try {
-            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status });
+            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status } , { withCredentials: true });
             const updatedUser = response.data;
             console.log(updatedUser);
         } catch (error) {

@@ -16,7 +16,7 @@ export const Menu = () => {
     useEffect(() => {
         const fetchAvailableUsers = async () => {
             try {
-                const response = await axios.get(`${apiUrl}${ENDPOINTS.availableUsers}`);
+                const response = await axios.get(`${apiUrl}${ENDPOINTS.availableUsers}`, { withCredentials: true });
                 const availableUsers = response.data;
                 console.log(availableUsers);
                 setAvailableUsers(availableUsers)
@@ -33,7 +33,7 @@ export const Menu = () => {
     const { id } = useParams();
     const fetchReservedUsers = async (userId: string | undefined) => {
         try {
-            const response = await axios.get(`${apiUrl}${ENDPOINTS.reservedUsers}${userId}`);
+            const response = await axios.get(`${apiUrl}${ENDPOINTS.reservedUsers}${userId}`, { withCredentials: true });
             const reservedUsers = response.data;
             console.log(reservedUsers);
             setReservedUsers(reservedUsers)
