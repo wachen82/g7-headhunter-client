@@ -1,15 +1,19 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import { routes } from './routesMap'
-import { LoginPage } from '../pages/LoginPage/LoginPage'
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
-import { AdminPage } from '../pages/AdminPage/AdminPage'
-import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage'
-import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage'
-import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage'
-import { UserPage } from '../pages/UserPage/UserPage'
-import { HrPage } from '../pages/HrPage/HrPage'
-import { useAppSelector } from '../hooks/reduxHooks'
-import { RegisterPage } from '../pages/RegisterPage/RegisterPage'
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Navigate,
+} from 'react-router-dom';
+import { routes } from './routesMap';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
+import { AdminPage } from '../pages/AdminPage/AdminPage';
+import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage';
+import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage';
+import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage';
+import { UserPage } from '../pages/UserPage/UserPage';
+import { HrPage } from '../pages/HrPage/HrPage';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 
 const router = (user: string) =>
     createBrowserRouter([
@@ -53,9 +57,9 @@ const router = (user: string) =>
             path: routes.notFound,
             element: <NotFoundPage />,
         },
-    ])
+    ]);
 
 export const AppRoutes = () => {
-    const user = useAppSelector((state) => state.user?.role)
-    return <RouterProvider router={router(user as string)} />
-}
+    const user = useAppSelector((state) => state.user?.role);
+    return <RouterProvider router={router(user as string)} />;
+};
