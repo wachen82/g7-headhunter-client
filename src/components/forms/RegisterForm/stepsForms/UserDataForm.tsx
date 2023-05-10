@@ -1,17 +1,18 @@
-import * as React from 'react'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import { useFormContext, Controller } from 'react-hook-form'
-import { Box } from '@mui/material'
-import { defaultValues } from '../FormDefaultValues'
+import * as React from 'react';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Box } from '@mui/material';
+import { defaultValues } from '../FormDefaultValues';
+import theme from '../../../../theme';
 
 export const UserDataForm = () => {
     const {
         register,
         control,
         formState: { errors },
-    } = useFormContext()
+    } = useFormContext();
 
     return (
         <>
@@ -37,6 +38,14 @@ export const UserDataForm = () => {
                                     {...register('firstName')}
                                     error={!!errors.firstName}
                                     helperText={errors.firstName?.message?.toString()}
+                                    FormHelperTextProps={{
+                                        sx: {
+                                            margin: 0,
+                                            paddingX: '1rem',
+                                            backgroundColor:
+                                                theme.palette.background.paper,
+                                        },
+                                    }}
                                 />
                             )}
                         />
@@ -58,6 +67,14 @@ export const UserDataForm = () => {
                                     {...register('lastName')}
                                     error={!!errors.lastName}
                                     helperText={errors.lastName?.message?.toString()}
+                                    FormHelperTextProps={{
+                                        sx: {
+                                            margin: 0,
+                                            paddingX: '1rem',
+                                            backgroundColor:
+                                                theme.palette.background.paper,
+                                        },
+                                    }}
                                 />
                             )}
                         />
@@ -79,6 +96,14 @@ export const UserDataForm = () => {
                                     {...register('email')}
                                     error={!!errors.email}
                                     helperText={errors.email?.message?.toString()}
+                                    FormHelperTextProps={{
+                                        sx: {
+                                            margin: 0,
+                                            paddingX: '1rem',
+                                            backgroundColor:
+                                                theme.palette.background.paper,
+                                        },
+                                    }}
                                 />
                             )}
                         />
@@ -100,6 +125,14 @@ export const UserDataForm = () => {
                                     {...register('githubUsername')}
                                     error={!!errors.githubUsername}
                                     helperText={errors.githubUsername?.message?.toString()}
+                                    FormHelperTextProps={{
+                                        sx: {
+                                            margin: 0,
+                                            paddingX: '1rem',
+                                            backgroundColor:
+                                                theme.palette.background.paper,
+                                        },
+                                    }}
                                 />
                             )}
                         />
@@ -127,5 +160,5 @@ export const UserDataForm = () => {
                 </Grid>
             </Box>
         </>
-    )
-}
+    );
+};
