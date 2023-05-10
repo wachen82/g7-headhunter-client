@@ -1,8 +1,6 @@
-import { Box, Container, Typography } from '@mui/material'
-import { LoginForm } from '../../components/forms/LoginForm/LoginForm'
-import theme from '../../theme'
-import React from 'react'
-import { RegisterForm } from '../../components/forms/RegisterForm/FormSteper'
+import { Box, Container } from '@mui/material';
+import React from 'react';
+import { RegisterForm } from '../../components/forms/RegisterForm/FormSteper';
 
 export const RegisterPage = () => {
     return (
@@ -23,5 +21,5 @@ export const RegisterPage = () => {
                 <RegisterForm />
             </Box>
         </Container>
-    )
-}
+    );
+};
