@@ -3,18 +3,21 @@ import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
 import React, { useState } from 'react';
-import { UserAndSkills } from './CustomAccordion';
+import { UserListProps } from './CustomAccordion';
 
-interface UserListProps {
-    users: UserAndSkills[];
-}
+const buttonStyles = {
+    fontSize: '1rem',
+    borderRadius: '0',
+    textTransform: 'none',
+    marginRight: '20px',
+};
 
 export const CustomAccordionFilter = ({ users }: UserListProps) => {
     const [expanded, setExpanded] = useState<string | false>(false);
-
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
+
     const grade = ['Ocena przejścia kursu:', 'Ocena aktywności i zaangażowania w kursie:', 'Ocena kodu w projekcie własnym:', 'Ocena pracy w zespole w Scrum:'];
     const renderTypographyGridItem = (label: string, value: string) => (
         <Grid item>
@@ -33,6 +36,24 @@ export const CustomAccordionFilter = ({ users }: UserListProps) => {
                 <span>{value}<span style={{ color: theme.palette.grey['200'] }}>/5</span></span> : value} </Typography>
         </Grid>
     );
+    const buttonData = [
+        { text: 'Pokaż CV', action: () => handleShowCV() },
+        { text: 'Brak zainteresowania', action: () => handleNoInterest() },
+        { text: 'Zatrudniony', action: () => handleEmployed() },
+    ];
+
+    const handleShowCV = () => {
+        // Logika obsługująca akcję "Pokaż CV"
+    };
+
+    const handleNoInterest = () => {
+        // Logika obsługująca akcję "Brak zainteresowania"
+    };
+
+    const handleEmployed = () => {
+        // Logika obsługująca akcję "Zatrudniony"
+    };
+
     return (<>
             {users.map(user => (
                 <Accordion key={user.id}
@@ -53,24 +74,14 @@ export const CustomAccordionFilter = ({ users }: UserListProps) => {
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName}`}</Typography>
-                        <ButtonMain text='Pokaż CV' sx={{
-                            fontSize: '1rem',
-                            borderRadius: '0',
-                            textTransform: 'none',
-                            marginRight: '20px',
-                        }} />
-                        <ButtonMain text='Brak zainteresowania' sx={{
-                            fontSize: '1rem',
-                            borderRadius: '0',
-                            textTransform: 'none',
-                            marginRight: '20px',
-                        }} />
-                        <ButtonMain text='Zatrudniony' sx={{
-                            fontSize: '1rem',
-                            borderRadius: '0',
-                            textTransform: 'none',
-                            marginRight: '20px',
-                        }} />
+                        {buttonData.map((button, index) => (
+                            <ButtonMain
+                                key={index}
+                                text={button.text}
+                                sx={buttonStyles}
+                                onClick={button.action}
+                            />
+                        ))}
                     </AccordionSummary>
                     <AccordionDetails
                         sx={{
