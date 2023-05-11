@@ -9,8 +9,10 @@ import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 
 export interface UserAndSkills {
     id: string;
+    email: string;
     firstName: string;
     lastName: string;
+    avatar: string;
     courseCompletion: number;
     courseEngagement: number;
     projectDegree: number;
@@ -23,15 +25,16 @@ export interface UserAndSkills {
     monthsOfCommercialExp: number;
 }
 
-interface UserListProps {
+export interface UserListProps {
     users: UserAndSkills[];
 }
 
 export const CustomAccordion = ({ users }: UserListProps) => {
     const [expanded, setExpanded] = useState<string | false>(false);
+    // @TODO: dodac jeszcze 'user' ze stanu globalnego z HrPage do sciezki
     const handleButtonClick = async (userId:string, email:string, status:string) => {
         try {
-            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status } , { withCredentials: true });
+            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status } , {withCredentials:true});
             const updatedUser = response.data;
             console.log(updatedUser);
         } catch (error) {
@@ -62,9 +65,9 @@ export const CustomAccordion = ({ users }: UserListProps) => {
     );
     return (<>
             {users.map(user => (
-                <Accordion key={user.id}
-                           expanded={expanded === user.id}
-                           onChange={handleChange(user.id)}
+                <Accordion key={user.email}
+                           expanded={expanded === user.email}
+                           onChange={handleChange(user.email)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
                     <AccordionSummary sx={{
                         bgcolor: theme.palette.secondary.light,
@@ -75,7 +78,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName.charAt(0)}.`}</Typography>
-                        <ButtonMain text='Zarezerwuj rozmowę' onClick={(userId, userEmail, userStatus) => handleButtonClick(userId, userEmail, userStatus)} sx={{
+                        <ButtonMain text='Zarezerwuj rozmowę' onClick={() => handleButtonClick(user.id, user.email, 'w trakcie rozmowy')} sx={{
                             fontSize: '1rem',
                             borderRadius: '0',
                             textTransform: 'none',
@@ -92,7 +95,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                             },
                         }}>
                         <Grid container
-                              spacing={{ xs: 1, md: 1 }}
+                              spacing={{ xs: 1, md: 3 }}
                               sx={{
                                   gap: 1,
                                   paddingLeft: 1,
