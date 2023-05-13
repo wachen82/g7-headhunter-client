@@ -63,7 +63,7 @@ export const ExpectationsBox = (props: Props) => {
             />
             <SingleExpectation
                 expectationName={'Komercyjne doświadczenie w programowaniu'}
-                userExpectation={`${monthsOfCommercialExp} miesięcy`}
+                userExpectation={`Liczba miesięcy: ${monthsOfCommercialExp}`}
             />
         </Box>
     )
