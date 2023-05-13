@@ -5,52 +5,10 @@ import { AvailableUsers } from '../AvailableUsers/AvailableUsers';
 import { ForConversation } from '../ForConversation/ForConversation';
 import { CustomTabs } from './CustomTabs';
 import { CustomPagination } from '../../../common/Pagination/CustomPagination';
-import { useEffect, useState } from 'react';
-import { HrRespons } from 'types';
-import axios from 'axios';
-import { apiUrl } from '../../../../config/api';
-import { ENDPOINTS } from '../../../../services/endpoints/endpoints';
-import { useParams } from 'react-router-dom';
-
-interface MenuProps {
-    user: HrRespons;
-}
-
-export const Menu = ({ user }: MenuProps) => {
-    const [availableUsers, setAvailableUsers] = useState([]);
-    useEffect(() => {
-        const fetchAvailableUsers = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}${ENDPOINTS.availableUsers}`, { withCredentials: true });
-                const availableUsers = response.data;
-                console.log(availableUsers);
-                setAvailableUsers(availableUsers);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchAvailableUsers();
-    }, []);
+import { useState } from 'react';
 
 
-    const [reservedUsers, setReservedUsers] = useState([]);
-    const { id } = useParams();
-    useEffect(() => {
-        const fetchReservedUsers = async (userId: string | undefined) => {
-            try {
-                const response = await axios.get(`${apiUrl}${ENDPOINTS.reservedUsers}/${user}/${userId}`, { withCredentials: true });
-                const reservedUsers = response.data;
-                console.log(reservedUsers);
-                setReservedUsers(reservedUsers);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchReservedUsers(id);
-    }, [id]);
-
+export const Menu = () => {
     const [value, setValue] = React.useState(0);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -63,7 +21,8 @@ export const Menu = ({ user }: MenuProps) => {
         setRowsPerPage(newRowsPerPage);
         setPage(0);
     };
-    const data = value === 0 ? availableUsers : reservedUsers;
+    // @TODO w miejsce cudzysłowów trzeba wstawic stany o tych nazwach-ewentualnie przeniesc paginacje do akordenonow
+    const data = value === 0 ? 'availableUsers' : 'reservedUsers';
     const totalCount = data.length;
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -98,10 +57,10 @@ export const Menu = ({ user }: MenuProps) => {
                 />
             </Box>
             <BasicPanel value={value} index={0}>
-                <AvailableUsers users={availableUsers} />
+                <AvailableUsers />
             </BasicPanel>
             <BasicPanel value={value} index={1}>
-                <ForConversation users={reservedUsers} />
+                <ForConversation />
             </BasicPanel>
             <Container sx={{
                 maxWidth: '80%',
