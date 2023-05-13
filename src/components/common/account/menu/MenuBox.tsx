@@ -87,10 +87,10 @@ export const MenuBox = (props: Props) => {
                     width: '260px',
                     height: '80px',
                     borderRadius: 0,
-                    backgroundColor: '#1E1E1F',
-                    color: '#1E1E1F',
+                    backgroundColor: theme.palette.grey['800'],
+                    color: theme.palette.grey['800'],
                     '&:hover': {
-                        backgroundColor: '#1E1E1F',
+                        backgroundColor: theme.palette.grey['800'],
                     },
                 }}
             >
@@ -142,7 +142,8 @@ export const MenuBox = (props: Props) => {
                                     aria-labelledby="composition-button"
                                     onKeyDown={handleListKeyDown}
                                     sx={{
-                                        backgroundColor: '#1E1E1F',
+                                        backgroundColor:
+                                            theme.palette.grey['800'],
                                         width: '260px',
                                     }}
                                 >

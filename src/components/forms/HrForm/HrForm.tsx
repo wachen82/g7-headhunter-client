@@ -1,16 +1,16 @@
-import React from 'react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
-import { Box } from '@mui/material'
-import { hrSchema } from './hr-schema'
-import { HrFormValues } from '../../../types/hrFormValues'
-import { useSnackBar } from '../../../hooks/useSnackBar'
-import { apiUrl } from '../../../config/api'
-import { ENDPOINTS } from '../../../services/endpoints/endpoints'
-import { SnackBarEnum } from '../../../types/formValues'
-import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar'
-import { HrDataArr } from './hr-data'
-import { CustomHrForm } from '../../common/CustomHrForm/CustomHrForm'
+import React from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { Box } from '@mui/material';
+import { hrSchema } from './hr-schema';
+import { HrFormValues } from '../../../types/hrFormValues';
+import { useSnackBar } from '../../../hooks/useSnackBar';
+import { apiUrl } from '../../../config/api';
+import { ENDPOINTS } from '../../../services/endpoints/endpoints';
+import { SnackBarEnum } from '../../../types/formValues';
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
+import { HrDataArr } from './hr-data';
+import { CustomHrForm } from '../../common/CustomHrForm/CustomHrForm';
 
 export const HrForm = () => {
     const {
@@ -19,14 +19,14 @@ export const HrForm = () => {
         isSnackBarOpen,
         showSnackBar,
         hideSnackBar,
-    } = useSnackBar()
+    } = useSnackBar();
 
     const defaultValues = {
         email: '',
         fullName: '',
         company: '',
         maxReservedStudents: '',
-    }
+    };
 
     const {
         register,
@@ -36,31 +36,33 @@ export const HrForm = () => {
     } = useForm<HrFormValues>({
         resolver: yupResolver(hrSchema),
         defaultValues,
-    })
+    });
 
-    const onSubmit = async (data: HrFormValues): Promise<void> => {
+    const onSubmit = async (hrFormData: HrFormValues): Promise<void> => {
         try {
             const response = await fetch(`${apiUrl}${ENDPOINTS.sendHrForm}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            })
-            if (!response.ok) {
-                showSnackBar(
-                    'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
-                    SnackBarEnum.ERROR_MESSAGE
-                )
+                body: JSON.stringify(hrFormData),
+                credentials: 'include',
+            });
+            const data = await response.json();
+            if (response.status === 400) {
+                showSnackBar(`${data.message}`, SnackBarEnum.ERROR_MESSAGE);
+                return;
             }
-            const res = await response.json()
-            showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE)
-            reset(defaultValues)
+            showSnackBar(
+                `Headhunter ${data.fullName} poprawnie dodoany do bazy`,
+                SnackBarEnum.SUCCESS_MESSAGE
+            );
+            reset(defaultValues);
         } catch (e) {
             showSnackBar(
-                'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
+                'Wystąpił nieoczekiwany błąd. Spróbuj ponownie później',
                 SnackBarEnum.ERROR_MESSAGE
-            )
+            );
         }
-    }
+    };
 
     return (
         <Box width="400px" maxWidth="90%" sx={{ margin: '0 auto' }}>
@@ -81,5 +83,5 @@ export const HrForm = () => {
                 />
             )}
         </Box>
-    )
-}
+    );
+};
