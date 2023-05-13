@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
@@ -6,6 +7,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { apiUrl } from '../../../config/api';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
+import { GridContainer } from './GridContainer';
+import { useParams } from 'react-router-dom';
 
 export interface UserAndSkills {
     id: string;
@@ -25,18 +28,36 @@ export interface UserAndSkills {
     monthsOfCommercialExp: number;
 }
 
-export interface UserListProps {
-    users: UserAndSkills[];
-}
 
-export const CustomAccordion = ({ users }: UserListProps) => {
+export const CustomAccordion = () => {
+    const [availableUsers, setAvailableUsers] = useState<UserAndSkills[]>([]);
+    useEffect(() => {
+        const fetchAvailableUsers = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/hr`, { withCredentials: true });
+                const availableUsers = response.data;
+                console.log(availableUsers);
+                setAvailableUsers(availableUsers);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchAvailableUsers();
+    }, []);
+
     const [expanded, setExpanded] = useState<string | false>(false);
-    // @TODO: dodac jeszcze 'user' ze stanu globalnego z HrPage do sciezki
-    const handleButtonClick = async (userId:string, email:string, status:string) => {
+    const { id } = useParams();
+    const handleButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email: string, status: string) => {
+        event.stopPropagation();
         try {
-            const response = await axios.post(`${apiUrl}${ENDPOINTS.setStatus}${userId}`, { email: email, status: status } , {withCredentials:true});
-            const updatedUser = response.data;
-            console.log(updatedUser);
+            const response = await axios.patch(`${apiUrl}${ENDPOINTS.setStatus}/${id}`, {
+                email: email,
+                status: status,
+            }, { withCredentials: true });
+            console.log(response);
+            setAvailableUsers((prevUsers) =>
+                prevUsers.filter((user) => user.email !== email)
+            );
         } catch (error) {
             console.error(error);
         }
@@ -64,7 +85,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
         </Grid>
     );
     return (<>
-            {users.map(user => (
+            { availableUsers ? availableUsers.map(user => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
                            onChange={handleChange(user.email)}
@@ -78,7 +99,9 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName.charAt(0)}.`}</Typography>
-                        <ButtonMain text='Zarezerwuj rozmowę' onClick={() => handleButtonClick(user.id, user.email, 'w trakcie rozmowy')} sx={{
+                        <ButtonMain text='Zarezerwuj rozmowę'
+                                    onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => handleButtonClick(event, user.email, 'W trakcie rozmowy')}
+                                    sx={{
                             fontSize: '1rem',
                             borderRadius: '0',
                             textTransform: 'none',
@@ -94,22 +117,7 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                                 padding: '0px',
                             },
                         }}>
-                        <Grid container
-                              spacing={{ xs: 1, md: 3 }}
-                              sx={{
-                                  gap: 1,
-                                  paddingLeft: 1,
-                                  paddingRight: 1,
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'center',
-                                  flexWrap: { xs: 'wrap', md: 'nowrap' },
-                                  '@media (min-width: 900px)': {
-                                      '& > .MuiGrid-item': {
-                                          paddingLeft: '0px',
-                                      },
-                                  },
-                              }}>
+                        <GridContainer>
                             {renderTypographyGridItem('Ocena przejścia kursu:', `${user.courseCompletion}`)}
                             {renderTypographyGridItem('Ocena aktywności i zaangażowania w kursie:', `${user.courseEngagement}`)}
                             {renderTypographyGridItem('Ocena kodu w projekcie własnym:', `${user.projectDegree}`)}
@@ -120,10 +128,10 @@ export const CustomAccordion = ({ users }: UserListProps) => {
                             {renderTypographyGridItem('Oczekiwane wynagrodzenie miesięczne netto:', user.expectedSalary)}
                             {renderTypographyGridItem('Zgoda na odbycie bezpłatnych praktyk/stażu na początek:', user.canTakeApprenticeship)}
                             {renderTypographyGridItem('Komercyjne doświadczenie w programowaniu:', user.monthsOfCommercialExp.toString())}
-                        </Grid>
+                        </GridContainer>
                     </AccordionDetails>
                 </Accordion>
-            ))}
+            )) : [] }
         </>
     );
 };
