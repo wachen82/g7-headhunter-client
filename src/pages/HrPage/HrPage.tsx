@@ -42,7 +42,7 @@ export const HrPage = () => {
                         bgcolor: theme.palette.secondary.light,
                     }}
                 >
-                    <Menu user={user} />
+                    <Menu />
                 </Container>
             </main>
         </>
