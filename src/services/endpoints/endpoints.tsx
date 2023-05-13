@@ -7,9 +7,6 @@ export const ENDPOINTS = {
     sendHrForm: '/admin/register-hr',
     validateCsv: '/admin/validate-csv',
     saveCsv: '/admin/save-csv',
-    availableUsers: '/hr',
-    reservedUsers: '/hr/:id',
-    setStatus: '/hr/status/:id',
-
+    setStatus: '/hr/status',
 };
 
