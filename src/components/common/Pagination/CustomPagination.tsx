@@ -57,6 +57,7 @@ export const CustomPagination: React.FC<PaginationProps> = ({
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage='Ilość elementów'
+            rowsPerPageOptions={[10, 25, 50]}
         />
     );
 };
