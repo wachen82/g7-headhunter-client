@@ -14,7 +14,7 @@ import { PortfolioContent } from '../../components/common/UserPortfolio/Portfoli
 import { GradesBox } from '../../components/common/UserPortfolio/Grades/GradesBox';
 import { ExpectationsBox } from '../../components/common/UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioLink } from '../../components/common/UserPortfolio/PortfolioLink/PortfolioLink';
-import { UserProfilResponse, UserRespons } from 'types';
+
         
 export const UserPage = () => {
     useTitle('Strona Kursanta');
