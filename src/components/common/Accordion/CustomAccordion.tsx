@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Container } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
@@ -9,8 +9,14 @@ import { apiUrl } from '../../../config/api';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 import { GridContainer } from './GridContainer';
 import { useParams } from 'react-router-dom';
+import { CustomPagination } from '../Pagination/CustomPagination';
+import { Loading } from '../Loading/Loading';
+import { CustomSnackBar } from '../CustomSnackBar/CustomSnackBar';
+import { handleChange } from '../../../utils/handleChange';
+
 
 export interface UserAndSkills {
+    reservationExpiryDate: string;
     id: string;
     email: string;
     firstName: string;
@@ -30,42 +36,60 @@ export interface UserAndSkills {
 
 
 export const CustomAccordion = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalCount, setTotalCount] = useState(0);
     const [availableUsers, setAvailableUsers] = useState<UserAndSkills[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarType, setSnackbarType] = useState('');
+    const [expanded, setExpanded] = useState<string | false>(false);
+
     useEffect(() => {
         const fetchAvailableUsers = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/hr`, { withCredentials: true });
-                const availableUsers = response.data;
-                console.log(availableUsers);
-                setAvailableUsers(availableUsers);
+                const response = await axios.get(`${apiUrl}/hr?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
+                const { users, totalPages } = response.data;
+                setAvailableUsers(users);
+                setTotalCount(totalPages * rowsPerPage);
+                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchAvailableUsers();
-    }, []);
+        setLoading(true);
+        fetchAvailableUsers()
+    }, [currentPage, rowsPerPage]);
 
-    const [expanded, setExpanded] = useState<string | false>(false);
     const { id } = useParams();
     const handleButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email: string, status: string) => {
         event.stopPropagation();
         try {
-            const response = await axios.patch(`${apiUrl}${ENDPOINTS.setStatus}/${id}`, {
+            await axios.patch(`${apiUrl}${ENDPOINTS.setStatus}/${id}`, {
                 email: email,
                 status: status,
             }, { withCredentials: true });
-            console.log(response);
             setAvailableUsers((prevUsers) =>
                 prevUsers.filter((user) => user.email !== email)
             );
-        } catch (error) {
-            console.error(error);
+            setTotalCount((prevTotalCount) => prevTotalCount - 1);
+            setRowsPerPage((prevRowsPerPage) => prevRowsPerPage - 1);
+            setSnackbarMessage('Kursant zarezerwowany');
+            setSnackbarType('success');
+            setSnackbarOpen(true);
+        } catch (error:any) {
+            if (error.response && error.response.status === 400) {
+                const errorMessage = error.response.data.message;
+                setSnackbarMessage(errorMessage);
+                setSnackbarType('error');
+                setSnackbarOpen(true);
+            } else {
+                console.log('Wystąpił inny błąd');
+            }
         }
     };
 
-    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-        setExpanded(isExpanded ? panel : false);
-    };
     const grade = ['Ocena przejścia kursu:', 'Ocena aktywności i zaangażowania w kursie:', 'Ocena kodu w projekcie własnym:', 'Ocena pracy w zespole w Scrum:'];
     const renderTypographyGridItem = (label: string, value: string) => (
         <Grid item>
@@ -84,11 +108,21 @@ export const CustomAccordion = () => {
                 <span>{value}<span style={{ color: theme.palette.grey['200'] }}>/5</span></span> : value} </Typography>
         </Grid>
     );
+
+    const handlePageChange = () => {
+        setCurrentPage(currentPage);
+    };
+
+    const handleRowsPerPageChange = () => {
+        setRowsPerPage(rowsPerPage);
+    };
+
+    if(loading) return <Loading/>
     return (<>
             { availableUsers ? availableUsers.map(user => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
-                           onChange={handleChange(user.email)}
+                           onChange={handleChange(user.email, setExpanded)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
                     <AccordionSummary sx={{
                         bgcolor: theme.palette.secondary.light,
@@ -107,6 +141,12 @@ export const CustomAccordion = () => {
                             textTransform: 'none',
                             marginRight: '20px',
                         }} />
+                        <CustomSnackBar
+                            actionState={snackbarOpen}
+                            setAction={setSnackbarOpen}
+                            type={snackbarType}
+                            message={snackbarMessage}
+                        />
                     </AccordionSummary>
                     <AccordionDetails
                         sx={{
@@ -132,6 +172,20 @@ export const CustomAccordion = () => {
                     </AccordionDetails>
                 </Accordion>
             )) : [] }
+            <Container sx={{
+                maxWidth: '80%',
+                margin: '0 auto',
+                display: 'flex',
+                justifyContent: 'flex-end',
+            }}>
+                { availableUsers.length > 0 ?  <CustomPagination
+                    count={totalCount}
+                    page={currentPage - 1}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                /> : null }
+            </Container>
         </>
     );
 };

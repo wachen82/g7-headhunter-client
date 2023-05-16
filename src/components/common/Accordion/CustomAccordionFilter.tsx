@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Box, Avatar } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Box, Avatar, Container } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
@@ -8,6 +8,9 @@ import axios from 'axios';
 import { apiUrl } from '../../../config/api';
 import { UserAndSkills } from './CustomAccordion';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
+import { Loading } from '../Loading/Loading';
+import { CustomPagination } from '../Pagination/CustomPagination';
+import { handleChange } from '../../../utils/handleChange';
 
 const buttonStyles = {
     fontSize: '1rem',
@@ -17,26 +20,32 @@ const buttonStyles = {
 };
 
 export const CustomAccordionFilter = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalCount, setTotalCount] = useState(0);
     const [reservedUsers, setReservedUsers] = useState<UserAndSkills[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [expanded, setExpanded] = useState<string | false>(false);
+
     const { id } = useParams();
     useEffect(() => {
         const fetchReservedUsers = async (userId: string | undefined) => {
         if(!userId) return null
             try {
-                const response = await axios.get(`${apiUrl}/hr/${userId}`, { withCredentials: true });
-                const reservedUsers = response.data;
-                setReservedUsers(reservedUsers);
+                const response = await axios.get(`${apiUrl}/hr/${userId}?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
+                const { users, totalPages } = response.data;
+                setReservedUsers(users);
+                setTotalCount(totalPages * rowsPerPage);
+                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
         };
+        setLoading(true);
         fetchReservedUsers(id);
-    }, [id]);
+    }, [id, currentPage, rowsPerPage]);
 
-    const [expanded, setExpanded] = useState<string | false>(false);
-    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-        setExpanded(isExpanded ? panel : false);
-    };
+
 
     const grade = ['Ocena przejścia kursu:', 'Ocena aktywności i zaangażowania w kursie:', 'Ocena kodu w projekcie własnym:', 'Ocena pracy w zespole w Scrum:'];
     const renderTypographyGridItem = (label: string, value: string) => (
@@ -63,7 +72,7 @@ export const CustomAccordionFilter = () => {
     const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
         try {
-            const response = await axios.patch(
+            await axios.patch(
                 `${apiUrl}${ENDPOINTS.setStatus}/${id}`,
                 {
                     email: email,
@@ -71,8 +80,9 @@ export const CustomAccordionFilter = () => {
                 },
                 { withCredentials: true }
             );
-            console.log(response);
             setReservedUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
+            setTotalCount((prevTotalCount) => prevTotalCount - 1);
+            setRowsPerPage((prevRowsPerPage) => prevRowsPerPage - 1);
         } catch (error) {
             console.error(error);
         }
@@ -88,12 +98,21 @@ export const CustomAccordionFilter = () => {
         { text: 'Brak zainteresowania', status: 'Dostępny', action: handleAction },
         { text: 'Zatrudniony', status: 'Zatrudniony', action: handleAction },
     ];
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
+    const handleRowsPerPageChange = (newRowsPerPage: number) => {
+        setRowsPerPage(newRowsPerPage);
+    };
+
+    if(loading) return <Loading/>
 
     return (<>
             {reservedUsers ? reservedUsers.map((user) => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
-                           onChange={handleChange(user.email)}
+                           onChange={handleChange(user.email, setExpanded)}
                            sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
                     <AccordionSummary sx={{
                         bgcolor: theme.palette.secondary.light,
@@ -111,9 +130,8 @@ export const CustomAccordionFilter = () => {
                         }}>
                             <p style={{ fontSize: '12px', fontWeight: 'normal', fontFamily: 'sans-serif' }}>Rezerwacja
                                 do</p>
-                            <p style={{ fontSize: '14px' }}>23.05.2023</p>
+                            <p style={{ fontSize: '14px' }}>{user.reservationExpiryDate}</p>
                         </Box>
-                        {/*@TODO: user.reservationDate*/}
                         <Avatar key={user.id} src={user.avatar} />
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1, marginLeft: '2px' }}>
@@ -167,6 +185,20 @@ export const CustomAccordionFilter = () => {
                     </AccordionDetails>
                 </Accordion>
             )) : []}
+            <Container sx={{
+                maxWidth: '80%',
+                margin: '0 auto',
+                display: 'flex',
+                justifyContent: 'flex-end',
+            }}>
+                { reservedUsers.length > 0 ?  <CustomPagination
+                    count={totalCount}
+                    page={currentPage - 1}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                /> : null }
+            </Container>
         </>
     );
 };
