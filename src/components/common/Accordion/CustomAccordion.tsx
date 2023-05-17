@@ -50,9 +50,9 @@ export const CustomAccordion = () => {
         const fetchAvailableUsers = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/hr?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
-                const { users, totalPages } = response.data;
+                const { users, totalCount } = response.data;
                 setAvailableUsers(users);
-                setTotalCount(totalPages * rowsPerPage);
+                setTotalCount(totalCount)
                 setLoading(false);
             } catch (error) {
                 console.error(error);
@@ -73,11 +73,29 @@ export const CustomAccordion = () => {
             setAvailableUsers((prevUsers) =>
                 prevUsers.filter((user) => user.email !== email)
             );
-            setTotalCount((prevTotalCount) => prevTotalCount - 1);
-            setRowsPerPage((prevRowsPerPage) => prevRowsPerPage - 1);
             setSnackbarMessage('Kursant zarezerwowany');
             setSnackbarType('success');
             setSnackbarOpen(true);
+            // Aktualizacja wartości totalCount
+            const newTotalCount = totalCount - 1;
+            setTotalCount(newTotalCount);
+
+            // Aktualizacja wartości rowsPerPage, jeśli ilość dostępnych użytkowników na stronie jest mniejsza niż rowsPerPage
+            const currentRowCount = availableUsers.length;
+            if (currentRowCount < rowsPerPage) {
+                setRowsPerPage(currentRowCount);
+            }
+
+            // Sprawdzenie czy currentPage jest większe niż nowa liczba stron
+            const newPageCount = Math.ceil(newTotalCount / rowsPerPage);
+            if (currentPage > newPageCount) {
+                setCurrentPage(newPageCount);
+            }
+
+            // Sprawdzenie czy currentPage * rowsPerPage jest większe niż newTotalCount
+            if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
+                setCurrentPage(currentPage - 1);
+            }
         } catch (error:any) {
             if (error.response && error.response.status === 400) {
                 const errorMessage = error.response.data.message;
@@ -109,8 +127,14 @@ export const CustomAccordion = () => {
         </Grid>
     );
 
-    const handlePageChange = () => {
-        setCurrentPage(currentPage);
+    const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+        if (newPage === currentPage - 1) {
+            setCurrentPage(currentPage - 1); // Cofanie do poprzedniej strony
+        } else if (newPage === currentPage + 1) {
+            setCurrentPage(currentPage + 1); // Przechodzenie do następnej strony
+        } else {
+            setCurrentPage(newPage + 1); // Kliknięcie na konkretną stronę
+        }
     };
 
     const handleRowsPerPageChange = () => {
@@ -178,13 +202,15 @@ export const CustomAccordion = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                { availableUsers.length > 0 ?  <CustomPagination
-                    count={totalCount}
-                    page={currentPage - 1}
-                    rowsPerPage={rowsPerPage}
-                    onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleRowsPerPageChange}
-                /> : null }
+                { availableUsers.length > 0 ?
+                    <CustomPagination
+                        count={totalCount}
+                        page={currentPage - 1}
+                        rowsPerPage={rowsPerPage}
+                        onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
+                        onRowsPerPageChange={handleRowsPerPageChange}
+                    />
+                    : null }
             </Container>
         </>
     );
