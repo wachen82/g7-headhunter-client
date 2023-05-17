@@ -25,7 +25,7 @@ interface PaginationProps {
     count: number;
     page: number;
     rowsPerPage: number;
-    onPageChange: (page: number) => void;
+    onPageChange: (page: number, event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     onRowsPerPageChange: (rowsPerPage: number) => void;
 }
 
@@ -37,11 +37,13 @@ export const CustomPagination: React.FC<PaginationProps> = ({
                                                                 onRowsPerPageChange,
                                                             }) => {
     const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number,
     ) => {
-        onPageChange(newPage);
+        onPageChange(newPage, event === null ? undefined : event);
     };
+
+
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -57,6 +59,9 @@ export const CustomPagination: React.FC<PaginationProps> = ({
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage='Ilość elementów'
+            labelDisplayedRows={({ from, to, count }) => (
+                    `Ilość elementów ${from}-${to} z ${count}`
+            )}
             rowsPerPageOptions={[10, 25, 50]}
         />
     );
