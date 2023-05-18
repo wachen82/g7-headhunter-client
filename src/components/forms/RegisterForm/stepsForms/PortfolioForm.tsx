@@ -8,13 +8,14 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 
 import theme from '../../../../theme';
 import { defaultValues } from '../FormDefaultValues';
+import { IUserProfileEntity1 } from '../types';
 
 export const PortfolioForm = () => {
     const {
         register,
         control,
         formState: { errors },
-    } = useFormContext();
+    } = useFormContext<IUserProfileEntity1>();
 
     const { fields, append, remove } = useFieldArray({
         name: 'portfolioUrls',
@@ -150,8 +151,21 @@ export const PortfolioForm = () => {
                                 required
                                 variant="outlined"
                                 {...register('projectUrls.0')}
-                                error={!!errors.projectUrls}
-                                helperText={errors.projectUrls?.message?.toString()}
+                                error={!!errors.projectUrls?.[0]}
+                                helperText={
+                                    errors.projectUrls &&
+                                    errors.projectUrls?.[0] &&
+                                    errors.projectUrls?.[0].message &&
+                                    errors.projectUrls?.[0].message.toString()
+                                }
+                                FormHelperTextProps={{
+                                    sx: {
+                                        margin: 0,
+                                        paddingX: '1rem',
+                                        backgroundColor:
+                                            theme.palette.background.paper,
+                                    },
+                                }}
                             />
                         )}
                     />
@@ -164,15 +178,28 @@ export const PortfolioForm = () => {
                         render={({ ...field }) => (
                             <TextField
                                 {...field}
-                                id="projectUrls"
+                                id="projectUrls2"
                                 label="Projekt zaliczeniowy BE - url"
                                 type="url"
                                 fullWidth
                                 required
                                 variant="outlined"
                                 {...register('projectUrls.1')}
-                                error={!!errors.projectUrls}
-                                helperText={errors.projectUrls?.message?.toString()}
+                                error={!!errors.projectUrls?.[1]}
+                                helperText={
+                                    errors.projectUrls &&
+                                    errors.projectUrls?.[1] &&
+                                    errors.projectUrls?.[1].message &&
+                                    errors.projectUrls?.[1].message.toString()
+                                }
+                                FormHelperTextProps={{
+                                    sx: {
+                                        margin: 0,
+                                        paddingX: '1rem',
+                                        backgroundColor:
+                                            theme.palette.background.paper,
+                                    },
+                                }}
                             />
                         )}
                     />
@@ -205,7 +232,24 @@ export const PortfolioForm = () => {
                                                 `portfolioUrls.${index}`
                                             )}
                                             error={!!errors.portfolioUrls}
-                                            helperText={errors.portfolioUrls?.message?.toString()}
+                                            helperText={
+                                                errors.portfolioUrls &&
+                                                errors.portfolioUrls?.[index] &&
+                                                errors.portfolioUrls?.[index]
+                                                    ?.message &&
+                                                errors.portfolioUrls?.[
+                                                    index
+                                                ]?.message?.toString()
+                                            }
+                                            FormHelperTextProps={{
+                                                sx: {
+                                                    margin: 0,
+                                                    paddingX: '1rem',
+                                                    backgroundColor:
+                                                        theme.palette.background
+                                                            .paper,
+                                                },
+                                            }}
                                         />
                                     )}
                                 />
