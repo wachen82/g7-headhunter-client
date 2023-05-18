@@ -1,11 +1,11 @@
 import { useTitle } from '../../hooks/useTitle';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { HrRespons } from 'types';
+import { HrResponse } from 'types';
 
 export const HrPage = () => {
     useTitle('Strona HR');
-    const user = useAppSelector((state) => state.user) as HrRespons;
+    const user = useAppSelector((state) => state.user) as HrResponse;
 
     if (!user) {
         return null;

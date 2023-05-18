@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/reduxHooks';
 import axios from 'axios';
 import { apiUrl } from '../../config/api';
 import { useEffect, useState } from 'react';
-import { IUserProfileEntity, UserProfilResponse, UserRespons } from 'types';
+import { IUserProfileEntity, UserProfilResponse, UserResponse } from 'types';
 import { Box } from '@mui/material';
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink';
 import { InfoBox } from '../../components/common/account/info/InfoBox';
@@ -16,7 +16,7 @@ import { PortfolioLink } from '../../components/common/UserPortfolio/PortfolioLi
 
 export const UserPage = () => {
     useTitle('Strona Kursanta');
-    const user = useAppSelector((state) => state.user) as UserRespons;
+    const user = useAppSelector((state) => state.user) as UserResponse;
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
 
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
