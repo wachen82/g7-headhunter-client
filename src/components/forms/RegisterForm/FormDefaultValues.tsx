@@ -1,10 +1,12 @@
-export const defaultValues = {
+import { IUserProfileEntity1 } from './types';
+
+export const defaultValues: IUserProfileEntity1 = {
     email: '',
     phone: '',
     firstName: '',
     lastName: '',
     githubUsername: '',
-    portfolioUrls: [''],
+    portfolioUrls: [' '],
     projectUrls: ['', ''],
     bio: '',
     expectedTypeWork: 'Bez znaczenia',
