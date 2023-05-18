@@ -10,13 +10,10 @@ import { defaultValues } from '../FormDefaultValues';
 export const ExpectedWorkForm = () => {
     const {
         register,
-        watch,
         control,
         formState: { errors },
     } = useFormContext();
 
-    console.log(watch('expectedTypeWork'));
-    console.log('errors:', errors);
     return (
         <>
             <Typography variant="h6" gutterBottom>
