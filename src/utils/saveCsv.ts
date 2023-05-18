@@ -9,7 +9,7 @@ interface UserCSV {
     bonusProjectUrls: string[];
 }
 
-export const saveCsv = async (data: UserCSV, success: boolean) => {
+export const saveCsv = async (data: UserCSV) => {
     try {
         const saveResponse = await fetch(`${apiUrl}${ENDPOINTS.saveCsv}`, {
             method: 'POST',
@@ -19,13 +19,12 @@ export const saveCsv = async (data: UserCSV, success: boolean) => {
             },
             credentials: 'include',
         });
+        const response = await saveResponse.json();
         if (!saveResponse.ok) {
-            console.error('Failed to save data');
-            return !success;
+            return { success: false, message: response.message };
         }
-        await saveResponse.json();
-    } catch (error) {
-        console.error(error);
-        return !success;
+        return { success: true };
+    } catch {
+        return { success: false, message: 'Błąd podczas zapisywania plik csv' };
     }
 };
