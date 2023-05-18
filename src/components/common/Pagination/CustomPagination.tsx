@@ -15,10 +15,6 @@ const StyledTablePagination = styled(TablePagination)<TablePaginationProps>`
     color: #333333 !important;
     background-color: #CFCFCF;
   }
-
-  .css-k5r1by-MuiTableCell-root-MuiTablePagination-root {
-    border-bottom: none !important;
-  }
 `;
 
 interface PaginationProps {
@@ -44,12 +40,16 @@ export const CustomPagination: React.FC<PaginationProps> = ({
     };
 
 
-
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        onRowsPerPageChange(parseInt(event.target.value, 10));
+        const newRowsPerPage = parseInt(event.target.value, 10);
+
+        if (newRowsPerPage <= count || newRowsPerPage === count) {
+            onRowsPerPageChange(newRowsPerPage);
+        }
     };
+    const validRowsPerPageOptions = [10, 25, 50].filter(option => option <= count);
 
     return (
         <StyledTablePagination
@@ -60,9 +60,9 @@ export const CustomPagination: React.FC<PaginationProps> = ({
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage='Ilość elementów'
             labelDisplayedRows={({ from, to, count }) => (
-                    `Ilość elementów ${from}-${to} z ${count}`
+                `Ilość elementów ${from}-${to} z ${count}`
             )}
-            rowsPerPageOptions={[10, 25, 50]}
+            rowsPerPageOptions={validRowsPerPageOptions}
         />
     );
 };
