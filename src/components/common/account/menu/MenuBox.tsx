@@ -13,12 +13,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import theme from '../../../../theme';
 import { MenuLink } from './MenuLink';
 import { routes } from '../../../../routes/routesMap';
-import { useAppDispatch } from '../../../../hooks/reduxHooks'
-import { setLogout } from '../../../../state/authSlice'
-import { clearPersistedState } from '../../../../app/store'
-import axios from 'axios'
-import { apiUrl } from '../../../../config/api'
-import { ENDPOINTS } from '../../../../services/endpoints/endpoints'
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { setLogout } from '../../../../state/authSlice';
+import { clearPersistedState } from '../../../../app/store';
+import axios from 'axios';
+import { apiUrl } from '../../../../config/api';
+import { ENDPOINTS } from '../../../../services/endpoints/endpoints';
 
 interface Props {
     avatarUrl: string;
@@ -28,19 +28,18 @@ interface Props {
 export const MenuBox = (props: Props) => {
     const { avatarUrl, userName } = props;
 
-    const [open, setOpen] = React.useState(false)
-    const anchorRef = React.useRef<HTMLButtonElement>(null)
-    const dispatch = useAppDispatch()
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef<HTMLButtonElement>(null);
+    const dispatch = useAppDispatch();
     const handleLogout = async () => {
+        await clearPersistedState();
         await axios(`${apiUrl}${ENDPOINTS.signOut}`, {
             method: 'GET',
             withCredentials: true,
-        })
+        });
 
-        await clearPersistedState()
-        dispatch(setLogout())
-    }
-
+        dispatch(setLogout());
+    };
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -88,10 +87,10 @@ export const MenuBox = (props: Props) => {
                     width: '260px',
                     height: '80px',
                     borderRadius: 0,
-                    backgroundColor: '#1E1E1F',
-                    color: '#1E1E1F',
+                    backgroundColor: theme.palette.grey['800'],
+                    color: theme.palette.grey['800'],
                     '&:hover': {
-                        backgroundColor: '#1E1E1F',
+                        backgroundColor: theme.palette.grey['800'],
                     },
                 }}
             >
@@ -143,7 +142,8 @@ export const MenuBox = (props: Props) => {
                                     aria-labelledby="composition-button"
                                     onKeyDown={handleListKeyDown}
                                     sx={{
-                                        backgroundColor: '#1E1E1F',
+                                        backgroundColor:
+                                            theme.palette.grey['800'],
                                         width: '260px',
                                     }}
                                 >

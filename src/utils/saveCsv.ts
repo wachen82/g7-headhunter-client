@@ -1,20 +1,24 @@
 import { IUserSkills } from 'types';
 import { apiUrl } from '../config/api';
+import { ENDPOINTS } from '../services/endpoints/endpoints';
+
 
 export const saveCsv = async (data: IUserSkills) => {
     try {
-        const saveResponse = await fetch(`${apiUrl}/api/save-csv`, {
+        const saveResponse = await fetch(`${apiUrl}${ENDPOINTS.saveCsv}`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
+        const response = await saveResponse.json();
         if (!saveResponse.ok) {
-            console.error('Failed to save data');
+            return { success: false, message: response.message };
         }
-        await saveResponse.json();
-    } catch (error) {
-        console.error(error);
+        return { success: true };
+    } catch {
+        return { success: false, message: 'Błąd podczas zapisywania plik csv' };
     }
 };

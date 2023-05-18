@@ -1,7 +1,7 @@
 export const ENDPOINTS = {
     signIn: '/auth/login',
     signOut: '/auth/logout',
-    register: '/auth/register',
+    register: '/user/{userId}/{token}',
     resetPassword: '/auth/reset-password',
     updatePassword: '/auth/update-password',
     sendHrForm: '/admin/register-hr',
@@ -9,4 +9,3 @@ export const ENDPOINTS = {
     saveCsv: '/admin/save-csv',
     setStatus: '/hr/status',
 };
-

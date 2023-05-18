@@ -31,6 +31,51 @@ const theme = createTheme({
             light: '#C92929', // kolor podkreślenia w menu hr
             dark: '#172A35', // kolor tła buttona "Wyczyść wszystkie"
         },
+        background: {
+            default: '#7E7E7E',
+            paper: '#1E1E1F',
+        },
+        action: {
+            disabledBackground: '#292A2B',
+            disabledOpacity: 0.7,
+        },
+    },
+    components: {
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    color: '#7E7E7E',
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {},
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    color: '#CFCFCF',
+                },
+            },
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#292A2B',
+                    color: '#7E7E7E',
+                    '&:hover': {
+                        backgroundColor: '#292A2B',
+                    },
+                    '&.Mui-focused': {
+                        backgroundColor: '#292A2B',
+                        color: 'green',
+                    },
+                    '& label': {
+                        color: '#7E7E7E',
+                    },
+                },
+            },
+        },
     },
     components: {
         MuiGrid: {

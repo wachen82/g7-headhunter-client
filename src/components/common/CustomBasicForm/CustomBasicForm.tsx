@@ -16,7 +16,6 @@ import {
     InputLabel,
     Link,
     styled,
-    Typography,
 } from '@mui/material';
 import { FormValues, InputFormData } from '../../../types/formValues';
 import theme from '../../../theme';
@@ -114,32 +113,11 @@ export const CustomBasicForm = ({
             <Box
                 sx={{
                     display: 'flex',
-                    justifyContent: `${
-                        additionalFormInfo ? 'space-between' : 'flex-end'
-                    }`,
+                    justifyContent: 'flex-end',
                     alignItems: 'center',
                     marginTop: '1rem',
                 }}
             >
-                {additionalFormInfo && (
-                    <Typography
-                        color={theme.palette.text.primary}
-                        fontSize="small"
-                    >
-                        Nie masz konta?
-                        <Link
-                            color={theme.palette.text.primary}
-                            sx={{
-                                marginLeft: '0.5rem',
-                            }}
-                            component={RouterLink}
-                            to={routes.signUp}
-                            fontWeight="bold"
-                        >
-                            Zarejestruj się
-                        </Link>
-                    </Typography>
-                )}
                 <StyledButton variant="contained" color="primary" type="submit">
                     {buttonText}
                 </StyledButton>

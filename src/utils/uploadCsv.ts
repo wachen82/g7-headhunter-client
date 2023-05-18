@@ -12,21 +12,21 @@ export const uploadCsvFile = async (
     formData.append('csvFile', fileBlob, 'csvFile.csv');
     try {
         const response = await fetch(`${apiUrl}${ENDPOINTS.validateCsv}`, {
+            credentials: 'include',
             method: 'POST',
             body: formData,
         });
+        const jsonResponse = await response.json();
+        const { success, message } = await saveCsv(jsonResponse);
         if (!response.ok) {
-            console.error('Failed to upload CSV file');
+            return { success, message };
         }
-        const jsonResponse = await response.json()
         if (jsonResponse && jsonResponse.errors) {
-            setErrors(jsonResponse.errors)
+            setErrors(jsonResponse.errors);
         } else {
-            console.log('CSV file is ready to be saved', jsonResponse.errors)
-            await saveCsv(jsonResponse)
+            return { success, message };
         }
-    } catch (error) {
-        console.error(error);
+    } catch {
+        return { success: false, message: 'Błąd podczas dodawania plik csv' };
     }
 };
-

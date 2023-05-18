@@ -1,15 +1,14 @@
 import { useTitle } from '../../hooks/useTitle';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { HrRespons } from 'types';
+import { HrResponse } from 'types';
 import { Box, Container } from '@mui/material';
 import theme from '../../theme';
 import { Menu } from '../../components/hr/MenuView/Menu/Menu';
 
-
 export const HrPage = () => {
     useTitle('Strona HR');
-    const user = useAppSelector((state) => state.user) as HrRespons;
+    const user = useAppSelector((state) => state.user) as HrResponse;
 
     if (!user) {
         return null;
@@ -17,6 +16,8 @@ export const HrPage = () => {
 
     return (
         <>
+            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} />
+            {user._id} - {user.role} - {user.fullName} - {user.company}
             <main
                 style={{
                     display: 'flex',
