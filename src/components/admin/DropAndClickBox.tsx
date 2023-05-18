@@ -30,7 +30,6 @@ export const DropAndClickBox = () => {
             return;
         }
     };
-    const handleUploadSuccess = () => true;
 
     const handleFileInputChange = async (
         e: React.ChangeEvent<HTMLInputElement>
@@ -41,19 +40,17 @@ export const DropAndClickBox = () => {
             return;
         }
 
-        const success = await uploadCsvFile(
+        const { success, message } = (await uploadCsvFile(
             csvFile,
-            setErrors,
-            handleUploadSuccess
+            setErrors
+        )) as { success: boolean; message: string };
+        console.log(success);
+        showSnackBar(
+            success
+                ? 'Plik csv dodany prawidłowo. Maile zostały wysłane do użytkowników'
+                : message,
+            success ? SnackBarEnum.SUCCESS_MESSAGE : undefined
         );
-        if (success as any) {
-            showSnackBar(
-                'Plik csv dodany prawidłowo. Maile zostały wysłane do użytkowników',
-                SnackBarEnum.SUCCESS_MESSAGE
-            );
-        } else {
-            showSnackBar('Błąd podczas dodawania plik csv');
-        }
     };
 
     return (
