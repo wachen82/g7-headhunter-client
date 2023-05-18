@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTitle } from '../../hooks/useTitle';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useAppSelector } from '../../hooks/reduxHooks';
@@ -15,7 +14,6 @@ import { GradesBox } from '../../components/common/UserPortfolio/Grades/GradesBo
 import { ExpectationsBox } from '../../components/common/UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioLink } from '../../components/common/UserPortfolio/PortfolioLink/PortfolioLink';
 
-        
 export const UserPage = () => {
     useTitle('Strona Kursanta');
     const user = useAppSelector((state) => state.user) as UserRespons;
@@ -132,7 +130,7 @@ export const UserPage = () => {
                             }
                             expectedSalary={
                                 userProfile?.profile.expectations
-                                    .expectedSalary as string
+                                    .expectedSalary as any
                             }
                             canTakeApprenticeship={
                                 userProfile?.profile.expectations

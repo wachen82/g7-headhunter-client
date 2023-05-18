@@ -21,9 +21,15 @@ export const validationSchema = [
     }),
 
     yup.object().shape({
-        portfolioUrls: yup.array(string()),
+        portfolioUrls: yup.array(
+            string()
+                .url('Url - przykład https://www.github.com/nazwa/projekt')
+                .required('Address url do projektu jest wymagany')
+        ),
         projectUrls: yup.array(
-            string().url().required('Address url do projektu jest wymagany')
+            string()
+                .url('Url - przykład https://www.github.com/nazwa/projekt')
+                .required('Address url do projektu jest wymagany')
         ),
         bio: yup.string(),
         education: yup.string(),
@@ -31,9 +37,10 @@ export const validationSchema = [
         courses: yup.string(),
         monthsOfCommercialExp: yup
             .number()
-            .min(0)
-            .integer()
-            .required('Ilość miesięcy jest wymagana'),
+            .required('Wartość jest wymagana')
+            .typeError('Wartość musi być liczbą')
+            .integer('Ilość miesięcy musi być liczbą dodatnią')
+            .min(0, 'Ilość miesięcy musi być liczbą dodatnią'),
     }),
     yup.object().shape({
         expectedTypeWork: yup
