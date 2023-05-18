@@ -21,6 +21,12 @@ export const PortfolioForm = () => {
         name: 'portfolioUrls',
     });
 
+    const helperTextStyles = {
+        margin: 0,
+        paddingX: '1rem',
+        backgroundColor: theme.palette.background.paper,
+    };
+
     return (
         <>
             <Typography variant="h6" gutterBottom>
@@ -132,6 +138,9 @@ export const PortfolioForm = () => {
                                 {...register('monthsOfCommercialExp')}
                                 error={!!errors.monthsOfCommercialExp}
                                 helperText={errors.monthsOfCommercialExp?.message?.toString()}
+                                FormHelperTextProps={{
+                                    sx: helperTextStyles,
+                                }}
                             />
                         )}
                     />
@@ -159,12 +168,7 @@ export const PortfolioForm = () => {
                                     errors.projectUrls?.[0].message.toString()
                                 }
                                 FormHelperTextProps={{
-                                    sx: {
-                                        margin: 0,
-                                        paddingX: '1rem',
-                                        backgroundColor:
-                                            theme.palette.background.paper,
-                                    },
+                                    sx: helperTextStyles,
                                 }}
                             />
                         )}
@@ -193,12 +197,7 @@ export const PortfolioForm = () => {
                                     errors.projectUrls?.[1].message.toString()
                                 }
                                 FormHelperTextProps={{
-                                    sx: {
-                                        margin: 0,
-                                        paddingX: '1rem',
-                                        backgroundColor:
-                                            theme.palette.background.paper,
-                                    },
+                                    sx: helperTextStyles,
                                 }}
                             />
                         )}
@@ -242,13 +241,7 @@ export const PortfolioForm = () => {
                                                 ]?.message?.toString()
                                             }
                                             FormHelperTextProps={{
-                                                sx: {
-                                                    margin: 0,
-                                                    paddingX: '1rem',
-                                                    backgroundColor:
-                                                        theme.palette.background
-                                                            .paper,
-                                                },
+                                                sx: helperTextStyles,
                                             }}
                                         />
                                     )}
