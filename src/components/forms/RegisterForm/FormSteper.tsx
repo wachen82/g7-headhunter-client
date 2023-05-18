@@ -74,16 +74,18 @@ export const RegisterForm = () => {
                     SnackBarEnum.ERROR_MESSAGE
                 );
             }
-            const res = await response.json();
-            showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE);
+            showSnackBar(
+                'Formularz wypełniony poprawnie, dziękujemy',
+                SnackBarEnum.SUCCESS_MESSAGE
+            );
             methods.reset(defaultValues);
+            handleNext();
         } catch (e) {
             showSnackBar(
                 'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
                 SnackBarEnum.ERROR_MESSAGE
             );
         }
-        handleNext();
     };
 
     const handleNext = () => {
