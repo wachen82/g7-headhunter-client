@@ -15,6 +15,12 @@ export const UserDataForm = () => {
         formState: { errors },
     } = useFormContext<IUserProfileEntity1>();
 
+    const helperTextStyles = {
+        margin: 0,
+        paddingX: '1rem',
+        backgroundColor: theme.palette.background.paper,
+    };
+
     return (
         <>
             <Box>
@@ -40,12 +46,7 @@ export const UserDataForm = () => {
                                     error={!!errors.firstName}
                                     helperText={errors.firstName?.message?.toString()}
                                     FormHelperTextProps={{
-                                        sx: {
-                                            margin: 0,
-                                            paddingX: '1rem',
-                                            backgroundColor:
-                                                theme.palette.background.paper,
-                                        },
+                                        sx: helperTextStyles,
                                     }}
                                 />
                             )}
@@ -69,12 +70,7 @@ export const UserDataForm = () => {
                                     error={!!errors.lastName}
                                     helperText={errors.lastName?.message?.toString()}
                                     FormHelperTextProps={{
-                                        sx: {
-                                            margin: 0,
-                                            paddingX: '1rem',
-                                            backgroundColor:
-                                                theme.palette.background.paper,
-                                        },
+                                        sx: helperTextStyles,
                                     }}
                                 />
                             )}
@@ -98,12 +94,7 @@ export const UserDataForm = () => {
                                     error={!!errors.email}
                                     helperText={errors.email?.message?.toString()}
                                     FormHelperTextProps={{
-                                        sx: {
-                                            margin: 0,
-                                            paddingX: '1rem',
-                                            backgroundColor:
-                                                theme.palette.background.paper,
-                                        },
+                                        sx: helperTextStyles,
                                     }}
                                 />
                             )}
@@ -127,12 +118,7 @@ export const UserDataForm = () => {
                                     error={!!errors.githubUsername}
                                     helperText={errors.githubUsername?.message?.toString()}
                                     FormHelperTextProps={{
-                                        sx: {
-                                            margin: 0,
-                                            paddingX: '1rem',
-                                            backgroundColor:
-                                                theme.palette.background.paper,
-                                        },
+                                        sx: helperTextStyles,
                                     }}
                                 />
                             )}
