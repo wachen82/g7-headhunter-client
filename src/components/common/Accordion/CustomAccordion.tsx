@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Container } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Container } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
@@ -13,27 +13,8 @@ import { CustomPagination } from '../Pagination/CustomPagination';
 import { Loading } from '../Loading/Loading';
 import { CustomSnackBar } from '../CustomSnackBar/CustomSnackBar';
 import { handleChange } from '../../../utils/handleChange';
-
-
-export interface UserAndSkills {
-    reservationExpiryDate: string;
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    courseCompletion: number;
-    courseEngagement: number;
-    projectDegree: number;
-    teamProjectDegree: number;
-    expectedTypeWork: string;
-    targetWorkCity: string;
-    expectedContractType: string;
-    expectedSalary: string;
-    canTakeApprenticeship: string;
-    monthsOfCommercialExp: number;
-}
-
+import { renderTypographyGridItem } from '../../../utils/renderSkills';
+import { UserAndSkills } from '../../../types/userAndSkills';
 
 export const CustomAccordion = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -76,23 +57,16 @@ export const CustomAccordion = () => {
             setSnackbarMessage('Kursant zarezerwowany');
             setSnackbarType('success');
             setSnackbarOpen(true);
-            // Aktualizacja wartości totalCount
             const newTotalCount = totalCount - 1;
             setTotalCount(newTotalCount);
-
-            // Aktualizacja wartości rowsPerPage, jeśli ilość dostępnych użytkowników na stronie jest mniejsza niż rowsPerPage
             const currentRowCount = availableUsers.length;
             if (currentRowCount < rowsPerPage) {
                 setRowsPerPage(currentRowCount);
             }
-
-            // Sprawdzenie czy currentPage jest większe niż nowa liczba stron
             const newPageCount = Math.ceil(newTotalCount / rowsPerPage);
             if (currentPage > newPageCount) {
                 setCurrentPage(newPageCount);
             }
-
-            // Sprawdzenie czy currentPage * rowsPerPage jest większe niż newTotalCount
             if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
                 setCurrentPage(currentPage - 1);
             }
@@ -107,38 +81,13 @@ export const CustomAccordion = () => {
             }
         }
     };
-
-    const grade = ['Ocena przejścia kursu:', 'Ocena aktywności i zaangażowania w kursie:', 'Ocena kodu w projekcie własnym:', 'Ocena pracy w zespole w Scrum:'];
-    const renderTypographyGridItem = (label: string, value: string) => (
-        <Grid item>
-            <Typography variant='h1'
-                        sx={{
-                            fontSize: '12px',
-                            paddingTop: '5px',
-                            height: '34px',
-                            color: theme.palette.grey['100'],
-                        }}>{label}</Typography>
-            <Typography variant='body1'
-                        sx={{
-                            fontSize: '12px',
-                            height: '24px',
-                        }}>{grade.includes(label) ?
-                <span>{value}<span style={{ color: theme.palette.grey['200'] }}>/5</span></span> : value} </Typography>
-        </Grid>
-    );
-
     const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-        if (newPage === currentPage - 1) {
-            setCurrentPage(currentPage - 1); // Cofanie do poprzedniej strony
-        } else if (newPage === currentPage + 1) {
-            setCurrentPage(currentPage + 1); // Przechodzenie do następnej strony
-        } else {
-            setCurrentPage(newPage + 1); // Kliknięcie na konkretną stronę
-        }
+        setCurrentPage(newPage === currentPage - 1 ? currentPage - 1 : newPage === currentPage + 1 ? currentPage + 1 : newPage + 1);
     };
 
-    const handleRowsPerPageChange = () => {
-        setRowsPerPage(rowsPerPage);
+    const handleRowsPerPageChange = (newRowsPerPage: number) => {
+        setRowsPerPage(newRowsPerPage);
+        setCurrentPage(1);
     };
 
     if(loading) return <Loading/>
@@ -165,12 +114,6 @@ export const CustomAccordion = () => {
                             textTransform: 'none',
                             marginRight: '20px',
                         }} />
-                        <CustomSnackBar
-                            actionState={snackbarOpen}
-                            setAction={setSnackbarOpen}
-                            type={snackbarType}
-                            message={snackbarMessage}
-                        />
                     </AccordionSummary>
                     <AccordionDetails
                         sx={{
@@ -212,6 +155,12 @@ export const CustomAccordion = () => {
                     />
                     : null }
             </Container>
+            <CustomSnackBar
+                actionState={snackbarOpen}
+                setAction={setSnackbarOpen}
+                type={snackbarType}
+                message={snackbarMessage}
+            />
         </>
     );
 };

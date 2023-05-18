@@ -6,11 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../../../config/api';
-import { UserAndSkills } from './CustomAccordion';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 import { Loading } from '../Loading/Loading';
 import { CustomPagination } from '../Pagination/CustomPagination';
 import { handleChange } from '../../../utils/handleChange';
+import { CustomSnackBar } from '../CustomSnackBar/CustomSnackBar';
+import { renderTypographyGridItem } from '../../../utils/renderSkills';
+import { UserAndSkills } from '../../../types/userAndSkills';
+import { ButtonData } from 'src/types/buttonData';
 
 const buttonStyles = {
     fontSize: '1rem',
@@ -25,6 +28,9 @@ export const CustomAccordionFilter = () => {
     const [totalCount, setTotalCount] = useState(0);
     const [reservedUsers, setReservedUsers] = useState<UserAndSkills[]>([]);
     const [loading, setLoading] = useState(true);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarType, setSnackbarType] = useState('');
     const [expanded, setExpanded] = useState<string | false>(false);
 
     const { id } = useParams();
@@ -33,9 +39,10 @@ export const CustomAccordionFilter = () => {
         if(!userId) return null
             try {
                 const response = await axios.get(`${apiUrl}/hr/${userId}?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
-                const { users, totalPages } = response.data;
+                const { users, totalCount } = response.data;
+                console.log(totalCount);
                 setReservedUsers(users);
-                setTotalCount(totalPages * rowsPerPage);
+                setTotalCount(totalCount);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
@@ -44,27 +51,6 @@ export const CustomAccordionFilter = () => {
         setLoading(true);
         fetchReservedUsers(id);
     }, [id, currentPage, rowsPerPage]);
-
-
-
-    const grade = ['Ocena przejścia kursu:', 'Ocena aktywności i zaangażowania w kursie:', 'Ocena kodu w projekcie własnym:', 'Ocena pracy w zespole w Scrum:'];
-    const renderTypographyGridItem = (label: string, value: string) => (
-        <Grid item>
-            <Typography variant='h1'
-                        sx={{
-                            fontSize: '12px',
-                            paddingTop: '5px',
-                            height: '34px',
-                            color: theme.palette.grey['100'],
-                        }}>{label}</Typography>
-            <Typography variant='body1'
-                        sx={{
-                            fontSize: '12px',
-                            height: '24px',
-                        }}>{grade.includes(label) ?
-                <span>{value}<span style={{ color: theme.palette.grey['200'] }}>/5</span></span> : value} </Typography>
-        </Grid>
-    );
 
     const handleShowCV = () => {
         // @TODO: Logika obsługująca akcję "Pokaż CV"
@@ -81,29 +67,51 @@ export const CustomAccordionFilter = () => {
                 { withCredentials: true }
             );
             setReservedUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
-            setTotalCount((prevTotalCount) => prevTotalCount - 1);
-            setRowsPerPage((prevRowsPerPage) => prevRowsPerPage - 1);
-        } catch (error) {
-            console.error(error);
+                setSnackbarType('success');
+                setSnackbarOpen(true);
+            if (status === 'Dostępny') {
+                setSnackbarMessage('Kursant przestał być zarezerwowany');
+            } else if (status === 'Zatrudniony') {
+                setSnackbarMessage('Kursant został oznaczony jako zatrudniony');
+            }
+            const newTotalCount = totalCount - 1;
+            setTotalCount(newTotalCount);
+            const currentRowCount = reservedUsers.length;
+            if (currentRowCount < rowsPerPage) {
+                setRowsPerPage(currentRowCount);
+            }
+            const newPageCount = Math.ceil(newTotalCount / rowsPerPage);
+            if (currentPage > newPageCount) {
+                setCurrentPage(newPageCount);
+            }
+            if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
+                setCurrentPage(currentPage - 1);
+            }
+        } catch (error: any) {
+            if (error.response && error.response.status === 400) {
+                const errorMessage = error.response.data.message;
+                setSnackbarMessage(errorMessage);
+                setSnackbarType('error');
+                setSnackbarOpen(true);
+            } else {
+                console.log('Wystąpił inny błąd');
+            }
         }
     };
 
-    type ButtonData = {
-        text: string;
-        action: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => Promise<void> | void;
-        status?: string;
-    };
     const buttonData: ButtonData[] = [
         { text: 'Pokaż CV', action: handleShowCV },
         { text: 'Brak zainteresowania', status: 'Dostępny', action: handleAction },
         { text: 'Zatrudniony', status: 'Zatrudniony', action: handleAction },
     ];
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
+
+    const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+        setCurrentPage(newPage === currentPage - 1 ? currentPage - 1 : newPage === currentPage + 1 ? currentPage + 1 : newPage + 1);
     };
 
     const handleRowsPerPageChange = (newRowsPerPage: number) => {
         setRowsPerPage(newRowsPerPage);
+        setCurrentPage(1);
     };
 
     if(loading) return <Loading/>
@@ -191,14 +199,20 @@ export const CustomAccordionFilter = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                { reservedUsers.length > 0 ?  <CustomPagination
+                { reservedUsers.length > 0 ?   <CustomPagination
                     count={totalCount}
                     page={currentPage - 1}
                     rowsPerPage={rowsPerPage}
-                    onPageChange={handlePageChange}
+                    onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
                     onRowsPerPageChange={handleRowsPerPageChange}
-                /> : null }
+                />: null }
             </Container>
+            <CustomSnackBar
+                actionState={snackbarOpen}
+                setAction={setSnackbarOpen}
+                type={snackbarType}
+                message={snackbarMessage}
+            />
         </>
     );
 };
