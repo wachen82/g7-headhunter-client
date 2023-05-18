@@ -8,6 +8,8 @@ import {
     Radio,
     RadioGroup,
     TextField,
+    ToggleButton,
+    ToggleButtonGroup,
     Typography,
 } from '@mui/material';
 import { ButtonWithIconAndText } from '../common/Buttons/ButtonWithIconAndText';
@@ -15,6 +17,22 @@ import { GradesFilterBox } from './Grades/GradesFilterBox';
 import theme from '../../theme';
 
 export const FilterBox = () => {
+    const [expectedTypeWork, setExpectedTypeWork] = React.useState('');
+    const [expectedContractType, setExpectedContractType] = React.useState('');
+
+    const handleTypeWorkChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newExpectedTypeWork: string
+    ) => {
+        setExpectedTypeWork(newExpectedTypeWork);
+    };
+    const handleContractTypeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newExpectedContractType: string
+    ) => {
+        setExpectedContractType(newExpectedContractType);
+    };
+
     return (
         <Container
             sx={{
@@ -70,8 +88,84 @@ export const FilterBox = () => {
                 >
                     Preferowane miejsce pracy
                 </Typography>
-                <Button>Praca zdalna</Button>
-                <Button>Praca w biurze</Button>
+
+                <ToggleButtonGroup
+                    color="primary"
+                    value={expectedTypeWork}
+                    exclusive
+                    onChange={handleTypeWorkChange}
+                    aria-label="Preferowane miejsce pracy"
+                >
+                    <ToggleButton
+                        value="Na miejscu"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Na miejscu
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Gotowość do przeprowadzki"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Gotowość do przeprowadzki
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Wyłącznie zdalnie"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Wyłącznie zdalnie
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Hybrydowo"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Hybrydowo
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Bez znaczenia"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Bez znaczenia
+                    </ToggleButton>
+                </ToggleButtonGroup>
             </Box>
 
             <Box
@@ -88,10 +182,71 @@ export const FilterBox = () => {
                 >
                     Oczekiwany typ kontraktu
                 </Typography>
-                <Button>Umowa o pracę</Button>
-                <Button>B2B</Button>
-                <Button>Umowa zlecenie</Button>
-                <Button>Umowa o dzieło</Button>
+
+                <ToggleButtonGroup
+                    color="primary"
+                    value={expectedContractType}
+                    exclusive
+                    onChange={handleContractTypeChange}
+                    aria-label="Oczekiwany typ kontraktu"
+                >
+                    <ToggleButton
+                        value="Tylko UoP"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Tylko UoP
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Możliwe B2B"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Możliwe B2B
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Możliwe UZ/UoD"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Możliwe UZ/UoD
+                    </ToggleButton>
+                    <ToggleButton
+                        value="Brak preferencji"
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            color: theme.palette.text.primary,
+                            marginRight: '8px',
+                            textTransform: 'none',
+                            fontSize: '12px',
+                            lineHeight: '19px',
+                            fontWeight: 'light',
+                        }}
+                    >
+                        Brak preferencji
+                    </ToggleButton>
+                </ToggleButtonGroup>
             </Box>
             <Box
                 sx={{
