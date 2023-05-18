@@ -7,7 +7,6 @@ import { routes } from './routesMap';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { AdminPage } from '../pages/AdminPage/AdminPage';
-import { RegisterInactivePage } from '../pages/RegisterInactivePage/RegisterInactivePage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage/ResetPasswordPage';
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage/ResetPasswordEmailPage';
 import { UserPage } from '../pages/UserPage/UserPage';
@@ -26,10 +25,7 @@ const router = (user: string) =>
             path: routes.signIn,
             element: <LoginPage />,
         },
-        {
-            path: routes.signUp,
-            element: <RegisterInactivePage />,
-        },
+
         {
             path: routes.register,
             element: <RegisterPage />,
