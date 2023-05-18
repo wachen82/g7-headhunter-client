@@ -2,7 +2,7 @@ import { useTitle } from '../../hooks/useTitle';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { HrResponse } from 'types';
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import theme from '../../theme';
 import { Menu } from '../../components/hr/MenuView/Menu/Menu';
 
@@ -17,20 +17,13 @@ export const HrPage = () => {
     return (
         <>
             <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} />
-            {user._id} - {user.role} - {user.fullName} - {user.company}
             <main
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
+                    minHeight: '100vh'
                 }}
             >
-                <Box sx={{ width: '100%' }}>
-                    <UsersAppBar
-                        avatarUrl={'avatarUrl'}
-                        userName={'Test Test'}
-                    />
-                </Box>
                 <Container
                     sx={{
                         maxWidth: '80%',
