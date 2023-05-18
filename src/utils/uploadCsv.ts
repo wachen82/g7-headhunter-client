@@ -11,6 +11,7 @@ export const uploadCsvFile = async (
     const formData = new FormData();
     const fileBlob = new Blob([csvFile], { type: 'text/csv' });
     formData.append('csvFile', fileBlob, 'csvFile.csv');
+    const success = true;
     try {
         const response = await fetch(`${apiUrl}${ENDPOINTS.validateCsv}`, {
             credentials: 'include',
@@ -25,8 +26,10 @@ export const uploadCsvFile = async (
             setErrors(jsonResponse.errors);
         } else {
             console.log('CSV file is ready to be saved');
-            await saveCsv(jsonResponse);
-            return handleUploadSuccess();
+            const response = await saveCsv(jsonResponse, success);
+            if (response === undefined) {
+                return handleUploadSuccess();
+            }
         }
     } catch (error) {
         console.error(error);
