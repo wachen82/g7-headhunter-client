@@ -76,8 +76,6 @@ const theme = createTheme({
                 },
             },
         },
-    },
-    components: {
         MuiGrid: {
             styleOverrides: {
                 item: {
@@ -87,7 +85,7 @@ const theme = createTheme({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     height: '130px',
-                    padding: '0'
+                    padding: '0',
                 },
             },
         },
