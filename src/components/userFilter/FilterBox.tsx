@@ -20,6 +20,11 @@ export const FilterBox = () => {
     const [expectedTypeWork, setExpectedTypeWork] = React.useState('');
     const [expectedContractType, setExpectedContractType] = React.useState('');
 
+    const handleClearFilterClick = () => {
+        setExpectedTypeWork('');
+        setExpectedContractType('');
+    };
+
     const handleTypeWorkChange = (
         event: React.MouseEvent<HTMLElement>,
         newExpectedTypeWork: string
@@ -57,6 +62,7 @@ export const FilterBox = () => {
                     Filtrowanie
                 </Typography>
                 <Button
+                    onClick={handleClearFilterClick}
                     sx={{
                         padding: '4px 10px',
                         height: '31px',
