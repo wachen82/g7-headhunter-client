@@ -5,7 +5,8 @@ import { ENDPOINTS } from '../services/endpoints/endpoints';
 
 export const uploadCsvFile = async (
     csvFile: string,
-    setErrors: (errors: ErrorCsv[]) => void
+    setErrors: (errors: ErrorCsv[]) => void,
+    handleUploadSuccess: () => void
 ) => {
     const formData = new FormData();
     const fileBlob = new Blob([csvFile], { type: 'text/csv' });
@@ -23,8 +24,9 @@ export const uploadCsvFile = async (
         if (jsonResponse && jsonResponse.errors) {
             setErrors(jsonResponse.errors);
         } else {
-            console.log('CSV file is ready to be saved', jsonResponse.errors);
+            console.log('CSV file is ready to be saved');
             await saveCsv(jsonResponse);
+            return handleUploadSuccess();
         }
     } catch (error) {
         console.error(error);
