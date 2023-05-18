@@ -6,13 +6,14 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { Box } from '@mui/material';
 import { defaultValues } from '../FormDefaultValues';
 import theme from '../../../../theme';
+import { IUserProfileEntity1 } from '../types';
 
 export const UserDataForm = () => {
     const {
         register,
         control,
         formState: { errors },
-    } = useFormContext();
+    } = useFormContext<IUserProfileEntity1>();
 
     return (
         <>
