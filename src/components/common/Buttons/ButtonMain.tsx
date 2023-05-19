@@ -8,6 +8,7 @@ interface ButtonProps {
     backgroundColor?: string;
     onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | (() => void);
     sx?: Record<string, any>;
+    type?:string;
 }
 
 export const ButtonMain = ({
