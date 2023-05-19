@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Slider, Typography } from '@mui/material';
 import theme from '../../../theme';
 
 interface Props {
     text: string;
-    //funkcja zbierająca ocenę do góry
+    name: string;
+    value: number;
+    onChange: (name: string, value: number) => void;
 }
 
-export const SingleGradeFilter = (props: Props) => {
-    const [value, setValue] = useState<number>(3);
+export const SingleGradeFilter = ({ text, name, value, onChange }: Props) => {
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number);
+    const handleGradeChange = (event: Event, newValue: number | number[]) => {
+        onChange(name, newValue as number);
     };
 
     return (
@@ -27,12 +28,11 @@ export const SingleGradeFilter = (props: Props) => {
                     color: theme.palette.text.primary,
                 }}
             >
-                {props.text}
+                {text}
             </Typography>
             <Slider
                 value={value}
-                onChange={handleChange}
-                // aria-label="course-completion"
+                onChange={handleGradeChange}
                 defaultValue={3}
                 valueLabelDisplay="auto"
                 step={1}
