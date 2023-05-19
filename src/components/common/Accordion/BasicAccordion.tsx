@@ -15,24 +15,41 @@ import { CustomSnackBar } from '../CustomSnackBar/CustomSnackBar';
 import { handleChange } from '../../../utils/handleChange';
 import { renderTypographyGridItem } from '../../../utils/renderSkills';
 import { UserAndSkills } from '../../../types/userAndSkills';
+import { useSnackBar } from '../../../hooks/useSnackBar';
+import { SnackBarEnum } from '../../../types/formValues';
+import { ButtonData } from '../../../types/buttonData';
+import { useNavigate } from 'react-router-dom';
 
-export const CustomAccordion = () => {
+interface Props {
+    url:string;
+    add?: string
+}
+const buttonStyles = {
+    fontSize: '1rem',
+    borderRadius: '0',
+    textTransform: 'none',
+    marginRight: '20px',
+};
+export const BasicAccordion = ({url, add}: Props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
-    const [availableUsers, setAvailableUsers] = useState<UserAndSkills[]>([]);
+    const [users, setUsers] = useState<UserAndSkills[]>([]);
     const [loading, setLoading] = useState(true);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarType, setSnackbarType] = useState('');
     const [expanded, setExpanded] = useState<string | false>(false);
-
+    const {
+        snackBarMessage,
+        snackBarType,
+        isSnackBarOpen,
+        hideSnackBar,
+        showSnackBar,
+    } = useSnackBar();
     useEffect(() => {
-        const fetchAvailableUsers = async () => {
+        const fetchAvailableUsers = async (url:string) => {
             try {
-                const response = await axios.get(`${apiUrl}/hr?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
+                const response = await axios.get(`${url}?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
                 const { users, totalCount } = response.data;
-                setAvailableUsers(users);
+                setUsers(users);
                 setTotalCount(totalCount)
                 setLoading(false);
             } catch (error) {
@@ -40,26 +57,41 @@ export const CustomAccordion = () => {
             }
         };
         setLoading(true);
-        fetchAvailableUsers()
-    }, [currentPage, rowsPerPage]);
-
+        fetchAvailableUsers(url)
+    }, [currentPage, rowsPerPage, url]);
+    const navigate = useNavigate();
+    const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId?:string) => {
+        navigate(`/user/${userId}`)
+    };
     const { id } = useParams();
-    const handleButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email: string, status: string) => {
+    const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
         try {
-            await axios.patch(`${apiUrl}${ENDPOINTS.setStatus}/${id}`, {
-                email: email,
-                status: status,
-            }, { withCredentials: true });
-            setAvailableUsers((prevUsers) =>
-                prevUsers.filter((user) => user.email !== email)
+            await axios.patch(
+                `${apiUrl}${ENDPOINTS.setStatus}/${id}`,
+                {
+                    email: email,
+                    status: status,
+                },
+                { withCredentials: true }
             );
-            setSnackbarMessage('Kursant zarezerwowany');
-            setSnackbarType('success');
-            setSnackbarOpen(true);
+            setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
+            switch (status) {
+                case 'W trakcie rozmowy':
+                    showSnackBar('Kursant zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
+                    break;
+                case 'Dostępny':
+                    showSnackBar('Kursant przestał być zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
+                    break;
+                case 'Zatrudniony':
+                    showSnackBar('Kursant został oznaczony jako zatrudniony', SnackBarEnum.SUCCESS_MESSAGE);
+                    break;
+                default:
+                    break;
+            }
             const newTotalCount = totalCount - 1;
             setTotalCount(newTotalCount);
-            const currentRowCount = availableUsers.length;
+            const currentRowCount = users.length;
             if (currentRowCount < rowsPerPage) {
                 setRowsPerPage(currentRowCount);
             }
@@ -70,17 +102,25 @@ export const CustomAccordion = () => {
             if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
                 setCurrentPage(currentPage - 1);
             }
-        } catch (error:any) {
+        } catch (error: any) {
             if (error.response && error.response.status === 400) {
                 const errorMessage = error.response.data.message;
-                setSnackbarMessage(errorMessage);
-                setSnackbarType('error');
-                setSnackbarOpen(true);
+                showSnackBar(errorMessage,  SnackBarEnum.ERROR_MESSAGE);
             } else {
-                console.log('Wystąpił inny błąd');
+                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE)
             }
         }
     };
+    const threeButtonData: ButtonData[] = [
+        { text: 'Pokaż CV', action: handleShowCV },
+        { text: 'Brak zainteresowania', status: 'Dostępny', action: handleAction },
+        { text: 'Zatrudniony', status: 'Zatrudniony', action: handleAction },
+    ];
+    const oneButtonData:ButtonData[] = [
+        { text: 'Zarezerwuj', status: 'W trakcie rozmowy', action: handleAction },
+    ]
+    const buttonData: ButtonData[] = add ? threeButtonData : oneButtonData;
+
     const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setCurrentPage(newPage === currentPage - 1 ? currentPage - 1 : newPage === currentPage + 1 ? currentPage + 1 : newPage + 1);
     };
@@ -89,10 +129,11 @@ export const CustomAccordion = () => {
         setRowsPerPage(newRowsPerPage);
         setCurrentPage(1);
     };
+    const showCVIndex = buttonData.findIndex(button => button.text === 'Pokaż CV');
 
     if(loading) return <Loading/>
     return (<>
-            { availableUsers ? availableUsers.map(user => (
+            { users ? users.map(user => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
                            onChange={handleChange(user.email, setExpanded)}
@@ -106,14 +147,19 @@ export const CustomAccordion = () => {
                         <Typography
                             sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
                             {`${user.firstName} ${user.lastName.charAt(0)}.`}</Typography>
-                        <ButtonMain text='Zarezerwuj rozmowę'
-                                    onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => handleButtonClick(event, user.email, 'W trakcie rozmowy')}
-                                    sx={{
-                            fontSize: '1rem',
-                            borderRadius: '0',
-                            textTransform: 'none',
-                            marginRight: '20px',
-                        }} />
+                        {buttonData.map((button, index) => (
+                            <ButtonMain
+                                key={index}
+                                text={button.text}
+                                sx={buttonStyles}
+                                onClick={(event) => {
+                                    if (index === showCVIndex) {
+                                        handleShowCV(event, user.id);
+                                    } else {
+                                        handleAction(event, user.email, button.status);
+                                    }
+                                }}                            />
+                        ))}
                     </AccordionSummary>
                     <AccordionDetails
                         sx={{
@@ -145,7 +191,7 @@ export const CustomAccordion = () => {
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                { availableUsers.length > 0 ?
+                { users.length > 0 ?
                     <CustomPagination
                         count={totalCount}
                         page={currentPage - 1}
@@ -155,12 +201,14 @@ export const CustomAccordion = () => {
                     />
                     : null }
             </Container>
-            <CustomSnackBar
-                actionState={snackbarOpen}
-                setAction={setSnackbarOpen}
-                type={snackbarType}
-                message={snackbarMessage}
-            />
+            {isSnackBarOpen && (
+                <CustomSnackBar
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
+                />
+            )}
         </>
     );
 };
