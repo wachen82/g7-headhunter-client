@@ -15,7 +15,7 @@ import {
 import theme from '../../theme';
 import { ButtonMain } from '../common/Buttons/ButtonMain';
 import { SingleGradeFilter } from './Grades/SingleGradeFilter';
-import { expectedContractTypeOptions, expectedTypeWorkOptions, initialFilterData } from './InitialData';
+import { expectedContractTypeOptions, expectedTypeWorkOptions, initialFilterData } from './initialData';
 import { apiUrl } from '../../config/api';
 import { ENDPOINTS } from '../../services/endpoints/endpoints';
 import { SnackBarEnum } from '../../types/formValues';
