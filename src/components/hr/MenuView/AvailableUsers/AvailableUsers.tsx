@@ -1,7 +1,7 @@
 import { ButtonsAndInputView } from '../ButtonAndInputView/ButtonsAndInputView'
 import { Container, Divider } from '@mui/material';
 import theme from '../../../../theme';
-import { CustomAccordion } from '../../../common/Accordion/CustomAccordion';
+import { AvailableAccordion } from '../../../common/Accordion/AvailableAccordion';
 
 export const AvailableUsers = () => {
 
@@ -10,7 +10,7 @@ export const AvailableUsers = () => {
             <ButtonsAndInputView />
             <Container>
                 <Divider sx={{ bgcolor: theme.palette.grey['900'] }} />
-                <CustomAccordion/>
+                <AvailableAccordion/>
             </Container>
         </>
     )

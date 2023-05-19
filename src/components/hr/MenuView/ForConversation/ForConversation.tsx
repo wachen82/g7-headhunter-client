@@ -1,7 +1,7 @@
 import { ButtonsAndInputView } from '../ButtonAndInputView/ButtonsAndInputView';
-import { CustomAccordionFilter } from '../../../common/Accordion/CustomAccordionFilter';
 import { Container, Divider } from '@mui/material';
 import theme from '../../../../theme';
+import { ReservedAccordion } from '../../../common/Accordion/ReservedAccordion';
 
 
 export const ForConversation = () => {
@@ -11,7 +11,7 @@ export const ForConversation = () => {
             <ButtonsAndInputView />
             <Container>
                 <Divider sx={{ bgcolor: theme.palette.grey['900'] }} />
-                <CustomAccordionFilter />
+                <ReservedAccordion/>
             </Container>
         </>
     );
