@@ -1,15 +1,9 @@
+import { IUserSkills } from 'types';
 import { apiUrl } from '../config/api';
 import { ENDPOINTS } from '../services/endpoints/endpoints';
-interface UserCSV {
-    email: string;
-    courseCompletion: number;
-    courseEngagement: number;
-    projectDegree: number;
-    teamProjectDegree: number;
-    bonusProjectUrls: string[];
-}
 
-export const saveCsv = async (data: UserCSV) => {
+
+export const saveCsv = async (data: IUserSkills) => {
     try {
         const saveResponse = await fetch(`${apiUrl}${ENDPOINTS.saveCsv}`, {
             method: 'POST',

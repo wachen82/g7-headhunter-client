@@ -20,7 +20,10 @@ export const CustomTabs = ({ tabs, value, onChange }: CustomTabsProps) => {
                     key={index}
                     sx={{
                         textTransform: 'none',
-                        color: theme.palette.text.primary,
+                        color: theme.palette.grey['100'],
+                        '&.Mui-selected': {
+                            color: theme.palette.text.primary,
+                        },
                         padding: '23px 34px 19px',
                     }}
                     label={label}

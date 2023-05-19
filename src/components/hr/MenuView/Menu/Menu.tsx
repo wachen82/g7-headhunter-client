@@ -1,16 +1,16 @@
-import * as React from 'react'
-import { Box } from '@mui/material'
-import { BasicPanel } from './BasicPanel'
-import { AvailableStudents } from '../AvailableStudents/AvailableStudents'
-import { ForConversation } from '../ForConversation/ForConversation'
-import { CustomTabs } from './CustomTabs'
+import * as React from 'react';
+import { Box } from '@mui/material';
+import { BasicPanel } from './BasicPanel';
+import { AvailableUsers } from '../AvailableUsers/AvailableUsers';
+import { ForConversation } from '../ForConversation/ForConversation';
+import { CustomTabs } from './CustomTabs';
+
 
 export const Menu = () => {
-    const [value, setValue] = React.useState(0)
-
+    const [value, setValue] = React.useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue)
-    }
+        setValue(newValue);
+    };
 
     return (
         <Box sx={{ width: '100%', padding: 0 }}>
@@ -40,11 +40,11 @@ export const Menu = () => {
                 />
             </Box>
             <BasicPanel value={value} index={0}>
-                <AvailableStudents />
+                <AvailableUsers />
             </BasicPanel>
             <BasicPanel value={value} index={1}>
                 <ForConversation />
             </BasicPanel>
         </Box>
-    )
-}
+    );
+};
