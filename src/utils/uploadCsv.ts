@@ -16,17 +16,17 @@ export const uploadCsvFile = async (
             method: 'POST',
             body: formData,
         });
-        if (!response.ok) {
-            console.error('Failed to upload CSV file');
-        }
         const jsonResponse = await response.json();
+        const { success, message } = await saveCsv(jsonResponse);
+        if (!response.ok) {
+            return { success, message };
+        }
         if (jsonResponse && jsonResponse.errors) {
             setErrors(jsonResponse.errors);
         } else {
-            console.log('CSV file is ready to be saved', jsonResponse.errors);
-            await saveCsv(jsonResponse);
+            return { success, message };
         }
-    } catch (error) {
-        console.error(error);
+    } catch {
+        return { success: false, message: 'Błąd podczas dodawania plik csv' };
     }
 };

@@ -9,7 +9,7 @@ export const AuthPage = ({ children }: Props) => {
     return (
         <Container
             sx={{
-                height: 'inherit',
+                height: '100vh',
             }}
         >
             <Box

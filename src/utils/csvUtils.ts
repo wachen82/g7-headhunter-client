@@ -14,8 +14,8 @@ export const getCsvFile = async (files: FileList) => {
             resolve(csvData);
         };
         reader.onerror = () => {
-            reject(reader.error)
+            reject(reader.error);
         };
-        reader.readAsText(file)
-    })
+        reader.readAsText(file);
+    });
 };

@@ -1,11 +1,10 @@
-import React from 'react';
 import { useTitle } from '../../hooks/useTitle';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import axios from 'axios';
 import { apiUrl } from '../../config/api';
 import { useEffect, useState } from 'react';
-import { IUserProfileEntity, UserProfilResponse, UserRespons } from 'types';
+import { IUserProfileEntity, UserProfilResponse, UserResponse } from 'types';
 import { Box } from '@mui/material';
 import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLink';
 import { InfoBox } from '../../components/common/account/info/InfoBox';
@@ -14,11 +13,10 @@ import { PortfolioContent } from '../../components/common/UserPortfolio/Portfoli
 import { GradesBox } from '../../components/common/UserPortfolio/Grades/GradesBox';
 import { ExpectationsBox } from '../../components/common/UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioLink } from '../../components/common/UserPortfolio/PortfolioLink/PortfolioLink';
-import { UserProfilResponse, UserRespons } from 'types';
-        
+
 export const UserPage = () => {
     useTitle('Strona Kursanta');
-    const user = useAppSelector((state) => state.user) as UserRespons;
+    const user = useAppSelector((state) => state.user) as UserResponse;
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
 
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
@@ -132,7 +130,7 @@ export const UserPage = () => {
                             }
                             expectedSalary={
                                 userProfile?.profile.expectations
-                                    .expectedSalary as string
+                                    .expectedSalary as any
                             }
                             canTakeApprenticeship={
                                 userProfile?.profile.expectations

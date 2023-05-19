@@ -1,4 +1,6 @@
 import { createTheme } from '@mui/material/styles';
+import { plPL } from '@mui/material/locale';
+
 
 const theme = createTheme({
     palette: {
@@ -74,7 +76,20 @@ const theme = createTheme({
                 },
             },
         },
+        MuiGrid: {
+            styleOverrides: {
+                item: {
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    height: '130px',
+                    padding: '0',
+                },
+            },
+        },
     },
-});
+}, plPL);
 
 export default theme;

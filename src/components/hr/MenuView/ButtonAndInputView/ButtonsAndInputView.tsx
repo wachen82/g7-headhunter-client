@@ -1,8 +1,8 @@
 import { Container } from '@mui/material'
-import { ButtonWithIconAndText } from '../../../../components/common/Buttons/ButtonWithIconAndText'
-import { SearchIcon } from '../../../../components/icon/SearchIcon'
+import { ButtonMain } from '../../../common/Buttons/ButtonMain'
+import { SearchIcon } from '../../../icon/SearchIcon'
 import theme from '../../../../theme'
-import { InputWithIconAndText } from '../../../../components/common/Inputs/InputWithIconAndText'
+import { InputWithIconAndText } from '../../../common/Inputs/InputWithIconAndText'
 
 export const ButtonsAndInputView = () => {
     return (
@@ -15,7 +15,7 @@ export const ButtonsAndInputView = () => {
                 }}
             >
                 <InputWithIconAndText />
-                <ButtonWithIconAndText
+                <ButtonMain
                     icon={<SearchIcon />}
                     text="Filtrowanie"
                     sx={{
@@ -26,6 +26,7 @@ export const ButtonsAndInputView = () => {
                         fontWeight: 'normal',
                         color: theme.palette.text.primary,
                         bgcolor: theme.palette.grey['800'],
+                        borderRadius: '0'
                     }}
                 />
             </Container>

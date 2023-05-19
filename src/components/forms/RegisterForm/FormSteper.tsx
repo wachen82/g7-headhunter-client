@@ -26,6 +26,7 @@ import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
 export const RegisterForm = () => {
     const steps = ['Dane Osobowe', 'Portfolio', 'Preferowane Zatrudnienie'];
     const [activeStep, setActiveStep] = useState(0);
+    const [submitted, setSubmitted] = useState(false);
 
     const currentValidationSchema = validationSchema[activeStep];
 
@@ -73,17 +74,21 @@ export const RegisterForm = () => {
                     'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
                     SnackBarEnum.ERROR_MESSAGE
                 );
+                setSubmitted(false);
             }
-            const res = await response.json();
-            showSnackBar(`${res.message}`, SnackBarEnum.SUCCESS_MESSAGE);
+            showSnackBar(
+                'Formularz wypełniony poprawnie, dziękujemy',
+                SnackBarEnum.SUCCESS_MESSAGE
+            );
             methods.reset(defaultValues);
+            handleNext();
         } catch (e) {
             showSnackBar(
                 'Sprawdź poprawność danych, headhunter nie został dodany do bazy',
                 SnackBarEnum.ERROR_MESSAGE
             );
+            setSubmitted(false);
         }
-        handleNext();
     };
 
     const handleNext = () => {
@@ -92,6 +97,7 @@ export const RegisterForm = () => {
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        setSubmitted(false);
     };
 
     const getStepContent = (step: number) => {
@@ -169,7 +175,7 @@ export const RegisterForm = () => {
                                     variant="contained"
                                     href={'/sign-in'}
                                     sx={{ mt: 3, ml: 1 }}
-                                    type="button"
+                                    type="button" /**/
                                 >
                                     Zaloguj się
                                 </Button>
@@ -178,9 +184,13 @@ export const RegisterForm = () => {
                     ) : (
                         <FormProvider {...methods}>
                             <Form
-                                onSubmit={methods.handleSubmit(
-                                    formSubmitHandler
-                                )}
+                                onSubmit={
+                                    submitted
+                                        ? methods.handleSubmit(
+                                              formSubmitHandler
+                                          )
+                                        : () => ({})
+                                }
                             >
                                 {getStepContent(activeStep)}
 
@@ -204,6 +214,7 @@ export const RegisterForm = () => {
                                                 !methods.formState.isValid ||
                                                 !methods.formState.isDirty
                                             }
+                                            onClick={() => setSubmitted(true)}
                                             variant="contained"
                                             sx={{ mt: 3, ml: 1 }}
                                             type="submit"
