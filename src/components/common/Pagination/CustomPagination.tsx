@@ -1,19 +1,21 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import TablePagination, { TablePaginationProps } from '@mui/material/TablePagination';
+import theme from '../../../theme';
 
 const StyledTablePagination = styled(TablePagination)<TablePaginationProps>`
   .css-i4bv87-MuiSvgIcon-root {
-    background-color: #CFCFCF;
+    background-color: ${theme.palette.grey['100']};
+  ;
   }
 
   button:nth-of-type(1) .MuiSvgIcon-root {
-    background-color: #666666;
+    background-color: ${theme.palette.grey['300']};
   }
 
   .css-vnofp3-MuiInputBase-root-MuiTablePagination-select {
-    color: #333333 !important;
-    background-color: #CFCFCF;
+    color: ${theme.palette.grey['500']} !important;
+    background-color: ${theme.palette.grey['100']};
   }
 `;
 
