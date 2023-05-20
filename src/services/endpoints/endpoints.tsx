@@ -8,4 +8,5 @@ export const ENDPOINTS = {
     validateCsv: '/admin/validate-csv',
     saveCsv: '/admin/save-csv',
     setStatus: '/hr/status',
+    filter: '/hr/filter',
 };

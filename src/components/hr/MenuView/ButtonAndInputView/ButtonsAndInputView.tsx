@@ -1,8 +1,6 @@
 import { Container } from '@mui/material'
-import { ButtonMain } from '../../../common/Buttons/ButtonMain'
-import { SearchIcon } from '../../../icon/SearchIcon'
-import theme from '../../../../theme'
-import { InputWithIconAndText } from '../../../common/Inputs/InputWithIconAndText'
+import { InputSearch } from '../../../common/Inputs/InputSearch'
+import { FilterButton } from '../../../common/Buttons/FilterButton/FilterButton';
 
 export const ButtonsAndInputView = () => {
     return (
@@ -14,21 +12,8 @@ export const ButtonsAndInputView = () => {
                     padding: '14px 20px',
                 }}
             >
-                <InputWithIconAndText />
-                <ButtonMain
-                    icon={<SearchIcon />}
-                    text="Filtrowanie"
-                    sx={{
-                        textTransform: 'none',
-                        width: '111px',
-                        height: '38px',
-                        display: 'flex',
-                        fontWeight: 'normal',
-                        color: theme.palette.text.primary,
-                        bgcolor: theme.palette.grey['800'],
-                        borderRadius: '0'
-                    }}
-                />
+                <InputSearch />
+               <FilterButton/>
             </Container>
         </>
     )

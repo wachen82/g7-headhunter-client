@@ -6,7 +6,7 @@ interface InputProps {
     onClick?: () => void
 }
 
-export const InputWithIconAndText = ({ onClick }: InputProps) => {
+export const InputSearch = ({ onClick }: InputProps) => {
     return (
         <TextField
             onClick={onClick}

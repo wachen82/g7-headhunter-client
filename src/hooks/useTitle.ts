@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { useState, useEffect } from 'react';
 
 export const useTitle = (initialTitle: string) => {
     const [title, setTitle] = useState(initialTitle);
