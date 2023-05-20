@@ -1,12 +1,18 @@
-import React from 'react';
+import { AppRoutes } from './routes/Routes'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './theme'
+import { Box } from '@mui/material'
 
-
-function App() {
-  return (
-    <div>
-
-    </div>
-  );
+export const App = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <Box
+                sx={{
+                    backgroundColor: theme.palette.secondary.main,
+                }}
+            >
+                <AppRoutes />
+            </Box>
+        </ThemeProvider>
+    )
 }
-
-export default App;
