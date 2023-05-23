@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Container } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import theme from '../../../theme';
@@ -19,24 +19,31 @@ import { useSnackBar } from '../../../hooks/useSnackBar';
 import { SnackBarEnum } from '../../../types/formValues';
 import { ButtonData } from '../../../types/buttonData';
 import { useNavigate } from 'react-router-dom';
+import { SearchValueContext } from '../../../context/SearchValueContext';
 
 interface Props {
-    url:string;
-    add?: string
+    url: string;
+    tab: number;
+    add?: string;
 }
+
 const buttonStyles = {
     fontSize: '1rem',
     borderRadius: '0',
     textTransform: 'none',
     marginRight: '20px',
 };
-export const BasicAccordion = ({url, add}: Props) => {
+export const BasicAccordion = ({ url, tab, add }: Props) => {
+    const { searchValue } = useContext(SearchValueContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const [users, setUsers] = useState<UserAndSkills[]>([]);
     const [loading, setLoading] = useState(true);
     const [expanded, setExpanded] = useState<string | false>(false);
+    const { id } = useParams();
+
     const {
         snackBarMessage,
         snackBarType,
@@ -45,25 +52,32 @@ export const BasicAccordion = ({url, add}: Props) => {
         showSnackBar,
     } = useSnackBar();
     useEffect(() => {
-        const fetchAvailableUsers = async (url:string) => {
+        const fetchAvailableUsers = async (url: string) => {
             try {
-                const response = await axios.get(`${url}?page=${currentPage}&limit=${rowsPerPage}`, { withCredentials: true });
-                const { users, totalCount } = response.data;
+                const pagesAndLimit = `page=${currentPage}&limit=${rowsPerPage}`;
+                const urlProps = `${url}?${pagesAndLimit}`;
+                const urlSearch = `${apiUrl}${ENDPOINTS.search}${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
+                const availableUrl = searchValue ? urlSearch : urlProps;
+                const response = await axios.get(availableUrl, { withCredentials: true });
+                const { users, totalCount, totalPages } = response.data;
                 setUsers(users);
-                setTotalCount(totalCount)
+                setTotalCount(totalCount);
+                if (totalCount === 0) {
+                    showSnackBar('Brak kursantów', SnackBarEnum.ERROR_MESSAGE);
+                }
+                setTotalPages(totalPages);
                 setLoading(false);
             } catch (error) {
-                console.error(error);
+                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE);
             }
         };
         setLoading(true);
-        fetchAvailableUsers(url)
-    }, [currentPage, rowsPerPage, url]);
+        fetchAvailableUsers(url);
+    }, [currentPage, rowsPerPage, searchValue]);
     const navigate = useNavigate();
-    const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId?:string) => {
-        navigate(`/user/${userId}`)
+    const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId?: string) => {
+        navigate(`/user/${userId}`);
     };
-    const { id } = useParams();
     const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
         try {
@@ -73,7 +87,7 @@ export const BasicAccordion = ({url, add}: Props) => {
                     email: email,
                     status: status,
                 },
-                { withCredentials: true }
+                { withCredentials: true },
             );
             setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
             switch (status) {
@@ -95,9 +109,9 @@ export const BasicAccordion = ({url, add}: Props) => {
             if (currentRowCount < rowsPerPage) {
                 setRowsPerPage(currentRowCount);
             }
-            const newPageCount = Math.ceil(newTotalCount / rowsPerPage);
-            if (currentPage > newPageCount) {
-                setCurrentPage(newPageCount);
+
+            if (currentPage > totalPages) {
+                setCurrentPage(totalPages);
             }
             if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
                 setCurrentPage(currentPage - 1);
@@ -105,9 +119,9 @@ export const BasicAccordion = ({url, add}: Props) => {
         } catch (error: any) {
             if (error.response && error.response.status === 400) {
                 const errorMessage = error.response.data.message;
-                showSnackBar(errorMessage,  SnackBarEnum.ERROR_MESSAGE);
+                showSnackBar(errorMessage, SnackBarEnum.ERROR_MESSAGE);
             } else {
-                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE)
+                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE);
             }
         }
     };
@@ -116,9 +130,9 @@ export const BasicAccordion = ({url, add}: Props) => {
         { text: 'Brak zainteresowania', status: 'Dostępny', action: handleAction },
         { text: 'Zatrudniony', status: 'Zatrudniony', action: handleAction },
     ];
-    const oneButtonData:ButtonData[] = [
+    const oneButtonData: ButtonData[] = [
         { text: 'Zarezerwuj', status: 'W trakcie rozmowy', action: handleAction },
-    ]
+    ];
     const buttonData: ButtonData[] = add ? threeButtonData : oneButtonData;
 
     const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -131,9 +145,9 @@ export const BasicAccordion = ({url, add}: Props) => {
     };
     const showCVIndex = buttonData.findIndex(button => button.text === 'Pokaż CV');
 
-    if(loading) return <Loading/>
+    if (loading) return <Loading />;
     return (<>
-            { users ? users.map(user => (
+            {users ? users.map(user => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
                            onChange={handleChange(user.email, setExpanded)}
@@ -158,7 +172,7 @@ export const BasicAccordion = ({url, add}: Props) => {
                                     } else {
                                         handleAction(event, user.email, button.status);
                                     }
-                                }}                            />
+                                }} />
                         ))}
                     </AccordionSummary>
                     <AccordionDetails
@@ -184,14 +198,14 @@ export const BasicAccordion = ({url, add}: Props) => {
                         </GridContainer>
                     </AccordionDetails>
                 </Accordion>
-            )) : [] }
+            )) : []}
             <Container sx={{
                 maxWidth: '80%',
                 margin: '0 auto',
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                { users.length > 0 ?
+                {users.length > 0 ?
                     <CustomPagination
                         count={totalCount}
                         page={currentPage - 1}
@@ -199,7 +213,7 @@ export const BasicAccordion = ({url, add}: Props) => {
                         onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
                         onRowsPerPageChange={handleRowsPerPageChange}
                     />
-                    : null }
+                    : null}
             </Container>
             {isSnackBarOpen && (
                 <CustomSnackBar
