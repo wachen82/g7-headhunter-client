@@ -8,13 +8,12 @@ import { SearchValueProvider } from '../../../../context/SearchValueContext';
 export const ForConversation = () => {
 
     return (
-        <><SearchValueProvider>
+        <SearchValueProvider>
             <ButtonsAndInputView />
             <Container>
                 <Divider sx={{ bgcolor: theme.palette.grey['900'] }} />
                 <ReservedAccordion />
             </Container>
         </SearchValueProvider>
-        </>
     );
 };

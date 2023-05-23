@@ -7,7 +7,6 @@ import { SearchValueProvider } from '../../../../context/SearchValueContext';
 export const AvailableUsers = () => {
 
     return (
-        <>
             <SearchValueProvider>
                 <ButtonsAndInputView />
                 <Container>
@@ -15,6 +14,5 @@ export const AvailableUsers = () => {
                     <AvailableAccordion />
                 </Container>
             </SearchValueProvider>
-        </>
     );
 };
