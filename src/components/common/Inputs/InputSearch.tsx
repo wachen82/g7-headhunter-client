@@ -2,8 +2,9 @@ import { InputAdornment, TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import theme from '../../../theme';
 import React, { useContext, useState } from 'react';
-
 import { SearchValueContext } from '../../../context/SearchValueContext';
+import { ButtonMain } from '../Buttons/ButtonMain';
+import { buttonStyles } from '../Accordion/BasicAccordion';
 
 export const InputSearch = () => {
     const { searchValue, setSearchValue } = useContext(SearchValueContext);
@@ -18,6 +19,9 @@ export const InputSearch = () => {
             setSearchValue(inputValue);
             setInputValue('');
         }
+    };
+    const handleShowAllResults = () => {
+        setSearchValue('');
     };
 
     return (<>
@@ -47,6 +51,12 @@ export const InputSearch = () => {
                     },
                 }}
             />
+            {searchValue && (
+                <ButtonMain
+                    text='Pokaż wszystkie wyniki'
+                    sx={buttonStyles}
+                    onClick={handleShowAllResults}
+                />)}
         </>
     );
 };
