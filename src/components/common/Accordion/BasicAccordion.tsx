@@ -27,7 +27,7 @@ interface Props {
     add?: string;
 }
 
-const buttonStyles = {
+export const buttonStyles = {
     fontSize: '1rem',
     borderRadius: '0',
     textTransform: 'none',
@@ -56,7 +56,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
             try {
                 const pagesAndLimit = `page=${currentPage}&limit=${rowsPerPage}`;
                 const urlProps = `${url}?${pagesAndLimit}`;
-                const urlSearch = `${apiUrl}${ENDPOINTS.search}${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
+                const urlSearch = `${apiUrl}${ENDPOINTS.search}/${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
                 const availableUrl = searchValue ? urlSearch : urlProps;
                 const response = await axios.get(availableUrl, { withCredentials: true });
                 const { users, totalCount, totalPages } = response.data;
