@@ -10,5 +10,4 @@ export const routes = {
     setNewPassword: '/reset-password/:token',
     registerUser: '/register/:id/:token',
     notFound: '*',
-    filter: '/hr/filter',
 };
