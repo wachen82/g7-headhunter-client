@@ -32,7 +32,7 @@ export const CustomModal = ({open, setOpen}: Props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                <FilterBox/>
+                <FilterBox closeModal={handleClose}/>
                 </Box>
             </Modal>
         </div>

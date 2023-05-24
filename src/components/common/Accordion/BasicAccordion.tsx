@@ -20,6 +20,7 @@ import { SnackBarEnum } from '../../../types/formValues';
 import { ButtonData } from '../../../types/buttonData';
 import { useNavigate } from 'react-router-dom';
 import { SearchValueContext } from '../../../context/SearchValueContext';
+import { FilterDataContext } from '../../../context/FilterDataContext';
 
 interface Props {
     url: string;
@@ -34,7 +35,8 @@ export const buttonStyles = {
     marginRight: '20px',
 };
 export const BasicAccordion = ({ url, tab, add }: Props) => {
-    const { searchValue } = useContext(SearchValueContext);
+    const { searchValue, setSearchValue } = useContext(SearchValueContext);
+    const { params, setParams } = useContext(FilterDataContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
@@ -57,7 +59,8 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                 const pagesAndLimit = `page=${currentPage}&limit=${rowsPerPage}`;
                 const urlProps = `${url}?${pagesAndLimit}`;
                 const urlSearch = `${apiUrl}${ENDPOINTS.search}/${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
-                const availableUrl = searchValue ? urlSearch : urlProps;
+                const urlFilter = `${apiUrl}${ENDPOINTS.filter}/${id}/?${params}&tab=${tab}&${pagesAndLimit}`
+                const availableUrl = searchValue ? urlSearch : (params ? urlFilter : urlProps);
                 const response = await axios.get(availableUrl, { withCredentials: true });
                 const { users, totalCount, totalPages } = response.data;
                 setUsers(users);
@@ -73,7 +76,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
         };
         setLoading(true);
         fetchAvailableUsers(url);
-    }, [currentPage, rowsPerPage, searchValue]);
+    }, [currentPage, rowsPerPage, searchValue, params]);
     const navigate = useNavigate();
     const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId?: string) => {
         navigate(`/user/${userId}`);
@@ -144,9 +147,18 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
         setCurrentPage(1);
     };
     const showCVIndex = buttonData.findIndex(button => button.text === 'Pokaż CV');
-
+    const handleShowAllResults = () => {
+        setSearchValue('');
+        setParams('');
+    };
     if (loading) return <Loading />;
     return (<>
+            {(searchValue || params) && (
+                <ButtonMain
+                    text='Pokaż wszystkie wyniki'
+                    sx={buttonStyles}
+                    onClick={handleShowAllResults}
+                />)}
             {users ? users.map(user => (
                 <Accordion key={user.email}
                            expanded={expanded === user.email}
