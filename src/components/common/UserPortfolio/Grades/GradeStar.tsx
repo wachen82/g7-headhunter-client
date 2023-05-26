@@ -11,7 +11,7 @@ export const GradeStar = (props: Props) => {
     return (
         <Typography
             sx={{
-                fontSize: '20px',
+                fontSize: '1rem',
                 color: props.color,
             }}
         >

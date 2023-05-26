@@ -23,7 +23,7 @@ export const InfoContact = (props: Props) => {
             >
                 <Typography
                     sx={{
-                        fontSize: '16px',
+                        fontSize: '.8rem',
                         lineHeight: '27px',
                         color: theme.palette.grey['400'],
                     }}
@@ -35,6 +35,7 @@ export const InfoContact = (props: Props) => {
                         marginLeft: '10px',
                         color: theme.palette.text.primary,
                         fontWeight: 'lighter',
+                        fontSize: '.8rem',
                     }}
                 >
                     {phone}
@@ -44,7 +45,7 @@ export const InfoContact = (props: Props) => {
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <Typography
                     sx={{
-                        fontSize: '16px',
+                        fontSize: '.8rem',
                         lineHeight: '27px',
                         color: theme.palette.grey['400'],
                     }}
@@ -56,6 +57,7 @@ export const InfoContact = (props: Props) => {
                         marginLeft: '10px',
                         color: theme.palette.text.primary,
                         fontWeight: 'lighter',
+                        fontSize: '.8rem',
                     }}
                 >
                     {email}

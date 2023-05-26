@@ -13,7 +13,7 @@ export const InfoBio = (props: Props) => {
         <>
             <Typography
                 sx={{
-                    fontSize: '16px',
+                    fontSize: '.8rem',
                     lineHeight: '27px',
                     color: theme.palette.grey['400'],
                     marginTop: '10px',
@@ -26,6 +26,7 @@ export const InfoBio = (props: Props) => {
                     margin: '0 25px 10px 0',
                     color: theme.palette.text.primary,
                     fontWeight: 'lighter',
+                    fontSize: '.8rem',
                 }}
             >
                 {bio}

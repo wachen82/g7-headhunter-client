@@ -25,7 +25,7 @@ export const GradesBox = (props: Props) => {
                 flexDirection: 'row',
                 justifyContent: 'left',
                 backgroundColor: '#222324',
-                width: '1176px',
+                width: '1000px',
                 height: '110px',
                 padding: '10px 0 0 26px',
                 margin: '0 0 12px 4px',
