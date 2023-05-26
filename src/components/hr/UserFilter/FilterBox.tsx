@@ -77,8 +77,9 @@ export const FilterBox = ({ closeModal }:Props) => {
         const filterParams = new URLSearchParams();
 
         Object.entries(filterData).forEach(([key, value]) => {
-            filterParams.set(key, String(value));
-        });
+            if (value !== '') {
+                filterParams.set(key, String(value));
+            }        });
 
         setParams(filterParams.toString());
         closeModal()
