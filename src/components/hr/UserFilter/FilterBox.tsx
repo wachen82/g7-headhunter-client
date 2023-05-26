@@ -12,11 +12,11 @@ import {
     ToggleButtonGroup,
     Typography,
 } from '@mui/material';
-import theme from '../../theme';
-import { ButtonMain } from '../common/Buttons/ButtonMain';
+import theme from '../../../theme';
+import { ButtonMain } from '../../common/Buttons/ButtonMain';
 import { SingleGradeFilter } from './Grades/SingleGradeFilter';
 import { expectedContractTypeOptions, expectedTypeWorkOptions, initialFilterData } from './initialData';
-import { FilterDataContext } from '../../context/FilterDataContext';
+import { FilterDataContext } from '../../../context/FilterDataContext';
 
 interface Props {
     closeModal: () => void;

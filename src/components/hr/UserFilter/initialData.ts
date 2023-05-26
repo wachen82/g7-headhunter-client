@@ -1,4 +1,4 @@
-import { FilterValues } from '../../types/filterData';
+import { FilterValues } from '../../../types/filterData';
 
 export const initialFilterData:FilterValues = {
     courseCompletion: 0,
