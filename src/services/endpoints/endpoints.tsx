@@ -9,5 +9,6 @@ export const ENDPOINTS = {
     saveCsv: '/admin/save-csv',
     setStatus: '/hr/status',
     filter: '/hr/filter',
-    search: '/hr/search'
+    search: '/hr/search',
+    cv: '/hr/user',
 };
