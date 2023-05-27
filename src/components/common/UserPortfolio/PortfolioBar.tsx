@@ -12,14 +12,14 @@ export const PortfolioBar = (props: Props) => {
             sx={{
                 backgroundColor: theme.palette.secondary.light,
                 height: '60px',
-                width: '1176px',
+                width: '1000px',
                 marginLeft: '4px',
             }}
         >
             <Typography
                 sx={{
                     color: theme.palette.text.primary,
-                    fontSize: '20px',
+                    fontSize: '1rem',
                     lineHeight: '60px',
                     marginLeft: '26px',
                 }}

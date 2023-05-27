@@ -21,7 +21,7 @@ export const PortfolioLink = (props: Props) => {
         >
             <Typography
                 sx={{
-                    fontSize: '24px',
+                    fontSize: '1rem',
                     lineHeight: '27px',
                     color: theme.palette.info.main,
                 }}
@@ -35,7 +35,7 @@ export const PortfolioLink = (props: Props) => {
             >
                 <Typography
                     sx={{
-                        fontSize: '16px',
+                        fontSize: '.9rem',
                         lineHeight: '27px',
                         marginLeft: '12px',
                         color: theme.palette.info.main,

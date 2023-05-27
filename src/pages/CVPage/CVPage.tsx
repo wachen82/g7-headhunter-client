@@ -1,19 +1,23 @@
+import React, { useEffect, useState } from 'react';
+import { UserProfilResponse } from 'types';
+import { UserProfile } from '../../components/common/UserProfile/UserProfile';
 import { useTitle } from '../../hooks/useTitle';
 import { useAppSelector } from '../../hooks/reduxHooks';
+import { HrResponse } from 'types';
 import { apiUrl } from '../../config/api';
-import React, { useEffect, useState } from 'react';
-import { UserProfilResponse, UserResponse } from 'types';
-import { Loading } from '../../components/common/Loading/Loading';
-import { UserProfile } from '../../components/common/UserProfile/UserProfile';
-import { CustomSnackBar } from '../../components/common/CustomSnackBar/CustomSnackBar';
+import { useParams } from 'react-router-dom';
 import { useSnackBar } from '../../hooks/useSnackBar';
+import { Loading } from '../../components/common/Loading/Loading';
+import { CustomSnackBar } from '../../components/common/CustomSnackBar/CustomSnackBar';
+import { ENDPOINTS } from '../../services/endpoints/endpoints';
 import { fetchUserProfile } from '../../utils/fetchUserProfile';
 
-export const UserPage = () => {
-    useTitle('Strona Kursanta');
-    const user = useAppSelector((state) => state.user) as UserResponse;
+export const CVPage: React.FC = () => {
+    useTitle('CV Kursanta');
+    const user = useAppSelector((state) => state.user) as HrResponse;
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
     const [loading, setLoading] = useState(true);
+    const { id, email } = useParams();
     const {
         snackBarMessage,
         snackBarType,
@@ -23,7 +27,7 @@ export const UserPage = () => {
     } = useSnackBar();
 
     useEffect(() => {
-        const url = `${apiUrl}/user/${user._id}`;
+        const url = `${apiUrl}${ENDPOINTS.cv}/${id}/${email}`;
         fetchUserProfile(url, setLoading, setUserProfile, showSnackBar);
     }, [user]);
 

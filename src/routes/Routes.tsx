@@ -14,6 +14,7 @@ import { HrPage } from '../pages/HrPage/HrPage';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import { ROLES } from '../types/router';
+import { CVPage } from '../pages/CVPage/CVPage';
 
 const router = (user: string) =>
     createBrowserRouter([
@@ -41,6 +42,10 @@ const router = (user: string) =>
         {
             path: routes.hr,
             element: user === ROLES.HR ? <HrPage /> : <Navigate to="/" />,
+        },
+        {
+            path: routes.cv,
+            element: user === ROLES.HR ? <CVPage /> : <Navigate to="/" />,
         },
         {
             path: routes.resetPassword,

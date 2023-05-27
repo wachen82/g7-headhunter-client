@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Slider, Typography } from '@mui/material';
-import theme from '../../../theme';
+import theme from '../../../../theme';
 
 interface Props {
     text: string;

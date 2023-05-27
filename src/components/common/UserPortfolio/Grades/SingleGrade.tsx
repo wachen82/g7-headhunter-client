@@ -30,8 +30,6 @@ export const SingleGrade = (props: Props) => {
     return (
         <Box
             sx={{
-                width: '163px',
-                height: '90px',
                 marginRight: '100px',
                 display: 'flex',
                 flexDirection: 'column',
@@ -42,13 +40,12 @@ export const SingleGrade = (props: Props) => {
                 sx={{
                     height: '41px',
                     display: 'flex',
-                    flexDirection: 'row',
                     alignItems: 'flex-end',
                 }}
             >
                 <Typography
                     sx={{
-                        fontSize: '14px',
+                        fontSize: '.8rem',
                         color: theme.palette.grey['100'],
                         fontWeight: 'light',
                     }}
@@ -65,8 +62,7 @@ export const SingleGrade = (props: Props) => {
             >
                 <Typography
                     sx={{
-                        fontSize: '18px',
-                        lineHeight: '30px',
+                        fontSize: '.9rem',
                         color: theme.palette.text.primary,
                         marginRight: '10px',
                     }}
@@ -75,8 +71,7 @@ export const SingleGrade = (props: Props) => {
                 </Typography>
                 <Typography
                     sx={{
-                        fontSize: '18px',
-                        lineHeight: '30px',
+                        fontSize: '.9rem',
                         color: theme.palette.grey['200'],
                         marginRight: '12px',
                     }}

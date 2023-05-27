@@ -16,6 +16,7 @@ Group project carried out to specification and mock-ups provided. Working in scr
 ![AvailableUsers](./imagesReadme/Dostępni%20kursanci.png)
 ![ReservedUsers](./imagesReadme/Zarezerwowani%20Kursanci.png)
 ![FilterView](./imagesReadme/Filtrowanie.png)
+![UserPage](./imagesReadme/Strona%20kursanta.png)
 
 
 ## Technologies Used

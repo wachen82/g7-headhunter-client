@@ -18,7 +18,8 @@ export const InfoName = (props: Props) => {
         <>
             <Typography
                 sx={{
-                    fontSize: '24px',
+                    // fontSize: '24px',
+                    fontSize: '18px',
                     lineHeight: '39px',
                     color: theme.palette.text.primary,
                     margin: '0 auto',
@@ -31,7 +32,8 @@ export const InfoName = (props: Props) => {
 
             <Typography
                 sx={{
-                    fontSize: '16px',
+                    // fontSize: '16px',
+                    fontSize: '14px',
                     lineHeight: '27px',
                     margin: '0 auto',
                     textTransform: 'lowercase',

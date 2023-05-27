@@ -18,9 +18,10 @@ import { UserAndSkills } from '../../../types/userAndSkills';
 import { useSnackBar } from '../../../hooks/useSnackBar';
 import { SnackBarEnum } from '../../../types/formValues';
 import { ButtonData } from '../../../types/buttonData';
-import { useNavigate } from 'react-router-dom';
 import { SearchValueContext } from '../../../context/SearchValueContext';
 import { FilterDataContext } from '../../../context/FilterDataContext';
+import { useNavigate } from 'react-router-dom';
+import { handleErrorResponse } from '../../../utils/handleErrorSnackBarResponse';
 
 interface Props {
     url: string;
@@ -59,7 +60,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                 const pagesAndLimit = `page=${currentPage}&limit=${rowsPerPage}`;
                 const urlProps = `${url}?${pagesAndLimit}`;
                 const urlSearch = `${apiUrl}${ENDPOINTS.search}/${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
-                const urlFilter = `${apiUrl}${ENDPOINTS.filter}/${id}/?${params}&tab=${tab}&${pagesAndLimit}`
+                const urlFilter = `${apiUrl}${ENDPOINTS.filter}/${id}/?${params}&tab=${tab}&${pagesAndLimit}`;
                 const availableUrl = searchValue ? urlSearch : (params ? urlFilter : urlProps);
                 const response = await axios.get(availableUrl, { withCredentials: true });
                 const { users, totalCount, totalPages } = response.data;
@@ -70,16 +71,18 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                 }
                 setTotalPages(totalPages);
                 setLoading(false);
-            } catch (error) {
-                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE);
+            } catch (error: any) {
+                setLoading(false)
+                handleErrorResponse(error, showSnackBar);
             }
         };
         setLoading(true);
         fetchAvailableUsers(url);
     }, [currentPage, rowsPerPage, searchValue, params]);
+
     const navigate = useNavigate();
-    const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId?: string) => {
-        navigate(`/user/${userId}`);
+    const handleShowCV = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string) => {
+        navigate(`/cv/${id}/${email}`);
     };
     const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
@@ -180,7 +183,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                                 sx={buttonStyles}
                                 onClick={(event) => {
                                     if (index === showCVIndex) {
-                                        handleShowCV(event, user.id);
+                                        handleShowCV(event, user.email);
                                     } else {
                                         handleAction(event, user.email, button.status);
                                     }
