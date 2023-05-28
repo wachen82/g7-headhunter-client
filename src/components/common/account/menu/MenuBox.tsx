@@ -23,10 +23,11 @@ import { ENDPOINTS } from '../../../../services/endpoints/endpoints';
 interface Props {
     avatarUrl: string;
     userName: string;
+    accountUrl: string;
 }
 
 export const MenuBox = (props: Props) => {
-    const { avatarUrl, userName } = props;
+    const { avatarUrl, userName, accountUrl } = props;
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -150,7 +151,7 @@ export const MenuBox = (props: Props) => {
                                     <MenuLink
                                         handleClose={handleClose}
                                         text={'Konto'}
-                                        url={'#'}
+                                        url={accountUrl}
                                     />
                                     <MenuLink
                                         onClick={handleLogout}
