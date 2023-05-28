@@ -57,10 +57,9 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
     useEffect(() => {
         const fetchAvailableUsers = async (url: string) => {
             try {
-                const pagesAndLimit = `page=${currentPage}&limit=${rowsPerPage}`;
-                const urlProps = `${url}?${pagesAndLimit}`;
-                const urlSearch = `${apiUrl}${ENDPOINTS.search}/${id}/?search=${searchValue}&tab=${tab}&${pagesAndLimit}`;
-                const urlFilter = `${apiUrl}${ENDPOINTS.filter}/${id}/?${params}&tab=${tab}&${pagesAndLimit}`;
+                const urlProps = `${url}?page=${currentPage}&limit=${rowsPerPage}`;
+                const urlSearch = `${apiUrl}${ENDPOINTS.search}/${id}/?search=${searchValue}&tab=${tab}`;
+                const urlFilter = `${apiUrl}${ENDPOINTS.filter}/${id}/?${params}&tab=${tab}`;
                 const availableUrl = searchValue ? urlSearch : (params ? urlFilter : urlProps);
                 const response = await axios.get(availableUrl, { withCredentials: true });
                 const { users, totalCount, totalPages } = response.data;
