@@ -11,6 +11,7 @@ export const routes = {
     registerUser: '/register/:id/:token',
     accountHr: '/hr/:id/account',
     accountUser: '/user/:id/account',
+    accountAdmin: '/admin/:id/account',
     cv: '/cv/:id/:email',
     notFound: '*',
 };

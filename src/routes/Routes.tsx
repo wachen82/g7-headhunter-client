@@ -17,6 +17,7 @@ import { ROLES } from '../types/router';
 import { AccountPageHr } from '../pages/AccountPage/AccountPageHr';
 import { CVPage } from '../pages/CVPage/CVPage';
 import { AccountPageUser } from '../pages/AccountPage/AccountPageUser';
+import { AccountPageAdmin } from '../pages/AccountPage/AccountPageAdmin';
 
 const router = (user: string) =>
     createBrowserRouter([
@@ -52,6 +53,10 @@ const router = (user: string) =>
         {
             path: routes.accountUser,
             element: user === ROLES.USER ? <AccountPageUser /> : <Navigate to="/" />,
+        },
+        {
+            path: routes.accountAdmin,
+            element: user === ROLES.ADMIN ? <AccountPageAdmin /> : <Navigate to="/" />,
         },
         {
             path: routes.cv,
