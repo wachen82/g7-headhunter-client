@@ -3,18 +3,12 @@ import { Box, Link, Typography } from '@mui/material';
 import theme from '../../../theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import { useLocation, useParams } from 'react-router-dom';
 
-export const BackArrowLink = () => {
-    const location = useLocation();
-    const pathname = location.pathname;
-    const { id, email } = useParams();
-    let url;
-    if (pathname === `/cv/${id}/${email}`) {
-        url = `http://localhost:3000/hr/${id}`;
-    } else {
-        url = '#';
-    }
+interface Props {
+    url: string;
+}
+
+export const BackArrowLink = ({ url }: Props) => {
     return (
         <Link
             href={url}
