@@ -7,8 +7,9 @@ import { BackArrowLink } from '../../components/common/BackArrowLink/BackArrowLi
 export const AccountPageHr = () => {
     useTitle('Panel zarządzania kontem headhuntera');
     const user = useAppSelector((state) => state.user) as HrResponse;
+
     return (<>
-        <BackArrowLink url={`/hr/${user._id}`}/>
-        <AccountContent user={user}/>
-        </>)
+        <BackArrowLink url={`/hr/${user._id}`} />
+        <AccountContent user={user} />
+    </>);
 };

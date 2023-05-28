@@ -7,6 +7,7 @@ import { AccountContent } from './AccountContent';
 export const AccountPageUser = () => {
     useTitle('Panel zarządzania kontem użytkownika');
     const user = useAppSelector((state) => state.user) as UserResponse;
+
     return (<>
         <BackArrowLink url={`/user/${user._id}`} />
         <AccountContent user={user} />
