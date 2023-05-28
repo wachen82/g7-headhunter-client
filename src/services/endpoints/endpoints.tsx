@@ -12,7 +12,4 @@ export const ENDPOINTS = {
     filter: '/hr/filter',
     search: '/hr/search',
     cv: '/hr/user',
-    lHHr: 'http://localhost:3000/hr',
-    lHUser: 'http://localhost:3000/user',
-    lHAdmin: 'http://localhost:3000/admin',
 };
