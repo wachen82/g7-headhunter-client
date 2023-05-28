@@ -4,6 +4,7 @@ export const ENDPOINTS = {
     register: '/user/{userId}/{token}',
     resetPassword: '/auth/reset-password',
     updatePassword: '/auth/update-password',
+    changePassword: '/auth/change-password',
     sendHrForm: '/admin/register-hr',
     validateCsv: '/admin/validate-csv',
     saveCsv: '/admin/save-csv',
@@ -11,4 +12,6 @@ export const ENDPOINTS = {
     filter: '/hr/filter',
     search: '/hr/search',
     cv: '/hr/user',
+    lHHr: 'http://localhost:3000/hr',
+    lHUser: 'http://localhost:3000/user',
 };
