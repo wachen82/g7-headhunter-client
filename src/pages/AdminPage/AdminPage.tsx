@@ -5,12 +5,12 @@ import { HrForm } from '../../components/forms/HrForm/HrForm';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useTitle } from '../../hooks/useTitle';
 import { useAppSelector } from '../../hooks/reduxHooks';
+import { ENDPOINTS } from '../../services/endpoints/endpoints';
 
 
 export const AdminPage = () => {
     useTitle('Panel Administratora');
     const user = useAppSelector((state) => state.user);
-    console.log(user);
     return (
         <main
             style={{
@@ -23,7 +23,7 @@ export const AdminPage = () => {
                 <UsersAppBar
                     avatarUrl={'avatarUrl'}
                     userName={'Administrator'}
-                    accountUrl={'#'}
+                    accountUrl={`${ENDPOINTS.lHAdmin}/${user?._id}/account`}
                 />
             </Box>
             <Container
