@@ -5,9 +5,10 @@ import { HrResponse } from 'types';
 import { Container } from '@mui/material';
 import theme from '../../theme';
 import { Menu } from '../../components/hr/MenuView/Menu/Menu';
+import { ENDPOINTS } from '../../services/endpoints/endpoints';
 
 export const HrPage = () => {
-    useTitle('Strona HR');
+    useTitle('Panel HR');
     const user = useAppSelector((state) => state.user) as HrResponse;
 
     if (!user) {
@@ -16,7 +17,7 @@ export const HrPage = () => {
 
     return (
         <>
-            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} />
+            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`${ENDPOINTS.lHHr}/${user._id}`}/>
             <main
                 style={{
                     display: 'flex',

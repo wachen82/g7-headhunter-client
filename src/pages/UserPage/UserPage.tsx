@@ -10,7 +10,7 @@ import { useSnackBar } from '../../hooks/useSnackBar';
 import { fetchUserProfile } from '../../utils/fetchUserProfile';
 
 export const UserPage = () => {
-    useTitle('Strona Kursanta');
+    useTitle('Panel Kursanta');
     const user = useAppSelector((state) => state.user) as UserResponse;
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
     const [loading, setLoading] = useState(true);
