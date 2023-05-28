@@ -14,6 +14,8 @@ import { GradesBox } from '../UserPortfolio/Grades/GradesBox';
 import { ExpectationsBox } from '../UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioContent } from '../UserPortfolio/PortfolioContent';
 import { PortfolioLink } from '../UserPortfolio/PortfolioLink/PortfolioLink';
+import { useLocation, useParams } from 'react-router-dom';
+import { ENDPOINTS } from '../../../services/endpoints/endpoints';
 
 interface Props {
     userProfile?: UserProfilResponse;
@@ -21,7 +23,11 @@ interface Props {
 
 export const UserProfile: React.FC<Props> = ({ userProfile }) => {
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
-
+    const location = useLocation();
+    const pathname = location.pathname;
+    const { id, email } = useParams();
+    const urlBack = pathname === `/cv/${id}/${email}` ? `${ENDPOINTS.lHHr}/${id}` : '#';
+    const isHRProfile = urlBack === `${ENDPOINTS.lHHr}/${id}`;
     return (
         <main
             style={{
@@ -34,6 +40,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                 <UsersAppBar
                     avatarUrl={userProfile?.info.avatar as string}
                     userName={fullName}
+                    accountUrl={isHRProfile ? `${ENDPOINTS.lHHr}/${id}/account` : `${ENDPOINTS.lHUser}/${id}/account`}
                 />
             </Box>
 
@@ -45,7 +52,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                     width: '80%',
                 }}
             >
-                <BackArrowLink />
+                {isHRProfile && <BackArrowLink url={urlBack} />}
                 <InfoBox
                     avatarUrl={userProfile?.info.avatar as string}
                     firstName={userProfile?.info.firstName as string}
