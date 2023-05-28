@@ -5,7 +5,6 @@ import { HrResponse } from 'types';
 import { Container } from '@mui/material';
 import theme from '../../theme';
 import { Menu } from '../../components/hr/MenuView/Menu/Menu';
-import { ENDPOINTS } from '../../services/endpoints/endpoints';
 
 export const HrPage = () => {
     useTitle('Panel HR');
@@ -14,10 +13,9 @@ export const HrPage = () => {
     if (!user) {
         return null;
     }
-
     return (
         <>
-            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`${ENDPOINTS.lHHr}/${user._id}`}/>
+            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`}/>
             <main
                 style={{
                     display: 'flex',

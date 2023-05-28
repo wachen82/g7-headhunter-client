@@ -5,8 +5,6 @@ import { HrForm } from '../../components/forms/HrForm/HrForm';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
 import { useTitle } from '../../hooks/useTitle';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { ENDPOINTS } from '../../services/endpoints/endpoints';
-
 
 export const AdminPage = () => {
     useTitle('Panel Administratora');
@@ -23,7 +21,7 @@ export const AdminPage = () => {
                 <UsersAppBar
                     avatarUrl={'avatarUrl'}
                     userName={'Administrator'}
-                    accountUrl={`${ENDPOINTS.lHAdmin}/${user?._id}/account`}
+                    accountUrl={`/admin/${user?._id}/account`}
                 />
             </Box>
             <Container
