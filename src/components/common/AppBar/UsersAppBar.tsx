@@ -6,10 +6,11 @@ import theme from '../../../theme';
 interface Props {
     userName: string;
     avatarUrl: string;
+    accountUrl:string;
 }
 
 export const UsersAppBar = (props: Props) => {
-    const { userName, avatarUrl } = props;
+    const { userName, avatarUrl, accountUrl } = props;
     return (
         <Box sx={{ margin: '0 auto 26px' }}>
             <AppBar
@@ -42,7 +43,7 @@ export const UsersAppBar = (props: Props) => {
                             alt="Logo megak"
                             src={process.env.PUBLIC_URL + '/mega-k.png'}
                         />
-                        <MenuBox userName={userName} avatarUrl={avatarUrl} />
+                        <MenuBox userName={userName} avatarUrl={avatarUrl} accountUrl={accountUrl} />
                     </Container>
                 </Toolbar>
             </AppBar>
