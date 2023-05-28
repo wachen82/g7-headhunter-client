@@ -3,19 +3,25 @@ import { Box, Link, Typography } from '@mui/material';
 import theme from '../../../theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
-    url: string;
+    url:string
 }
 
 export const BackArrowLink = ({ url }: Props) => {
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+        navigate(url);
+    };
     return (
         <Link
-            href={url}
+            onClick={handleBackClick}
             sx={{
                 textDecoration: 'none',
                 height: '27px',
                 marginLeft: '-10%',
+                cursor:'pointer',
             }}
         >
             <Box
