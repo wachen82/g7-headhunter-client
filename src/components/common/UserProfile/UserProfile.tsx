@@ -3,6 +3,7 @@ import { Box, Container } from '@mui/material';
 
 
 import {
+    HrResponse,
     IUserProfileEntity,
     UserProfilResponse,
 } from 'types';
@@ -16,12 +17,14 @@ import { PortfolioContent } from '../UserPortfolio/PortfolioContent';
 import { PortfolioLink } from '../UserPortfolio/PortfolioLink/PortfolioLink';
 import { useLocation, useParams } from 'react-router-dom';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
+import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface Props {
     userProfile?: UserProfilResponse;
 }
 
 export const UserProfile: React.FC<Props> = ({ userProfile }) => {
+    const user = useAppSelector((state) => state.user) as HrResponse;
     const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
     const location = useLocation();
     const pathname = location.pathname;
@@ -39,7 +42,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
             <Box sx={{ width: '100vw' }}>
                 <UsersAppBar
                     avatarUrl={userProfile?.info.avatar as string}
-                    userName={fullName}
+                    userName={isHRProfile ? user.email : fullName}
                     accountUrl={isHRProfile ? `${ENDPOINTS.lHHr}/${id}/account` : `${ENDPOINTS.lHUser}/${id}/account`}
                 />
             </Box>
