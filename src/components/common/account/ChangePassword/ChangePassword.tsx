@@ -11,7 +11,6 @@ import { handleErrorResponse } from '../../../../utils/handleErrorSnackBarRespon
 import theme from '../../../../theme';
 
 export const ChangePassword = () => {
-    const [currentPassword, setCurrentPassword] = useState('');
     const [password, setPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const { id } = useParams();
@@ -23,7 +22,6 @@ export const ChangePassword = () => {
         showSnackBar,
     } = useSnackBar();
     const reset = () => {
-        setCurrentPassword('')
         setPassword('');
         setConfirmNewPassword('')
     }
@@ -33,12 +31,10 @@ export const ChangePassword = () => {
                 showSnackBar('Hasło i jego potwierdzenie się różnią', SnackBarEnum.ERROR_MESSAGE);
                 setPassword('');
                 setConfirmNewPassword('')
+                return
             }
-            console.log(password);
             const url = `${apiUrl}${ENDPOINTS.changePassword}/${id}`;
-            console.log(url);
-            const response = await axios.patch(url, password);
-            console.log(response.data.message);
+            await axios.patch(url, { password }, {withCredentials:true});
             showSnackBar('Hasło zostało zmienione', SnackBarEnum.SUCCESS_MESSAGE);
             reset()
         } catch (error: any) {
@@ -62,13 +58,6 @@ export const ChangePassword = () => {
             >
                 Zmiana hasła
             </Typography>
-            <TextField
-                sx={{margin: '.5rem auto', minWidth: '500px', bgcolor: theme.palette.grey['800']}}
-                type='password'
-                label='Aktualne hasło'
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-            />
             <TextField
                 sx={{margin: '.5rem auto',minWidth: '500px', bgcolor: theme.palette.grey['800']}}
                 type='password'
