@@ -1,14 +1,10 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
-
-
 import {
-    HrResponse,
     IUserProfileEntity,
     UserProfilResponse,
 } from 'types';
 import { InfoBox } from '../account/info/InfoBox';
-import { UsersAppBar } from '../AppBar/UsersAppBar';
 import { BackArrowLink } from '../BackArrowLink/BackArrowLink';
 import { PortfolioBar } from '../UserPortfolio/PortfolioBar';
 import { GradesBox } from '../UserPortfolio/Grades/GradesBox';
@@ -16,21 +12,16 @@ import { ExpectationsBox } from '../UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioContent } from '../UserPortfolio/PortfolioContent';
 import { PortfolioLink } from '../UserPortfolio/PortfolioLink/PortfolioLink';
 import { useLocation, useParams } from 'react-router-dom';
-import { ENDPOINTS } from '../../../services/endpoints/endpoints';
-import { useAppSelector } from '../../../hooks/reduxHooks';
+import theme from '../../../theme';
 
 interface Props {
     userProfile?: UserProfilResponse;
 }
 
 export const UserProfile: React.FC<Props> = ({ userProfile }) => {
-    const user = useAppSelector((state) => state.user) as HrResponse;
-    const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
     const location = useLocation();
-    const pathname = location.pathname;
-    const { id, email } = useParams();
-    const urlBack = pathname === `/cv/${id}/${email}` ? `${ENDPOINTS.lHHr}/${id}` : '#';
-    const isHRProfile = urlBack === `${ENDPOINTS.lHHr}/${id}`;
+    const { id } = useParams();
+
     return (
         <main
             style={{
@@ -39,14 +30,6 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                 width: '100vw',
             }}
         >
-            <Box sx={{ width: '100vw' }}>
-                <UsersAppBar
-                    avatarUrl={userProfile?.info.avatar as string}
-                    userName={isHRProfile ? user.email : fullName}
-                    accountUrl={isHRProfile ? `${ENDPOINTS.lHHr}/${id}/account` : `${ENDPOINTS.lHUser}/${id}/account`}
-                />
-            </Box>
-
             <Container
                 sx={{
                     display: 'flex',
@@ -55,7 +38,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                     width: '80%',
                 }}
             >
-                {isHRProfile && <BackArrowLink url={urlBack} />}
+                {location.pathname.startsWith('/cv') ?  <BackArrowLink url={`/hr/${id}`} /> : null}
                 <InfoBox
                     avatarUrl={userProfile?.info.avatar as string}
                     firstName={userProfile?.info.firstName as string}
@@ -150,7 +133,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',
@@ -168,7 +151,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',
@@ -186,7 +169,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',
