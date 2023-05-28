@@ -9,9 +9,14 @@ import { Loading } from '../../components/common/Loading/Loading';
 import { CustomSnackBar } from '../../components/common/CustomSnackBar/CustomSnackBar';
 import { ENDPOINTS } from '../../services/endpoints/endpoints';
 import { fetchUserProfile } from '../../utils/fetchUserProfile';
+import { Box } from '@mui/material';
+import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { HrResponse } from 'types';
 
 export const CVPage: React.FC = () => {
     useTitle('CV Kursanta');
+    const user = useAppSelector((state) => state.user) as HrResponse;
     const [userProfile, setUserProfile] = useState<UserProfilResponse>();
     const [loading, setLoading] = useState(true);
     const { id, email } = useParams();
@@ -30,7 +35,13 @@ export const CVPage: React.FC = () => {
 
     return (
         <>
-            {loading ? <Loading /> : <UserProfile userProfile={userProfile} />}
+            {loading ?
+                <Loading /> :
+                <>
+                    <Box sx={{ width: '100vw' }}>
+                    <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`} /></Box>
+                    <UserProfile userProfile={userProfile} />
+                </>}
             {isSnackBarOpen && (
                 <CustomSnackBar
                     setAction={hideSnackBar}
