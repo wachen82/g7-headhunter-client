@@ -52,7 +52,7 @@ export const HrForm = () => {
                 return;
             }
             showSnackBar(
-                `Headhunter ${data.fullName} poprawnie dodoany do bazy`,
+                `Headhunter ${data.fullName} poprawnie dodany do bazy`,
                 SnackBarEnum.SUCCESS_MESSAGE
             );
             reset(defaultValues);

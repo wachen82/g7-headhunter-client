@@ -1,26 +1,26 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
-
-
 import {
     IUserProfileEntity,
     UserProfilResponse,
 } from 'types';
 import { InfoBox } from '../account/info/InfoBox';
-import { UsersAppBar } from '../AppBar/UsersAppBar';
 import { BackArrowLink } from '../BackArrowLink/BackArrowLink';
 import { PortfolioBar } from '../UserPortfolio/PortfolioBar';
 import { GradesBox } from '../UserPortfolio/Grades/GradesBox';
 import { ExpectationsBox } from '../UserPortfolio/Expectations/ExpectationsBox';
 import { PortfolioContent } from '../UserPortfolio/PortfolioContent';
 import { PortfolioLink } from '../UserPortfolio/PortfolioLink/PortfolioLink';
+import { useLocation, useParams } from 'react-router-dom';
+import theme from '../../../theme';
 
 interface Props {
     userProfile?: UserProfilResponse;
 }
 
 export const UserProfile: React.FC<Props> = ({ userProfile }) => {
-    const fullName = `${userProfile?.info.firstName} ${userProfile?.info.lastName}`;
+    const location = useLocation();
+    const { id } = useParams();
 
     return (
         <main
@@ -30,13 +30,6 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                 width: '100vw',
             }}
         >
-            <Box sx={{ width: '100vw' }}>
-                <UsersAppBar
-                    avatarUrl={userProfile?.info.avatar as string}
-                    userName={fullName}
-                />
-            </Box>
-
             <Container
                 sx={{
                     display: 'flex',
@@ -45,7 +38,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                     width: '80%',
                 }}
             >
-                <BackArrowLink />
+                {location.pathname.startsWith('/cv') ?  <BackArrowLink url={`/hr/${id}`} /> : null}
                 <InfoBox
                     avatarUrl={userProfile?.info.avatar as string}
                     firstName={userProfile?.info.firstName as string}
@@ -140,7 +133,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',
@@ -158,7 +151,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',
@@ -176,7 +169,7 @@ export const UserProfile: React.FC<Props> = ({ userProfile }) => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            backgroundColor: '#222324',
+                            bgcolor: theme.palette.grey['600'],
                             width: '1000px',
                             padding: '17px 26px 15px 26px',
                             margin: '0 0 12px 4px',

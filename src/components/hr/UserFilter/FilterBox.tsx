@@ -17,14 +17,24 @@ import { ButtonMain } from '../../common/Buttons/ButtonMain';
 import { SingleGradeFilter } from './Grades/SingleGradeFilter';
 import { expectedContractTypeOptions, expectedTypeWorkOptions, initialFilterData } from './initialData';
 import { FilterDataContext } from '../../../context/FilterDataContext';
+import { useSnackBar } from '../../../hooks/useSnackBar';
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
 
 interface Props {
     closeModal: () => void;
 }
 
-export const FilterBox = ({ closeModal }:Props) => {
+export const FilterBox = ({ closeModal }: Props) => {
     const { params, setParams } = useContext(FilterDataContext);
     const [filterData, setFilterData] = useState(initialFilterData);
+    const {
+        snackBarMessage,
+        snackBarType,
+        isSnackBarOpen,
+        hideSnackBar,
+        showSnackBar,
+    } = useSnackBar();
+
     const gradeFilters = [
         {
             text: 'Ocena przejścia kursu',
@@ -60,7 +70,6 @@ export const FilterBox = ({ closeModal }:Props) => {
         inputRefs.forEach((ref) => {
             if (ref.current) {
                 ref.current.value = '';
-                ref.current.focus?.();
             }
         });
     };
@@ -71,19 +80,33 @@ export const FilterBox = ({ closeModal }:Props) => {
             ...prevFilterData,
             [name]: type === 'checkbox' ? checked : value,
         }));
+        if (name === 'expectedSalaryFrom') {
+            if (value === '') {
+                setFilterData((prevFilterData) => ({
+                    ...prevFilterData,
+                    expectedSalaryTo: '',
+                }));
+            }
+        }
     };
-
+    const handleTextFieldFocus = () => {
+        if (filterData.expectedSalaryFrom === '') {
+            showSnackBar('Wprowadź najpierw wartość w polu "salary from"', 'error');
+        }
+    };
     const handleSubmit = () => {
         const filterParams = new URLSearchParams();
 
         Object.entries(filterData).forEach(([key, value]) => {
             if (value !== '') {
                 filterParams.set(key, String(value));
-            }        });
+            }
+        });
 
         setParams(filterParams.toString());
-        closeModal()
+        closeModal();
     };
+
 
     return (<>
             <Container
@@ -292,7 +315,8 @@ export const FilterBox = ({ closeModal }:Props) => {
                                 variant='standard'
                                 inputRef={expectedSalaryToRef}
                                 onChange={handleChange}
-                            />
+                                disabled={filterData.expectedSalaryFrom === ''}
+                                onClick={handleTextFieldFocus} />
                         </Box>
                     </Box>
                     <Box
@@ -384,6 +408,14 @@ export const FilterBox = ({ closeModal }:Props) => {
                     </Box>
                 </form>
             </Container>
+            {isSnackBarOpen && (
+                <CustomSnackBar
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
+                />
+            )}
         </>
     );
 };

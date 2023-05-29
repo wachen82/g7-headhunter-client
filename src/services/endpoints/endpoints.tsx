@@ -4,6 +4,7 @@ export const ENDPOINTS = {
     register: '/user/{userId}/{token}',
     resetPassword: '/auth/reset-password',
     updatePassword: '/auth/update-password',
+    changePassword: '/auth/change-password',
     sendHrForm: '/admin/register-hr',
     validateCsv: '/admin/validate-csv',
     saveCsv: '/admin/save-csv',

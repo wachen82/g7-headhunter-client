@@ -7,16 +7,15 @@ import theme from '../../theme';
 import { Menu } from '../../components/hr/MenuView/Menu/Menu';
 
 export const HrPage = () => {
-    useTitle('Strona HR');
+    useTitle('Panel HR');
     const user = useAppSelector((state) => state.user) as HrResponse;
 
     if (!user) {
         return null;
     }
-
     return (
         <>
-            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} />
+            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`}/>
             <main
                 style={{
                     display: 'flex',
