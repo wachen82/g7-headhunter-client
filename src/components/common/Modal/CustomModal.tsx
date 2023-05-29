@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Dispatch, SetStateAction } from 'react';
-import { FilterBox } from '../../userFilter/FilterBox';
+import { FilterBox } from '../../hr/UserFilter/FilterBox';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -32,7 +32,7 @@ export const CustomModal = ({open, setOpen}: Props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                <FilterBox/>
+                <FilterBox closeModal={handleClose}/>
                 </Box>
             </Modal>
         </div>

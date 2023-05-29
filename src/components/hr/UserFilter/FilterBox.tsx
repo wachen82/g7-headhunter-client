@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useRef, useState } from 'react';
 import {
     Box,
     Button,
@@ -12,21 +12,21 @@ import {
     ToggleButtonGroup,
     Typography,
 } from '@mui/material';
-import theme from '../../theme';
-import { ButtonMain } from '../common/Buttons/ButtonMain';
+import theme from '../../../theme';
+import { ButtonMain } from '../../common/Buttons/ButtonMain';
 import { SingleGradeFilter } from './Grades/SingleGradeFilter';
 import { expectedContractTypeOptions, expectedTypeWorkOptions, initialFilterData } from './initialData';
-import { apiUrl } from '../../config/api';
-import { ENDPOINTS } from '../../services/endpoints/endpoints';
-import { SnackBarEnum } from '../../types/formValues';
-import { useSnackBar } from '../../hooks/useSnackBar';
-import { CustomSnackBar } from '../common/CustomSnackBar/CustomSnackBar';
-import axios from 'axios';
+import { FilterDataContext } from '../../../context/FilterDataContext';
+import { useSnackBar } from '../../../hooks/useSnackBar';
+import { CustomSnackBar } from '../../common/CustomSnackBar/CustomSnackBar';
 
-export const FilterBox = () => {
-    const [filterUsers, setFilterUsers] = useState([])
-    const [totalCount, setTotalCount] = useState(0);
+interface Props {
+    closeModal: () => void;
+}
 
+export const FilterBox = ({ closeModal }: Props) => {
+    const { params, setParams } = useContext(FilterDataContext);
+    const [filterData, setFilterData] = useState(initialFilterData);
     const {
         snackBarMessage,
         snackBarType,
@@ -35,7 +35,6 @@ export const FilterBox = () => {
         showSnackBar,
     } = useSnackBar();
 
-    const [filterData, setFilterData] = useState(initialFilterData);
     const gradeFilters = [
         {
             text: 'Ocena przejścia kursu',
@@ -58,42 +57,57 @@ export const FilterBox = () => {
             value: filterData.teamProjectDegree,
         },
     ];
-
+    const workExperienceRef = useRef<HTMLInputElement | null>(null);
+    const expectedSalaryFromRef = useRef<HTMLInputElement | null>(null);
+    const expectedSalaryToRef = useRef<HTMLInputElement | null>(null);
+    const inputRefs = [
+        expectedSalaryFromRef,
+        expectedSalaryToRef,
+        workExperienceRef,
+    ];
     const handleClearFilterClick = () => {
         setFilterData(initialFilterData);
+        inputRefs.forEach((ref) => {
+            if (ref.current) {
+                ref.current.value = '';
+            }
+        });
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = event.target;
-
         setFilterData((prevFilterData) => ({
             ...prevFilterData,
             [name]: type === 'checkbox' ? checked : value,
         }));
+        if (name === 'expectedSalaryFrom') {
+            if (value === '') {
+                setFilterData((prevFilterData) => ({
+                    ...prevFilterData,
+                    expectedSalaryTo: '',
+                }));
+            }
+        }
+    };
+    const handleTextFieldFocus = () => {
+        if (filterData.expectedSalaryFrom === '') {
+            showSnackBar('Wprowadź najpierw wartość w polu "salary from"', 'error');
+        }
+    };
+    const handleSubmit = () => {
+        const filterParams = new URLSearchParams();
+
+        Object.entries(filterData).forEach(([key, value]) => {
+            if (value !== '') {
+                filterParams.set(key, String(value));
+            }
+        });
+
+        setParams(filterParams.toString());
+        closeModal();
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        try {
-            const response = await axios.post(`${apiUrl}${ENDPOINTS.filter}`, {filterData},{
-                withCredentials: true
-            }, );
-            const { users, totalCount } = response.data;
-            console.log(response.data);
-            setFilterUsers(users)
-            setTotalCount(totalCount)
-            showSnackBar(
-                `Wybrane przez Ciebie filtry zostały zastosowane`,
-                SnackBarEnum.SUCCESS_MESSAGE,
-            );
-        } catch (e) {
-            showSnackBar(
-                'Wystąpił nieoczekiwany błąd. Spróbuj ponownie później',
-                SnackBarEnum.ERROR_MESSAGE,
-            );
-        }
-        console.log(filterData);
-    };
+
     return (<>
             <Container
                 sx={{
@@ -280,6 +294,7 @@ export const FilterBox = () => {
                                 name='expectedSalaryFrom'
                                 label='np. 1000 zł'
                                 variant='standard'
+                                inputRef={expectedSalaryFromRef}
                                 onChange={handleChange}
                             />
                             <Typography
@@ -298,8 +313,10 @@ export const FilterBox = () => {
                                 name='expectedSalaryTo'
                                 label='np. 10000 zł'
                                 variant='standard'
+                                inputRef={expectedSalaryToRef}
                                 onChange={handleChange}
-                            />
+                                disabled={filterData.expectedSalaryFrom === ''}
+                                onClick={handleTextFieldFocus} />
                         </Box>
                     </Box>
                     <Box
@@ -360,6 +377,7 @@ export const FilterBox = () => {
                             id='work-experience'
                             label='0 miesięcy'
                             name='monthsOfCommercialExp'
+                            inputRef={workExperienceRef}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -382,10 +400,11 @@ export const FilterBox = () => {
                                 marginRight: '20px',
                                 color: theme.palette.text.primary,
                             }}
+                            onClick={closeModal}
                         >
                             Anuluj
                         </Button>
-                        <ButtonMain text={'Pokaż wyniki'} type='submit' onClick={(event) => handleSubmit(event)} />
+                        <ButtonMain text={'Pokaż wyniki'} type='submit' onClick={() => handleSubmit()} />
                     </Box>
                 </form>
             </Container>

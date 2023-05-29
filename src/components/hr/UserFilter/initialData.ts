@@ -1,10 +1,10 @@
-import { FilterValues } from '../../types/filterData';
+import { FilterValues } from '../../../types/filterData';
 
 export const initialFilterData:FilterValues = {
-    courseCompletion: 1,
-    courseEngagement: 1,
-    projectDegree: 1,
-    teamProjectDegree: 1,
+    courseCompletion: 0,
+    courseEngagement: 0,
+    projectDegree: 0,
+    teamProjectDegree: 0,
     expectedTypeWork: '',
     expectedContractType: '',
     expectedSalaryFrom: '',

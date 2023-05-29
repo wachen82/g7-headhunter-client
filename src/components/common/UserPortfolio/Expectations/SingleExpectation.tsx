@@ -28,7 +28,7 @@ export const SingleExpectation = (props: Props) => {
             >
                 <Typography
                     sx={{
-                        fontSize: '14px',
+                        fontSize: '.8rem',
                         lineHeight: '18px',
                         fontWeight: 'light',
                         color: theme.palette.grey['100'],
@@ -40,7 +40,7 @@ export const SingleExpectation = (props: Props) => {
             <Box>
                 <Typography
                     sx={{
-                        fontSize: '16px',
+                        fontSize: '.9rem',
                         lineHeight: '27px',
                         color: theme.palette.text.primary,
                     }}

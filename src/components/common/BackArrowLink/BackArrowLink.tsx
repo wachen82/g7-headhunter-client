@@ -1,33 +1,38 @@
-import React from 'react'
-import { Box, Link, Typography } from '@mui/material'
-import theme from '../../../theme'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { Box, Link, Typography } from '@mui/material';
+import theme from '../../../theme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
-    url: string
+    url:string
 }
 
-export const BackArrowLink = (props: Props) => {
+export const BackArrowLink = ({ url }: Props) => {
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+        navigate(url);
+    };
     return (
         <Link
-            href={props.url}
+            onClick={handleBackClick}
             sx={{
                 textDecoration: 'none',
                 height: '27px',
-                marginRight: '25px',
+                marginLeft: '-10%',
+                cursor:'pointer',
             }}
         >
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'row',
                 }}
             >
                 <Typography
                     sx={{
                         color: theme.palette.grey['300'],
-                        fontSize: '20px',
+                        fontSize: '1rem',
                         lineHeight: '27px',
                         fontWeight: 'normal',
                     }}
@@ -37,15 +42,15 @@ export const BackArrowLink = (props: Props) => {
                 <Typography
                     sx={{
                         color: theme.palette.text.primary,
-                        fontSize: '16px',
+                        fontSize: '1rem',
                         lineHeight: '27px',
                         fontWeight: 'normal',
-                        marginLeft: '10px',
+                        margin: '0 .5rem',
                     }}
                 >
                     Wróć
                 </Typography>
             </Box>
         </Link>
-    )
-}
+    );
+};

@@ -9,5 +9,9 @@ export const routes = {
     resetPassword: '/reset-password',
     setNewPassword: '/reset-password/:token',
     registerUser: '/register/:id/:token',
+    accountHr: '/hr/:id/account',
+    accountUser: '/user/:id/account',
+    accountAdmin: '/admin/:id/account',
+    cv: '/cv/:id/:email',
     notFound: '*',
 };

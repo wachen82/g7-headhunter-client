@@ -3,21 +3,25 @@ import { DropAndClickBox } from '../../components/admin/DropAndClickBox';
 import theme from '../../theme';
 import { HrForm } from '../../components/forms/HrForm/HrForm';
 import { UsersAppBar } from '../../components/common/AppBar/UsersAppBar';
-
+import { useTitle } from '../../hooks/useTitle';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 export const AdminPage = () => {
+    useTitle('Panel Administratora');
+    const user = useAppSelector((state) => state.user);
     return (
         <main
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                height: '100vh',
             }}
         >
             <Box sx={{ width: '100%' }}>
                 <UsersAppBar
                     avatarUrl={'avatarUrl'}
-                    userName={'imię nazwisko'}
+                    userName={'Administrator'}
+                    accountUrl={`/admin/${user?._id}/account`}
                 />
             </Box>
             <Container

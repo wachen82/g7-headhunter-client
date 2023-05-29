@@ -30,7 +30,7 @@ export const ExpectationsBox = (props: Props) => {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 backgroundColor: '#222324',
-                width: '1176px',
+                width: '1000px',
                 margin: '0 0 12px 4px',
                 '& :last-child': {
                     border: 'none',
