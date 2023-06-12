@@ -23,6 +23,13 @@ import { FilterDataContext } from '../../../context/FilterDataContext';
 import { useNavigate } from 'react-router-dom';
 import { handleErrorResponse } from '../../../utils/handleErrorSnackBarResponse';
 
+// @TODO:zaimportowac ten enum z BE, na ten moment podczas kompilacji pojawia sie błą∂ uniemozliwiajacy import
+export enum Status {
+    available = 'Dostępny',
+    reserved = 'W trakcie rozmowy',
+    employed = 'Zatrudniony',
+}
+
 interface Props {
     url: string;
     tab: number;
@@ -35,6 +42,7 @@ export const buttonStyles = {
     textTransform: 'none',
     marginRight: '20px',
 };
+
 export const BasicAccordion = ({ url, tab, add }: Props) => {
     const { searchValue, setSearchValue } = useContext(SearchValueContext);
     const { params, setParams } = useContext(FilterDataContext);
@@ -46,14 +54,8 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
     const [loading, setLoading] = useState(true);
     const [expanded, setExpanded] = useState<string | false>(false);
     const { id } = useParams();
+    const { snackBarMessage, snackBarType, isSnackBarOpen, hideSnackBar, showSnackBar } = useSnackBar();
 
-    const {
-        snackBarMessage,
-        snackBarType,
-        isSnackBarOpen,
-        hideSnackBar,
-        showSnackBar,
-    } = useSnackBar();
     useEffect(() => {
         const fetchAvailableUsers = async (url: string) => {
             try {
@@ -71,7 +73,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                 setTotalPages(totalPages);
                 setLoading(false);
             } catch (error: any) {
-                setLoading(false)
+                setLoading(false);
                 handleErrorResponse(error, showSnackBar);
             }
         };
@@ -96,13 +98,13 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
             );
             setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
             switch (status) {
-                case 'W trakcie rozmowy':
+                case Status.reserved:
                     showSnackBar('Kursant zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
                     break;
-                case 'Dostępny':
+                case Status.available:
                     showSnackBar('Kursant przestał być zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
                     break;
-                case 'Zatrudniony':
+                case Status.employed:
                     showSnackBar('Kursant został oznaczony jako zatrudniony', SnackBarEnum.SUCCESS_MESSAGE);
                     break;
                 default:
