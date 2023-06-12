@@ -2,11 +2,11 @@ import React from 'react';
 import { styled } from '@mui/system';
 import TablePagination, { TablePaginationProps } from '@mui/material/TablePagination';
 import theme from '../../../theme';
+import { Container } from '@mui/material';
 
 const StyledTablePagination = styled(TablePagination)<TablePaginationProps>`
   .css-i4bv87-MuiSvgIcon-root {
     background-color: ${theme.palette.grey['100']};
-  ;
   }
 
   button:nth-of-type(1) .MuiSvgIcon-root {
@@ -53,18 +53,26 @@ export const CustomPagination: React.FC<PaginationProps> = ({
     };
     const validRowsPerPageOptions = [10, 25, 50].filter(option => option <= count);
 
-    return (
-        <StyledTablePagination
-            count={count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            labelRowsPerPage='Ilość elementów'
-            labelDisplayedRows={({ from, to, count }) => (
-                `Ilość elementów ${from}-${to} z ${count}`
-            )}
-            rowsPerPageOptions={validRowsPerPageOptions}
-        />
+    return (<>
+            <Container sx={{
+                maxWidth: '80%',
+                margin: '0 auto',
+                display: 'flex',
+                justifyContent: 'flex-end',
+            }}>
+                <StyledTablePagination
+                    count={count}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage='Ilość elementów'
+                    labelDisplayedRows={({ from, to, count }) => (
+                        `Ilość elementów ${from}-${to} z ${count}`
+                    )}
+                    rowsPerPageOptions={validRowsPerPageOptions}
+                />
+            </Container>
+        </>
     );
 };
