@@ -1,10 +1,11 @@
 import { Grid } from '@mui/material';
+import React, { ReactNode } from 'react';
 
-interface GridContainerProps {
-    children: React.ReactNode;
+interface Props {
+    children: ReactNode;
 }
 
-export const GridContainer = ({ children }: GridContainerProps) => {
+export const GridContainer = ({ children }: Props) => {
     return (
         <Grid
             container
@@ -18,9 +19,7 @@ export const GridContainer = ({ children }: GridContainerProps) => {
                 alignItems: 'center',
                 flexWrap: { xs: 'wrap', md: 'nowrap' },
                 '@media (min-width: 900px)': {
-                    '& > .MuiGrid-item': {
-                        paddingLeft: '0px',
-                    },
+                    '& > .MuiGrid-item': { paddingLeft: '0px' },
                 },
             }}
         >
