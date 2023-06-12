@@ -5,9 +5,7 @@ interface Props {
     children: ReactNode;
 }
 
-export const GridContainer = ({ children }: Props) => {
-    return (
-        <Grid
+export const GridContainer = ({ children }: Props) => <Grid
             container
             spacing={{ xs: 1, md: 3 }}
             sx={{
@@ -25,5 +23,4 @@ export const GridContainer = ({ children }: Props) => {
         >
             {children}
         </Grid>
-    );
-};
+
