@@ -1,5 +1,5 @@
-import { Container } from '@mui/material'
-import { InputSearch } from '../../../common/Inputs/InputSearch'
+import { Container } from '@mui/material';
+import { InputSearch } from '../../../common/Inputs/InputSearch';
 import { FilterButton } from '../../../common/Buttons/FilterButton/FilterButton';
 
 export const ButtonsAndInputView = () => {
@@ -13,8 +13,8 @@ export const ButtonsAndInputView = () => {
                 }}
             >
                 <InputSearch />
-               <FilterButton/>
+                <FilterButton />
             </Container>
         </>
-    )
-}
+    );
+};
