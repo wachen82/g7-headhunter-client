@@ -32,7 +32,7 @@ export const DropAndClickBox = () => {
     };
 
     const handleFileInputChange = async (
-        e: React.ChangeEvent<HTMLInputElement>
+        e: React.ChangeEvent<HTMLInputElement>,
     ) => {
         e.preventDefault();
         const csvFile = await getCsvFile((e.target.files as FileList) || []);
@@ -42,14 +42,14 @@ export const DropAndClickBox = () => {
 
         const { success, message } = (await uploadCsvFile(
             csvFile,
-            setErrors
+            setErrors,
         )) as { success: boolean; message: string };
         console.log(success);
         showSnackBar(
             success
                 ? 'Plik csv dodany prawidłowo. Maile zostały wysłane do użytkowników'
                 : message,
-            success ? SnackBarEnum.SUCCESS_MESSAGE : undefined
+            success ? SnackBarEnum.SUCCESS_MESSAGE : undefined,
         );
     };
 
@@ -58,8 +58,8 @@ export const DropAndClickBox = () => {
             <Grid
                 container
                 spacing={2}
-                alignItems="center"
-                justifyContent="center"
+                alignItems='center'
+                justifyContent='center'
             >
                 <Grid item>
                     <FileButton handleFileInputChange={handleFileInputChange} />

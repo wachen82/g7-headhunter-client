@@ -2,27 +2,27 @@ import { List, ListItem, ListItemText } from '@mui/material';
 import theme from '../../theme';
 
 interface ErrorWithField extends ErrorCsv {
-    field: string
-    message: string
+    field: string;
+    message: string;
 }
 
 export type ErrorOrErrorWithField = ErrorCsv | ErrorWithField
 
 export interface ErrorCsv {
-    email?: { row: number; message: string }
-    courseCompletion?: { row: number; message: string }
-    courseEngagement?: { row: number; message: string }
-    projectDegree?: { row: number; message: string }
-    teamProjectDegree?: { row: number; message: string }
-    bonusProjectUrls?: Array<{ row: number; field: string; message: string }>
+    email?: { row: number; message: string };
+    courseCompletion?: { row: number; message: string };
+    courseEngagement?: { row: number; message: string };
+    projectDegree?: { row: number; message: string };
+    teamProjectDegree?: { row: number; message: string };
+    bonusProjectUrls?: Array<{ row: number; field: string; message: string }>;
 }
 
 interface ErrorListProps {
-    errors: ErrorOrErrorWithField[]
+    errors: ErrorOrErrorWithField[];
 }
 
 export const ErrorList = ({ errors }: ErrorListProps) => {
-    const hasHeaderError = errors.some((error) => 'field' in error)
+    const hasHeaderError = errors.some((error) => 'field' in error);
 
     return (
         <List
@@ -34,9 +34,9 @@ export const ErrorList = ({ errors }: ErrorListProps) => {
         >
             {errors.map((error, index) => {
                 const hasErrors = Object.values(error).some(
-                    (error) => error !== undefined
-                )
-                if (!hasErrors) return null
+                    (error) => error !== undefined,
+                );
+                if (!hasErrors) return null;
 
                 const primary = hasHeaderError ? (
                     `Nazwa nagłówka: ${(error as ErrorWithField).field}`
@@ -49,7 +49,7 @@ export const ErrorList = ({ errors }: ErrorListProps) => {
                     >
                         Rząd {Object.values(error)[0].row}:{' '}
                     </ul>
-                )
+                );
 
                 const secondary = hasHeaderError ? (
                     <span
@@ -118,14 +118,14 @@ export const ErrorList = ({ errors }: ErrorListProps) => {
                             </li>
                         ))}
                     </>
-                )
+                );
 
                 return (
                     <ListItem key={index}>
                         <ListItemText primary={primary} secondary={secondary} />
                     </ListItem>
-                )
+                );
             })}
         </List>
-    )
-}
+    );
+};
