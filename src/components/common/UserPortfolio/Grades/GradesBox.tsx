@@ -1,16 +1,9 @@
 import React from 'react';
 import { SingleGrade } from './SingleGrade';
 import { Box } from '@mui/material';
-import { UserProfilResponse } from 'types';
+import { Skills } from 'types';
 
-interface Props {
-    courseCompletion: UserProfilResponse['profile']['skills']['courseCompletion'];
-    courseEngagement: UserProfilResponse['profile']['skills']['courseEngagement'];
-    projectDegree: UserProfilResponse['profile']['skills']['projectDegree'];
-    teamProjectDegree: UserProfilResponse['profile']['skills']['teamProjectDegree'];
-}
-
-export const GradesBox = (props: Props) => {
+export const GradesBox = (props: Skills) => {
     const {
         courseCompletion,
         courseEngagement,
