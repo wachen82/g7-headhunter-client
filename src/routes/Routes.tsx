@@ -1,8 +1,4 @@
-import {
-    createBrowserRouter,
-    RouterProvider,
-    Navigate,
-} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { routes } from './routesMap';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
@@ -23,7 +19,7 @@ const router = (user: string) =>
     createBrowserRouter([
         {
             path: routes.home,
-            element: <Navigate to="/sign-in" replace />,
+            element: <Navigate to='/sign-in' replace />,
         },
         {
             path: routes.signIn,
@@ -36,31 +32,31 @@ const router = (user: string) =>
         },
         {
             path: routes.admin,
-            element: user === ROLES.ADMIN ? <AdminPage /> : <Navigate to="/" />,
+            element: user === ROLES.ADMIN ? <AdminPage /> : <Navigate to='/' />,
         },
         {
             path: routes.user,
-            element: user === ROLES.USER ? <UserPage /> : <Navigate to="/" />,
+            element: user === ROLES.USER ? <UserPage /> : <Navigate to='/' />,
         },
         {
             path: routes.hr,
-            element: user === ROLES.HR ? <HrPage /> : <Navigate to="/" />,
+            element: user === ROLES.HR ? <HrPage /> : <Navigate to='/' />,
         },
         {
             path: routes.accountHr,
-            element: user === ROLES.HR ? <AccountPageHr /> : <Navigate to="/" />,
+            element: user === ROLES.HR ? <AccountPageHr /> : <Navigate to='/' />,
         },
         {
             path: routes.accountUser,
-            element: user === ROLES.USER ? <AccountPageUser /> : <Navigate to="/" />,
+            element: user === ROLES.USER ? <AccountPageUser /> : <Navigate to='/' />,
         },
         {
             path: routes.accountAdmin,
-            element: user === ROLES.ADMIN ? <AccountPageAdmin /> : <Navigate to="/" />,
+            element: user === ROLES.ADMIN ? <AccountPageAdmin /> : <Navigate to='/' />,
         },
         {
             path: routes.cv,
-            element: user === ROLES.HR ? <CVPage /> : <Navigate to="/" />,
+            element: user === ROLES.HR ? <CVPage /> : <Navigate to='/' />,
         },
         {
             path: routes.resetPassword,

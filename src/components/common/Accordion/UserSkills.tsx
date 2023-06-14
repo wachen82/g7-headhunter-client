@@ -4,10 +4,10 @@ import { renderTypographyGridItem } from '../../../utils/renderSkills';
 import React, { Fragment } from 'react';
 
 interface Props {
-    user: UserAndSkills
+    user: UserAndSkills;
 }
 
-export const UserSkills = ({user}: Props) => {
+export const UserSkills = ({ user }: Props) => {
     const userSkills = [
         { label: 'Ocena przejścia kursu:', value: `${user.courseCompletion}` },
         { label: 'Ocena aktywności i zaangażowania w kursie:', value: `${user.courseEngagement}` },
@@ -19,11 +19,11 @@ export const UserSkills = ({user}: Props) => {
         { label: 'Oczekiwane wynagrodzenie miesięczne netto:', value: user.expectedSalary },
         { label: 'Zgoda na odbycie bezpłatnych praktyk/stażu na początek:', value: user.canTakeApprenticeship },
         { label: 'Komercyjne doświadczenie w programowaniu:', value: user.monthsOfCommercialExp.toString() },
-    ]
-  return (
-      <GridContainer>
-          {userSkills.map((userSkill, index) =>
-              <Fragment key={index}>{renderTypographyGridItem(userSkill.label, userSkill.value)}</Fragment>)}
-      </GridContainer>
-  )
-}
+    ];
+    return (
+        <GridContainer>
+            {userSkills.map((userSkill, index) =>
+                <Fragment key={index}>{renderTypographyGridItem(userSkill.label, userSkill.value)}</Fragment>)}
+        </GridContainer>
+    );
+};

@@ -34,7 +34,7 @@ export const SingleGradeFilter = ({ text, name, value, onChange }: Props) => {
                 value={value}
                 onChange={handleGradeChange}
                 defaultValue={3}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 step={1}
                 marks
                 min={1}
