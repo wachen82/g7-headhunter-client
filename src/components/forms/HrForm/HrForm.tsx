@@ -53,26 +53,26 @@ export const HrForm = () => {
             }
             showSnackBar(
                 `Headhunter ${data.fullName} poprawnie dodany do bazy`,
-                SnackBarEnum.SUCCESS_MESSAGE
+                SnackBarEnum.SUCCESS_MESSAGE,
             );
             reset(defaultValues);
         } catch (e) {
             showSnackBar(
                 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie później',
-                SnackBarEnum.ERROR_MESSAGE
+                SnackBarEnum.ERROR_MESSAGE,
             );
         }
     };
 
     return (
-        <Box width="400px" maxWidth="90%" sx={{ margin: '0 auto' }}>
+        <Box width='400px' maxWidth='90%' sx={{ margin: '0 auto' }}>
             <CustomHrForm
                 onSubmit={onSubmit}
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
                 dataFormArr={HrDataArr}
-                buttonText="Dodaj headhuntera"
+                buttonText='Dodaj headhuntera'
             />
             {isSnackBarOpen && (
                 <CustomSnackBar

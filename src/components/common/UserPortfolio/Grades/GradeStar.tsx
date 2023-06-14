@@ -1,10 +1,10 @@
-import React from 'react'
-import { Typography } from '@mui/material'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { Typography } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
-    color: string
+    color: string;
 }
 
 export const GradeStar = (props: Props) => {
@@ -17,5 +17,5 @@ export const GradeStar = (props: Props) => {
         >
             <FontAwesomeIcon icon={faStar} />
         </Typography>
-    )
-}
+    );
+};

@@ -5,15 +5,15 @@ type HrInputFormDataType =
     | 'maxReservedStudents'
 
 export interface HrInputFormData {
-    key: HrInputFormDataType
-    inputText: string
-    htmlFor: string
-    type: string
+    key: HrInputFormDataType;
+    inputText: string;
+    htmlFor: string;
+    type: string;
 }
 
 export interface HrFormValues {
-    email: string
-    fullName: string
-    company: string
-    maxReservedStudents: string
+    email: string;
+    fullName: string;
+    company: string;
+    maxReservedStudents: string;
 }

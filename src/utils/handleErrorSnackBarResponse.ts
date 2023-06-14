@@ -7,7 +7,7 @@ export const handleErrorResponse = (error: any, showSnackBar: (message: string, 
     } else {
         showSnackBar(
             'Przepraszamy, spróbuj ponownie później',
-            SnackBarEnum.ERROR_MESSAGE
+            SnackBarEnum.ERROR_MESSAGE,
         );
     }
 };

@@ -15,12 +15,12 @@ export const HrPage = () => {
     }
     return (
         <>
-            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`}/>
+            <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`} />
             <main
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    minHeight: '100vh'
+                    minHeight: '100vh',
                 }}
             >
                 <Container
