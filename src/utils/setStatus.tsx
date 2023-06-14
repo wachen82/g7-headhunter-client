@@ -1,11 +1,11 @@
 import { ENDPOINTS } from '../services/endpoints/endpoints';
 import { apiUrl } from '../config/api';
 import { SnackBarEnum } from '../types/formValues';
-import { Status } from '../types/status';
 import axios from 'axios';
 import { UserAndSkills } from '../types/userAndSkills';
 import React from 'react';
 import { handleErrorResponse } from './handleErrorSnackBarResponse';
+import { Status } from '../types/status';
 
 export const setStatus = async (users: UserAndSkills[], totalCount: number, totalPages: number,
                                 currentPage: number, rowsPerPage: number, setUsers: React.Dispatch<React.SetStateAction<UserAndSkills[]>>,
@@ -23,13 +23,13 @@ export const setStatus = async (users: UserAndSkills[], totalCount: number, tota
         );
         setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
         switch (status) {
-            case Status.reserved:
+            case Status.RESERVED:
                 showSnackBar('Kursant zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
                 break;
-            case Status.available:
+            case Status.AVAILABLE:
                 showSnackBar('Kursant przestał być zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
                 break;
-            case Status.employed:
+            case Status.EMPLOYED:
                 showSnackBar('Kursant został oznaczony jako zatrudniony', SnackBarEnum.SUCCESS_MESSAGE);
                 break;
             default:
