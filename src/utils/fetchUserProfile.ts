@@ -16,4 +16,4 @@ export const fetchUserProfile = async (url: string, setLoading: (loading: boolea
         setLoading(false);
         handleErrorResponse(error, showSnackBar);
     }
-}
+};
