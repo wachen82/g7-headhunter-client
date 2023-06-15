@@ -25,13 +25,6 @@ interface Props {
     add?: string;
 }
 
-export const buttonStyles = {
-    fontSize: '1rem',
-    borderRadius: '0',
-    textTransform: 'none',
-    marginRight: '20px',
-};
-
 export const BasicAccordion = ({ url, tab, add }: Props) => {
     const { searchValue, setSearchValue } = useContext(SearchValueContext);
     const { params, setParams } = useContext(FilterDataContext);
@@ -76,7 +69,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
     };
     const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
-        await setStatus(users,totalCount,totalPages, currentPage,rowsPerPage,setUsers,setCurrentPage,setTotalCount,setRowsPerPage, showSnackBar, id,email,status,)
+        await setStatus(users, totalCount, totalPages, currentPage, rowsPerPage, setUsers, setCurrentPage, setTotalCount, setRowsPerPage, showSnackBar, id, email, status);
     };
     const threeButtonData: ButtonData[] = [
         { text: 'Pokaż CV', action: handleShowCV },
@@ -106,30 +99,33 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
             {(searchValue || params) && (
                 <ButtonMain
                     text='Pokaż wszystkie wyniki'
-                    sx={buttonStyles}
+                    sx={{ fontSize: '1rem',
+                        borderRadius: '0',
+                        textTransform: 'none',
+                        marginRight: '20px' }}
                     onClick={handleShowAllResults}
                 />)}
-                {users ?
-                    users.map(user =>
-                        <AccordionItem key={user.email} user={user} expanded={expanded}
-                                       setExpanded={setExpanded} buttonData={buttonData}
-                                       handleShowCV={handleShowCV} handleAction={handleAction} />) : null}
-                {users.length > 0 ?
-                    <CustomPagination
-                        count={totalCount}
-                        page={currentPage - 1}
-                        rowsPerPage={rowsPerPage}
-                        onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
-                        onRowsPerPageChange={handleRowsPerPageChange}
-                    /> : null}
-                {isSnackBarOpen && (
-                    <CustomSnackBar
-                        setAction={hideSnackBar}
-                        actionState={isSnackBarOpen}
-                        message={snackBarMessage}
-                        type={snackBarType}
-                    />
-                )}
+            {users ?
+                users.map(user =>
+                    <AccordionItem key={user.email} user={user} expanded={expanded}
+                                   setExpanded={setExpanded} buttonData={buttonData}
+                                   handleShowCV={handleShowCV} handleAction={handleAction} />) : null}
+            {users.length > 0 ?
+                <CustomPagination
+                    count={totalCount}
+                    page={currentPage - 1}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                /> : null}
+            {isSnackBarOpen && (
+                <CustomSnackBar
+                    setAction={hideSnackBar}
+                    actionState={isSnackBarOpen}
+                    message={snackBarMessage}
+                    type={snackBarType}
+                />
+            )}
         </>
     );
 };

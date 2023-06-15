@@ -4,7 +4,6 @@ import theme from '../../../theme';
 import { ExpandMore } from '@mui/icons-material';
 import { ButtonMain } from '../Buttons/ButtonMain';
 import React from 'react';
-import { buttonStyles } from './BasicAccordion';
 import { UserAndSkills } from '../../../types/userAndSkills';
 import { ButtonData } from '../../../types/buttonData';
 import { UserSkills } from './UserSkills';
@@ -42,7 +41,12 @@ export const AccordionItem = ({ user, expanded, setExpanded, buttonData, handleS
                     <ButtonMain
                         key={index}
                         text={button.text}
-                        sx={buttonStyles}
+                        sx={{
+                            fontSize: '1rem',
+                            borderRadius: '0',
+                            textTransform: 'none',
+                            marginRight: '20px',
+                        }}
                         onClick={(event) => {
                             index === showCVIndex ? handleShowCV(event, user.email) : handleAction(event, user.email, button.status);
                         }}
