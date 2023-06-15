@@ -1,41 +1,39 @@
-import React from 'react'
+import React from 'react';
 import {
     UseFormRegister,
     SubmitHandler,
     FieldErrors,
     UseFormHandleSubmit,
-} from 'react-hook-form'
-
-import { Form } from 'react-router-dom'
+} from 'react-hook-form';
+import { Form } from 'react-router-dom';
 import {
     Box,
     FormControl,
     FormHelperText,
     Input,
     InputLabel,
-} from '@mui/material'
-
-import theme from '../../../theme'
-import { HrFormValues, HrInputFormData } from '../../../types/hrFormValues'
-import { StyledButton } from '../CustomBasicForm/CustomBasicForm'
+} from '@mui/material';
+import theme from '../../../theme';
+import { HrFormValues, HrInputFormData } from '../../../types/hrFormValues';
+import { StyledButton } from '../CustomBasicForm/CustomBasicForm';
 
 interface CustomBasicFormProps {
-    onSubmit: SubmitHandler<HrFormValues>
-    register: UseFormRegister<HrFormValues>
-    handleSubmit: UseFormHandleSubmit<HrFormValues>
-    errors: FieldErrors<HrFormValues>
-    buttonText: string
-    dataFormArr: HrInputFormData[]
+    onSubmit: SubmitHandler<HrFormValues>;
+    register: UseFormRegister<HrFormValues>;
+    handleSubmit: UseFormHandleSubmit<HrFormValues>;
+    errors: FieldErrors<HrFormValues>;
+    buttonText: string;
+    dataFormArr: HrInputFormData[];
 }
 
 export const CustomHrForm = ({
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    buttonText,
-    dataFormArr,
-}: CustomBasicFormProps) => {
+                                 register,
+                                 handleSubmit,
+                                 onSubmit,
+                                 errors,
+                                 buttonText,
+                                 dataFormArr,
+                             }: CustomBasicFormProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {dataFormArr.map(({ inputText, htmlFor, type, key }, idx) => (
@@ -46,7 +44,7 @@ export const CustomHrForm = ({
                         backgroundColor: theme.palette.secondary.light,
                     }}
                     error={Boolean(errors[key as keyof typeof errors])}
-                    variant="outlined"
+                    variant='outlined'
                     fullWidth
                 >
                     <InputLabel
@@ -89,10 +87,10 @@ export const CustomHrForm = ({
                     padding: '1rem',
                 }}
             >
-                <StyledButton variant="contained" color="primary" type="submit">
+                <StyledButton variant='contained' color='primary' type='submit'>
                     {buttonText}
                 </StyledButton>
             </Box>
         </Form>
-    )
-}
+    );
+};

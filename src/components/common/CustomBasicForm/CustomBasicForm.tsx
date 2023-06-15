@@ -36,14 +36,14 @@ interface CustomBasicFormProps {
 }
 
 export const CustomBasicForm = ({
-    additionalFormInfo = false,
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    buttonText,
-    dataFormArr,
-}: CustomBasicFormProps) => {
+                                    additionalFormInfo = false,
+                                    register,
+                                    handleSubmit,
+                                    onSubmit,
+                                    errors,
+                                    buttonText,
+                                    dataFormArr,
+                                }: CustomBasicFormProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {dataFormArr.map(({ inputText, htmlFor, type, key }, idx) => (
@@ -54,7 +54,7 @@ export const CustomBasicForm = ({
                         backgroundColor: theme.palette.secondary.light,
                     }}
                     error={Boolean(errors[key as keyof typeof errors])}
-                    variant="outlined"
+                    variant='outlined'
                     fullWidth
                 >
                     <InputLabel
@@ -102,7 +102,7 @@ export const CustomBasicForm = ({
                             fontFamily: 'sans-serif',
                         }}
                         color={theme.palette.text.primary}
-                        fontSize="small"
+                        fontSize='small'
                         component={RouterLink}
                         to={routes.resetPassword}
                     >
@@ -118,7 +118,7 @@ export const CustomBasicForm = ({
                     marginTop: '1rem',
                 }}
             >
-                <StyledButton variant="contained" color="primary" type="submit">
+                <StyledButton variant='contained' color='primary' type='submit'>
                     {buttonText}
                 </StyledButton>
             </Box>
