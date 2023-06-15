@@ -24,12 +24,12 @@ export const validationSchema = [
         portfolioUrls: yup.array(
             string()
                 .url('Url - przykład https://www.github.com/nazwa/projekt')
-                .required('Address url do projektu jest wymagany')
+                .required('Address url do projektu jest wymagany'),
         ),
         projectUrls: yup.array(
             string()
                 .url('Url - przykład https://www.github.com/nazwa/projekt')
-                .required('Address url do projektu jest wymagany')
+                .required('Address url do projektu jest wymagany'),
         ),
         bio: yup.string(),
         education: yup.string(),

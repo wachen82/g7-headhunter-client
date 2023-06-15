@@ -1,14 +1,14 @@
-import React from 'react'
-import { Box, Link, Typography } from '@mui/material'
-import theme from '../../../../theme'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { Box, Link, Typography } from '@mui/material';
+import theme from '../../../../theme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
-    url: string
+    url: string;
 }
 
-export const PortfolioLink = (props: Props) => {
+export const PortfolioLink = ({ url }: Props) => {
     return (
         <Box
             sx={{
@@ -29,7 +29,7 @@ export const PortfolioLink = (props: Props) => {
                 <FontAwesomeIcon icon={faPaperclip} />
             </Typography>
             <Link
-                href={props.url}
+                href={url}
                 target={'_blank'}
                 sx={{ textDecoration: 'none' }}
             >
@@ -41,9 +41,9 @@ export const PortfolioLink = (props: Props) => {
                         color: theme.palette.info.main,
                     }}
                 >
-                    {props.url}
+                    {url}
                 </Typography>
             </Link>
         </Box>
-    )
-}
+    );
+};

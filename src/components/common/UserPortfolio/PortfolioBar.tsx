@@ -1,12 +1,12 @@
-import React from 'react'
-import theme from '../../../theme'
-import { Box, Typography } from '@mui/material'
+import React from 'react';
+import theme from '../../../theme';
+import { Box, Typography } from '@mui/material';
 
 interface Props {
-    sectionName: string
+    sectionName: string;
 }
 
-export const PortfolioBar = (props: Props) => {
+export const PortfolioBar = ({ sectionName }: Props) => {
     return (
         <Box
             sx={{
@@ -24,8 +24,8 @@ export const PortfolioBar = (props: Props) => {
                     marginLeft: '26px',
                 }}
             >
-                {props.sectionName}
+                { sectionName }
             </Typography>
         </Box>
-    )
-}
+    );
+};

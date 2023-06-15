@@ -1,22 +1,17 @@
 import React from 'react';
-import { Box, Button, Link, styled, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import theme from '../../../theme';
 import { routes } from '../../../routes/routesMap';
 
-const StyledButton = styled(Button)({
-    textTransform: 'none',
-});
-
 export const NotFoundBox = () => {
     return (
-        <Box width="400px" maxWidth="90%">
+        <Box sx={{ width: '400px', maxWidth: '90%' }}>
             <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    // margin: '1rem',
                     padding: '1rem',
                 }}
             >
@@ -27,7 +22,7 @@ export const NotFoundBox = () => {
                         fontSize: '5rem',
                     }}
                 >
-                    #404
+                    <span style={{ color: theme.palette.primary.main }}>#</span>404
                 </Typography>
                 <Typography
                     sx={{
@@ -39,14 +34,14 @@ export const NotFoundBox = () => {
                     Przykro nam. Podany adres nie istnieje.
                 </Typography>
 
-                <StyledButton
+                <Button
                     href={routes.home}
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                 >
                     <Link
-                        component="button"
-                        underline="none"
+                        component='button'
+                        underline='none'
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: 'light',
@@ -55,7 +50,7 @@ export const NotFoundBox = () => {
                     >
                         Wróć do strony głównej
                     </Link>
-                </StyledButton>
+                </Button>
             </Box>
         </Box>
     );
