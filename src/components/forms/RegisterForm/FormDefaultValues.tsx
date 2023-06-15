@@ -1,6 +1,6 @@
-import { IUserProfileEntity1 } from './types';
+import { Apprenticeship, ContractType, IUserProfileEntity, TypeWork } from "types";
 
-export const defaultValues: IUserProfileEntity1 = {
+export const defaultValues: IUserProfileEntity = {
     email: '',
     phone: '',
     firstName: '',
@@ -9,11 +9,11 @@ export const defaultValues: IUserProfileEntity1 = {
     portfolioUrls: [' '],
     projectUrls: ['', ''],
     bio: '',
-    expectedTypeWork: 'Bez znaczenia',
+    expectedTypeWork: TypeWork.WHATEVER,
     targetWorkCity: '',
-    expectedContractType: 'Brak preferencji',
-    expectedSalary: '',
-    canTakeApprenticeship: 'NIE',
+    expectedContractType: ContractType.NOPREFERENCE,
+    expectedSalary: 0,
+    canTakeApprenticeship: Apprenticeship.NO,
     monthsOfCommercialExp: 0,
     education: '',
     workExperience: '',
