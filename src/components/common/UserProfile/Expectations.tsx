@@ -15,9 +15,9 @@ export const Expectations = ({ userProfile }: UserProfileProps) => {
 
     return <ExpectationsBox
         expectedTypeWork={expectedTypeWork as TypeWork}
-        targetWorkCity={targetWorkCity}
+        targetWorkCity={targetWorkCity as string}
         expectedContractType={expectedContractType as ContractType}
-        expectedSalary={expectedSalary ? parseInt(expectedSalary) : undefined}
+        expectedSalary={expectedSalary as string}
         canTakeApprenticeship={canTakeApprenticeship as Apprenticeship}
         monthsOfCommercialExp={monthsOfCommercialExp as number}
     />;
