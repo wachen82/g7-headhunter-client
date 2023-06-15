@@ -44,7 +44,6 @@ export const DropAndClickBox = () => {
             csvFile,
             setErrors,
         )) as { success: boolean; message: string };
-        console.log(success);
         showSnackBar(
             success
                 ? 'Plik csv dodany prawidłowo. Maile zostały wysłane do użytkowników'

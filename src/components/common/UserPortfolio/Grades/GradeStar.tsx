@@ -7,12 +7,12 @@ interface Props {
     color: string;
 }
 
-export const GradeStar = (props: Props) => {
+export const GradeStar = ({ color }: Props) => {
     return (
         <Typography
             sx={{
                 fontSize: '1rem',
-                color: props.color,
+                color: color,
             }}
         >
             <FontAwesomeIcon icon={faStar} />

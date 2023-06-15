@@ -1,4 +1,16 @@
-import { Apprenticeship, ContractType, IUserProfileEntity, TypeWork } from "types";
+import { IUserProfileEntity } from "types";
+
+enum TypeWork {
+    WHATEVER = 'Bez znaczenia',
+}
+
+enum ContractType {
+    NOPREFERENCE = 'Brak preferencji',
+}
+
+enum Apprenticeship {
+    NO = 'NIE',
+}
 
 export const defaultValues: IUserProfileEntity = {
     email: '',

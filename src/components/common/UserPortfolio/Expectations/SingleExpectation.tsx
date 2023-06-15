@@ -7,8 +7,7 @@ interface Props {
     userExpectation: string;
 }
 
-export const SingleExpectation = (props: Props) => {
-    const { expectationName, userExpectation } = props;
+export const SingleExpectation = ({ expectationName, userExpectation } : Props) => {
     return (
         <Box
             sx={{
