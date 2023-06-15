@@ -33,7 +33,7 @@ export const AdminPage = () => {
                 }}
             >
                 <Typography
-                    variant="h1"
+                    variant='h1'
                     color={theme.palette.text.primary}
                     sx={{ fontSize: '18px', padding: 3, textAlign: 'left' }}
                 >
@@ -41,7 +41,7 @@ export const AdminPage = () => {
                 </Typography>
                 <Divider sx={{ backgroundColor: theme.palette.primary.main }} />
                 <Typography
-                    variant="h2"
+                    variant='h2'
                     color={theme.palette.text.primary}
                     sx={{ fontSize: '18px', padding: 3, textAlign: 'center' }}
                 >
@@ -49,7 +49,7 @@ export const AdminPage = () => {
                 </Typography>
                 <DropAndClickBox />
                 <Typography
-                    variant="h2"
+                    variant='h2'
                     color={theme.palette.text.primary}
                     sx={{
                         fontSize: '18px',
