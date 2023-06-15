@@ -1,6 +1,6 @@
 import { FilterValues } from '../../../types/filterData';
 
-export const initialFilterData:FilterValues = {
+export const initialFilterData: FilterValues = {
     courseCompletion: 0,
     courseEngagement: 0,
     projectDegree: 0,
