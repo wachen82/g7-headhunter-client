@@ -1,7 +1,10 @@
-# Project HeadHunter Frontend
-This is the group project for Mega Kurs. 
+# Project HeadHunter Front-End
+This is the group project for Mega Kurs.
+
 ## Table of Contents
 * [General info](#general-info)
+* [Back-End Repository](#back-end-repository)
+* [Video](#video)
 * [Screenshots](#screenshots)
 * [Technologies used](#technologies-used)
 * [Usage](#usage)
@@ -9,6 +12,12 @@ This is the group project for Mega Kurs.
 
 ## General Info
 Group project carried out to specification and mock-ups provided. Working in scram technology, under the supervision of a global Scrum Master and the client.
+
+## Back-End Repository
+[designByMilencja / g7-headhunter-server](https://github.com/designByMilencja/g7-headhunter-server)
+
+## Video
+[![MegaK v2: g7-headhunter: Demo Final](https://github.com/wachen82/g7-headhunter-client/assets/98549349/8dc0c57b-b834-41b0-bc2a-4dd44abe46ff)](https://youtu.be/B_WKuYeoT2Y)
 
 ## Screenshots
 ![LoginView](./imagesReadme/Widok%20logowania.png)
