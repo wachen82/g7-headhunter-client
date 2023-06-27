@@ -4,9 +4,9 @@ import { Snackbar } from '@mui/material';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
-    ref
+    ref,
 ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 });
 
 interface Props {
@@ -17,11 +17,11 @@ interface Props {
 }
 
 export const CustomSnackBar = ({
-    actionState,
-    setAction,
-    type,
-    message,
-}: Props) => {
+                                   actionState,
+                                   setAction,
+                                   type,
+                                   message,
+                               }: Props) => {
     const handleClose = () => {
         if (setAction) {
             setAction(false);

@@ -1,6 +1,6 @@
 export const getCsvFile = async (files: FileList) => {
     const csvFiles = Array.from(files).filter(
-        (file) => file.type === 'text/csv'
+        (file) => file.type === 'text/csv',
     );
     if (csvFiles.length === 0) {
         return null;

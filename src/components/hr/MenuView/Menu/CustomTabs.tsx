@@ -1,6 +1,6 @@
-import { Tabs, Tab } from '@mui/material'
-import theme from '../../../../theme'
-import { a11yProps } from '../../../../utils/accessTab'
+import { Tabs, Tab } from '@mui/material';
+import theme from '../../../../theme';
+import { a11yProps } from '../../../../utils/accessTab';
 
 type CustomTabsProps = {
     tabs: {
@@ -14,7 +14,7 @@ type CustomTabsProps = {
 
 export const CustomTabs = ({ tabs, value, onChange }: CustomTabsProps) => {
     return (
-        <Tabs value={value} onChange={onChange} aria-label="basic tabs">
+        <Tabs value={value} onChange={onChange} aria-label='basic tabs'>
             {tabs.map(({ label, index }) => (
                 <Tab
                     key={index}
@@ -31,5 +31,5 @@ export const CustomTabs = ({ tabs, value, onChange }: CustomTabsProps) => {
                 />
             ))}
         </Tabs>
-    )
-}
+    );
+};

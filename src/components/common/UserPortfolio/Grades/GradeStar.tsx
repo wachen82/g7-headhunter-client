@@ -1,21 +1,21 @@
-import React from 'react'
-import { Typography } from '@mui/material'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { Typography } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
-    color: string
+    color: string;
 }
 
-export const GradeStar = (props: Props) => {
+export const GradeStar = ({ color }: Props) => {
     return (
         <Typography
             sx={{
                 fontSize: '1rem',
-                color: props.color,
+                color: color,
             }}
         >
             <FontAwesomeIcon icon={faStar} />
         </Typography>
-    )
-}
+    );
+};

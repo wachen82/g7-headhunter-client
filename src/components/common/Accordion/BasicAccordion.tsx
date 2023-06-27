@@ -1,19 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Container } from '@mui/material';
-import { ExpandMore } from '@mui/icons-material';
-import theme from '../../../theme';
 import { ButtonMain } from '../Buttons/ButtonMain';
 import { useState } from 'react';
 import axios from 'axios';
 import { apiUrl } from '../../../config/api';
 import { ENDPOINTS } from '../../../services/endpoints/endpoints';
-import { GridContainer } from './GridContainer';
 import { useParams } from 'react-router-dom';
 import { CustomPagination } from '../Pagination/CustomPagination';
 import { Loading } from '../Loading/Loading';
 import { CustomSnackBar } from '../CustomSnackBar/CustomSnackBar';
-import { handleChange } from '../../../utils/handleChange';
-import { renderTypographyGridItem } from '../../../utils/renderSkills';
 import { UserAndSkills } from '../../../types/userAndSkills';
 import { useSnackBar } from '../../../hooks/useSnackBar';
 import { SnackBarEnum } from '../../../types/formValues';
@@ -22,6 +16,8 @@ import { SearchValueContext } from '../../../context/SearchValueContext';
 import { FilterDataContext } from '../../../context/FilterDataContext';
 import { useNavigate } from 'react-router-dom';
 import { handleErrorResponse } from '../../../utils/handleErrorSnackBarResponse';
+import { AccordionItem } from './AccordionItem';
+import { setStatus } from '../../../utils/setStatus';
 
 interface Props {
     url: string;
@@ -29,12 +25,6 @@ interface Props {
     add?: string;
 }
 
-export const buttonStyles = {
-    fontSize: '1rem',
-    borderRadius: '0',
-    textTransform: 'none',
-    marginRight: '20px',
-};
 export const BasicAccordion = ({ url, tab, add }: Props) => {
     const { searchValue, setSearchValue } = useContext(SearchValueContext);
     const { params, setParams } = useContext(FilterDataContext);
@@ -46,14 +36,8 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
     const [loading, setLoading] = useState(true);
     const [expanded, setExpanded] = useState<string | false>(false);
     const { id } = useParams();
+    const { snackBarMessage, snackBarType, isSnackBarOpen, hideSnackBar, showSnackBar } = useSnackBar();
 
-    const {
-        snackBarMessage,
-        snackBarType,
-        isSnackBarOpen,
-        hideSnackBar,
-        showSnackBar,
-    } = useSnackBar();
     useEffect(() => {
         const fetchAvailableUsers = async (url: string) => {
             try {
@@ -71,7 +55,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
                 setTotalPages(totalPages);
                 setLoading(false);
             } catch (error: any) {
-                setLoading(false)
+                setLoading(false);
                 handleErrorResponse(error, showSnackBar);
             }
         };
@@ -85,50 +69,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
     };
     const handleAction = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email?: string, status?: string) => {
         event.stopPropagation();
-        try {
-            await axios.patch(
-                `${apiUrl}${ENDPOINTS.setStatus}/${id}`,
-                {
-                    email: email,
-                    status: status,
-                },
-                { withCredentials: true },
-            );
-            setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
-            switch (status) {
-                case 'W trakcie rozmowy':
-                    showSnackBar('Kursant zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
-                    break;
-                case 'Dostępny':
-                    showSnackBar('Kursant przestał być zarezerwowany', SnackBarEnum.SUCCESS_MESSAGE);
-                    break;
-                case 'Zatrudniony':
-                    showSnackBar('Kursant został oznaczony jako zatrudniony', SnackBarEnum.SUCCESS_MESSAGE);
-                    break;
-                default:
-                    break;
-            }
-            const newTotalCount = totalCount - 1;
-            setTotalCount(newTotalCount);
-            const currentRowCount = users.length;
-            if (currentRowCount < rowsPerPage) {
-                setRowsPerPage(currentRowCount);
-            }
-
-            if (currentPage > totalPages) {
-                setCurrentPage(totalPages);
-            }
-            if ((currentPage - 1) * rowsPerPage >= newTotalCount) {
-                setCurrentPage(currentPage - 1);
-            }
-        } catch (error: any) {
-            if (error.response && error.response.status === 400) {
-                const errorMessage = error.response.data.message;
-                showSnackBar(errorMessage, SnackBarEnum.ERROR_MESSAGE);
-            } else {
-                showSnackBar('Przepraszamy spróbuj ponownie później', SnackBarEnum.ERROR_MESSAGE);
-            }
-        }
+        await setStatus(users, totalCount, totalPages, currentPage, rowsPerPage, setUsers, setCurrentPage, setTotalCount, setRowsPerPage, showSnackBar, id, email, status);
     };
     const threeButtonData: ButtonData[] = [
         { text: 'Pokaż CV', action: handleShowCV },
@@ -148,7 +89,7 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
         setRowsPerPage(newRowsPerPage);
         setCurrentPage(1);
     };
-    const showCVIndex = buttonData.findIndex(button => button.text === 'Pokaż CV');
+
     const handleShowAllResults = () => {
         setSearchValue('');
         setParams('');
@@ -158,77 +99,25 @@ export const BasicAccordion = ({ url, tab, add }: Props) => {
             {(searchValue || params) && (
                 <ButtonMain
                     text='Pokaż wszystkie wyniki'
-                    sx={buttonStyles}
+                    sx={{ fontSize: '1rem',
+                        borderRadius: '0',
+                        textTransform: 'none',
+                        marginRight: '20px' }}
                     onClick={handleShowAllResults}
                 />)}
-            {users ? users.map(user => (
-                <Accordion key={user.email}
-                           expanded={expanded === user.email}
-                           onChange={handleChange(user.email, setExpanded)}
-                           sx={{ bgcolor: theme.palette.grey['800'], textAlign: 'initial', paddingBottom: '1rem' }}>
-                    <AccordionSummary sx={{
-                        bgcolor: theme.palette.secondary.light,
-                        color: theme.palette.text.primary,
-                        display: 'flex',
-                        alignItems: 'center',
-                    }} expandIcon={<ExpandMore sx={{ color: theme.palette.grey['300'], height: '70px' }} />}>
-                        <Typography
-                            sx={{ width: '30px', height: '40px', lineHeight: '40px', flexShrink: 1, flexGrow: 1 }}>
-                            {`${user.firstName} ${user.lastName.charAt(0)}.`}</Typography>
-                        {buttonData.map((button, index) => (
-                            <ButtonMain
-                                key={index}
-                                text={button.text}
-                                sx={buttonStyles}
-                                onClick={(event) => {
-                                    if (index === showCVIndex) {
-                                        handleShowCV(event, user.email);
-                                    } else {
-                                        handleAction(event, user.email, button.status);
-                                    }
-                                }} />
-                        ))}
-                    </AccordionSummary>
-                    <AccordionDetails
-                        sx={{
-                            bgcolor: theme.palette.grey['600'],
-                            color: theme.palette.text.primary,
-                            height: '130px',
-                            '&.css-10ao48g-MuiAccordionDetails-root': {
-                                padding: '0px',
-                            },
-                        }}>
-                        <GridContainer>
-                            {renderTypographyGridItem('Ocena przejścia kursu:', `${user.courseCompletion}`)}
-                            {renderTypographyGridItem('Ocena aktywności i zaangażowania w kursie:', `${user.courseEngagement}`)}
-                            {renderTypographyGridItem('Ocena kodu w projekcie własnym:', `${user.projectDegree}`)}
-                            {renderTypographyGridItem('Ocena pracy w zespole w Scrum:', `${user.teamProjectDegree}`)}
-                            {renderTypographyGridItem('Preferowane miejsce pracy:', user.expectedTypeWork)}
-                            {renderTypographyGridItem('Docelowe miasto, gdzie chce pracować kandydat:', user.targetWorkCity)}
-                            {renderTypographyGridItem('Oczekiwany typ kontraktu:', user.expectedContractType)}
-                            {renderTypographyGridItem('Oczekiwane wynagrodzenie miesięczne netto:', user.expectedSalary)}
-                            {renderTypographyGridItem('Zgoda na odbycie bezpłatnych praktyk/stażu na początek:', user.canTakeApprenticeship)}
-                            {renderTypographyGridItem('Komercyjne doświadczenie w programowaniu:', user.monthsOfCommercialExp.toString())}
-                        </GridContainer>
-                    </AccordionDetails>
-                </Accordion>
-            )) : []}
-            <Container sx={{
-                maxWidth: '80%',
-                margin: '0 auto',
-                display: 'flex',
-                justifyContent: 'flex-end',
-            }}>
-                {users.length > 0 ?
-                    <CustomPagination
-                        count={totalCount}
-                        page={currentPage - 1}
-                        rowsPerPage={rowsPerPage}
-                        onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
-                        onRowsPerPageChange={handleRowsPerPageChange}
-                    />
-                    : null}
-            </Container>
+            {users ?
+                users.map(user =>
+                    <AccordionItem key={user.email} user={user} expanded={expanded}
+                                   setExpanded={setExpanded} buttonData={buttonData}
+                                   handleShowCV={handleShowCV} handleAction={handleAction} />) : null}
+            {users.length > 0 ?
+                <CustomPagination
+                    count={totalCount}
+                    page={currentPage - 1}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={(page, event) => handlePageChange(event === undefined ? null : event, page)}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                /> : null}
             {isSnackBarOpen && (
                 <CustomSnackBar
                     setAction={hideSnackBar}

@@ -17,13 +17,7 @@ import { routes } from '../../../routes/routesMap';
 export const ResetPasswordForm = () => {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
     const { token } = useParams<string>();
-    const {
-        snackBarMessage,
-        snackBarType,
-        isSnackBarOpen,
-        showSnackBar,
-        hideSnackBar,
-    } = useSnackBar();
+    const { snackBarMessage, snackBarType, isSnackBarOpen, showSnackBar, hideSnackBar } = useSnackBar();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -58,15 +52,13 @@ export const ResetPasswordForm = () => {
             });
             showSnackBar(
                 'Hasło zmienione pomyślnie. Zostaniesz przekierowany na stronę główną',
-                SnackBarEnum.SUCCESS_MESSAGE
+                SnackBarEnum.SUCCESS_MESSAGE,
             );
             reset(defaultValues);
             setIsFormSubmitted(true);
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                showSnackBar(
-                    'Nie udało się ustawić nowego hasła. Błędny token'
-                );
+                showSnackBar('Nie udało się ustawić nowego hasła. Błędny token');
             } else {
                 showSnackBar('Nie udało się ustawić nowego hasła');
             }
@@ -74,14 +66,14 @@ export const ResetPasswordForm = () => {
     };
 
     return (
-        <Box width="400px" maxWidth="90%">
+        <Box width='400px' maxWidth='90%'>
             <CustomBasicForm
                 onSubmit={onSubmit}
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
                 dataFormArr={resetPasswordData}
-                buttonText="Ustaw nowe hasło"
+                buttonText='Ustaw nowe hasło'
             />
             {isSnackBarOpen && (
                 <CustomSnackBar

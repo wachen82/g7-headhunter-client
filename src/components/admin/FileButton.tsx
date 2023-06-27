@@ -8,7 +8,7 @@ interface Props {
 
 export const FileButton = ({ handleFileInputChange }: Props) => (
     <Button
-        component="label"
+        component='label'
         sx={{
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.text.primary,
@@ -17,8 +17,8 @@ export const FileButton = ({ handleFileInputChange }: Props) => (
         Dodaj plik
         <input
             onChange={handleFileInputChange}
-            type="file"
-            accept=".csv"
+            type='file'
+            accept='.csv'
             hidden
         />
     </Button>

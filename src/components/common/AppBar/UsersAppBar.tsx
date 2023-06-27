@@ -6,7 +6,7 @@ import theme from '../../../theme';
 interface Props {
     userName: string;
     avatarUrl: string;
-    accountUrl:string;
+    accountUrl: string;
 }
 
 export const UsersAppBar = (props: Props) => {
@@ -14,7 +14,7 @@ export const UsersAppBar = (props: Props) => {
     return (
         <Box sx={{ margin: '0 auto 26px' }}>
             <AppBar
-                position="static"
+                position='static'
                 sx={{
                     backgroundColor: theme.palette.grey['800'],
                     boxShadow: '0',
@@ -34,13 +34,13 @@ export const UsersAppBar = (props: Props) => {
                         }}
                     >
                         <Box
-                            component="img"
+                            component='img'
                             sx={{
                                 width: 89,
                                 marginTop: '13px',
                                 marginBottom: '12px',
                             }}
-                            alt="Logo megak"
+                            alt='Logo megak'
                             src={process.env.PUBLIC_URL + '/mega-k.png'}
                         />
                         <MenuBox userName={userName} avatarUrl={avatarUrl} accountUrl={accountUrl} />

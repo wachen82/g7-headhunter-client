@@ -69,7 +69,7 @@ export const LoginForm = () => {
             if (isAxiosError(err)) {
                 if (err.response?.status === 403) {
                     showSnackBar(
-                        'Logujesz się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora'
+                        'Logujesz się jako nieaktywny użytkownik. Czekaj na potwierdzenie przez administratora',
                     );
                 } else {
                     showSnackBar('Taki użytkownik nie jest zarejestrowany');
@@ -81,7 +81,7 @@ export const LoginForm = () => {
     };
 
     return (
-        <Box width="400px" maxWidth="90%">
+        <Box width='400px' maxWidth='90%'>
             <CustomBasicForm
                 onSubmit={onSubmit}
                 register={register}
@@ -89,7 +89,7 @@ export const LoginForm = () => {
                 errors={errors}
                 additionalFormInfo={true}
                 dataFormArr={loginDataArr}
-                buttonText="Zaloguj się"
+                buttonText='Zaloguj się'
             />
             {isSnackBarOpen && (
                 <CustomSnackBar

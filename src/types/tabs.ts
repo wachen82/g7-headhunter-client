@@ -1,5 +1,5 @@
 export interface TabsProps {
-    children?: React.ReactNode
-    index: number
-    value: number
+    children?: React.ReactNode;
+    index: number;
+    value: number;
 }

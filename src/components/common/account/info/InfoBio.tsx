@@ -1,14 +1,12 @@
-import { Typography } from '@mui/material'
-import theme from '../../../../theme'
-import React from 'react'
+import { Typography } from '@mui/material';
+import theme from '../../../../theme';
+import React from 'react';
 
 interface Props {
-    bio: string
+    bio: string;
 }
 
-export const InfoBio = (props: Props) => {
-    const { bio } = props
-
+export const InfoBio = ({ bio }: Props) => {
     return (
         <>
             <Typography
@@ -32,5 +30,5 @@ export const InfoBio = (props: Props) => {
                 {bio}
             </Typography>
         </>
-    )
-}
+    );
+};

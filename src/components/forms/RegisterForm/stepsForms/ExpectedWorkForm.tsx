@@ -1,166 +1,18 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import { InputAdornment, MenuItem } from '@mui/material';
-
-import { useFormContext, Controller } from 'react-hook-form';
-import { defaultValues } from '../FormDefaultValues';
+import { CitySalaryContractType } from './ControllersExpectedWorkForm/CitySalaryContractType';
+import { TypeWorkAndApprenticeship } from './ControllersExpectedWorkForm/TypeWorkAndApprenticeship';
 
 export const ExpectedWorkForm = () => {
-    const {
-        register,
-        control,
-        formState: { errors },
-    } = useFormContext();
-
     return (
         <>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant='h6' gutterBottom>
                 Preferowane zatrudnienie
             </Typography>
             <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Controller
-                        name="targetWorkCity"
-                        control={control}
-                        defaultValue={defaultValues.targetWorkCity}
-                        render={({ ...field }) => (
-                            <TextField
-                                {...field}
-                                id="targetWorkCity"
-                                label="Miasto"
-                                type="text"
-                                fullWidth
-                                variant="outlined"
-                                {...register('targetWorkCity')}
-                                error={!!errors.targetWorkCity}
-                                helperText={errors.targetWorkCity?.message?.toString()}
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Controller
-                        name="expectedSalary"
-                        control={control}
-                        defaultValue={defaultValues.expectedSalary}
-                        render={({ ...field }) => (
-                            <TextField
-                                {...field}
-                                id="expectedSalary"
-                                label="Oczekiwane wynagrodzenie"
-                                type="number"
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            zł
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                fullWidth
-                                variant="outlined"
-                                {...register('expectedSalary')}
-                                error={!!errors.expectedSalary}
-                                helperText={errors.expectedSalary?.message?.toString()}
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Controller
-                        name="expectedContractType"
-                        control={control}
-                        render={({ ...field }) => (
-                            <TextField
-                                {...field}
-                                id="expectedContractType"
-                                label="Rodzaj Kontractu"
-                                type="text"
-                                defaultValue="Brak preferencji"
-                                fullWidth
-                                required
-                                select
-                                variant="outlined"
-                                {...register('expectedContractType')}
-                                error={!!errors.expectedContractType}
-                                helperText={errors.expectedContractType?.message?.toString()}
-                            >
-                                <MenuItem value="Tylko UoP">Tylko UoP</MenuItem>
-                                <MenuItem value="Możliwe B2B">
-                                    Możliwe B2B
-                                </MenuItem>
-                                <MenuItem value="Możliwe UZ/UoD">
-                                    Możliwe UZ/UoD
-                                </MenuItem>
-                                <MenuItem value="Brak preferencji">
-                                    Brak preferencji
-                                </MenuItem>
-                            </TextField>
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Controller
-                        name="expectedTypeWork"
-                        control={control}
-                        render={({ ...field }) => (
-                            <TextField
-                                {...field}
-                                id="expectedTypeWork"
-                                label="Rodzaj pracy"
-                                type="text"
-                                fullWidth
-                                defaultValue="Bez znaczenia"
-                                required
-                                select
-                                variant="outlined"
-                                {...register('expectedTypeWork')}
-                                error={!!errors.expectedTypeWork}
-                                helperText={errors.expectedTypeWork?.message?.toString()}
-                            >
-                                <MenuItem value="Na miejscu">
-                                    Na miejscu
-                                </MenuItem>
-                                <MenuItem value="Gotowość do przeprowadzki">
-                                    Gotowość do przeprowadzki
-                                </MenuItem>
-                                <MenuItem value="Wyłącznie zdalnie">
-                                    Wyłącznie zdalnie
-                                </MenuItem>
-                                <MenuItem value="Hybrydowo">Hybrydowo</MenuItem>
-                                <MenuItem value="Bez znaczenia">
-                                    Bez znaczenia
-                                </MenuItem>
-                            </TextField>
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Controller
-                        name="canTakeApprenticeship"
-                        control={control}
-                        render={({ ...field }) => (
-                            <TextField
-                                {...field}
-                                id="canTakeApprenticeship"
-                                label="Mogę odbyć praktyki/staż"
-                                type="text"
-                                fullWidth
-                                defaultValue="NIE"
-                                required
-                                select
-                                variant="outlined"
-                                {...register('canTakeApprenticeship')}
-                                error={!!errors.canTakeApprenticeship}
-                                helperText={errors.canTakeApprenticeship?.message?.toString()}
-                            >
-                                <MenuItem value="NIE">NIE</MenuItem>
-                                <MenuItem value="TAK">TAK</MenuItem>
-                            </TextField>
-                        )}
-                    />
-                </Grid>
+                <CitySalaryContractType />
+                <TypeWorkAndApprenticeship />
             </Grid>
         </>
     );

@@ -4,13 +4,13 @@ import { SnackBarEnum } from '../types/formValues';
 export const useSnackBar = () => {
     const [snackBarMessage, setSnackBarMessage] = useState<string>('');
     const [snackBarType, setSnackBarType] = useState<string>(
-        SnackBarEnum.ERROR_MESSAGE
+        SnackBarEnum.ERROR_MESSAGE,
     );
     const [isSnackBarOpen, setIsSnackBarOpen] = useState<boolean>(false);
 
     const showSnackBar = (
         message: string,
-        type: string = SnackBarEnum.ERROR_MESSAGE
+        type: string = SnackBarEnum.ERROR_MESSAGE,
     ) => {
         setSnackBarMessage(message);
         setSnackBarType(type);

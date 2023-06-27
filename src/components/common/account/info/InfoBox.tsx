@@ -5,31 +5,9 @@ import { InfoContact } from './InfoContact';
 import { InfoName } from './InfoName';
 import { InfoBio } from './InfoBio';
 import { InfoButton } from './InfoButton';
-import { IUserProfileEntity, UserProfilResponse } from 'types';
+import { InfoResponse } from 'types';
 
-interface Props {
-    firstName: IUserProfileEntity['firstName'];
-    lastName: IUserProfileEntity['lastName'];
-    avatarUrl: string;
-    githubUsername: IUserProfileEntity['githubUsername'];
-    phone: IUserProfileEntity['phone'];
-    email: IUserProfileEntity['email'];
-    bio: IUserProfileEntity['bio'];
-    jobStatus: UserProfilResponse['info']['status'];
-}
-
-export const InfoBox = (props: Props) => {
-    const {
-        firstName,
-        lastName,
-        avatarUrl,
-        githubUsername,
-        phone,
-        email,
-        bio,
-        jobStatus,
-    } = props;
-
+export const InfoBox = ({ firstName, lastName, avatar, githubUsername, phone, email, bio, status }: InfoResponse) => {
     return (
         <Box sx={{ width: '250px', height: '718px' }}>
             <Box
@@ -47,14 +25,13 @@ export const InfoBox = (props: Props) => {
                         height: 150,
                         margin: '30px 50px 12px 50px',
                     }}
-                    src={avatarUrl}
+                    src={avatar}
                 />
                 <InfoName
                     firstName={firstName}
                     lastName={lastName}
                     githubUsername={githubUsername}
                 />
-
                 <Box
                     sx={{
                         display: 'flex',
@@ -64,15 +41,10 @@ export const InfoBox = (props: Props) => {
                     }}
                 >
                     <InfoContact phone={phone} email={email} />
-
                     <InfoBio bio={bio as string} />
                 </Box>
-
-                <InfoButton
-                    buttonUrl={'#'}
-                    buttonText={'Brak zainteresowania'}
-                />
-                <InfoButton buttonUrl={'#'} buttonText={jobStatus} />
+                <InfoButton buttonUrl={'#'} buttonText={'Brak zainteresowania'} />
+                <InfoButton buttonUrl={'#'} buttonText={status} />
             </Box>
         </Box>
     );
