@@ -1,27 +1,16 @@
-import React from 'react'
-import { Box } from '@mui/material'
-import { SingleExpectation } from './SingleExpectation'
-import { IUserProfileEntity } from 'types'
+import React from 'react';
+import { Box } from '@mui/material';
+import { SingleExpectation } from './SingleExpectation';
+import { Expectations } from 'types';
 
-interface Props {
-    expectedTypeWork: IUserProfileEntity['expectedTypeWork']
-    targetWorkCity: IUserProfileEntity['targetWorkCity']
-    expectedContractType: IUserProfileEntity['expectedContractType']
-    expectedSalary: IUserProfileEntity['expectedSalary']
-    canTakeApprenticeship: IUserProfileEntity['canTakeApprenticeship']
-    monthsOfCommercialExp: IUserProfileEntity['monthsOfCommercialExp']
-}
-
-export const ExpectationsBox = (props: Props) => {
-    const {
-        expectedTypeWork,
-        targetWorkCity,
-        expectedContractType,
-        expectedSalary,
-        canTakeApprenticeship,
-        monthsOfCommercialExp,
-    } = props
-
+export const ExpectationsBox = ({
+                                    expectedTypeWork,
+                                    targetWorkCity,
+                                    expectedContractType,
+                                    expectedSalary,
+                                    canTakeApprenticeship,
+                                    monthsOfCommercialExp,
+                                }: Expectations) => {
     return (
         <Box
             sx={{
@@ -66,5 +55,5 @@ export const ExpectationsBox = (props: Props) => {
                 userExpectation={`Liczba miesięcy: ${monthsOfCommercialExp}`}
             />
         </Box>
-    )
-}
+    );
+};

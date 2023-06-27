@@ -1,14 +1,13 @@
-import React from 'react'
-import theme from '../../../../theme'
-import { Box, Typography } from '@mui/material'
+import React from 'react';
+import theme from '../../../../theme';
+import { Box, Typography } from '@mui/material';
 
 interface Props {
-    expectationName: string
-    userExpectation: string
+    expectationName: string;
+    userExpectation: string;
 }
 
-export const SingleExpectation = (props: Props) => {
-    const { expectationName, userExpectation } = props
+export const SingleExpectation = ({ expectationName, userExpectation } : Props) => {
     return (
         <Box
             sx={{
@@ -49,5 +48,5 @@ export const SingleExpectation = (props: Props) => {
                 </Typography>
             </Box>
         </Box>
-    )
-}
+    );
+};

@@ -1,12 +1,12 @@
-import theme from '../../../theme'
-import { Box, Typography } from '@mui/material'
-import React from 'react'
+import theme from '../../../theme';
+import { Box, Typography } from '@mui/material';
+import React from 'react';
 
 interface Props {
-    content?: string
+    content?: string;
 }
 
-export const PortfolioContent = (props: Props) => {
+export const PortfolioContent = ({ content }: Props) => {
     return (
         <Box
             sx={{
@@ -23,8 +23,8 @@ export const PortfolioContent = (props: Props) => {
                     fontWeight: 'light',
                 }}
             >
-                {props.content}
+                {content}
             </Typography>
         </Box>
-    )
-}
+    );
+};

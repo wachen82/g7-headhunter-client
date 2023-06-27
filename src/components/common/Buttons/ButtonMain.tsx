@@ -8,7 +8,7 @@ interface ButtonProps {
     backgroundColor?: string;
     onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | (() => void);
     sx?: Record<string, any>;
-    type?:string;
+    type?: string;
 }
 
 export const ButtonMain = ({
@@ -20,7 +20,7 @@ export const ButtonMain = ({
                            }: ButtonProps & { userId?: string, userEmail?: string, userStatus?: string }) => {
     return (
         <Button
-            variant="contained"
+            variant='contained'
             onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => onClick && onClick(event)}
             {...(path && { href: path })}
             startIcon={icon}
@@ -28,5 +28,5 @@ export const ButtonMain = ({
         >
             {text}
         </Button>
-    )
-}
+    );
+};

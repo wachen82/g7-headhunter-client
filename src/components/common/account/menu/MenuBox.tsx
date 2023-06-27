@@ -1,24 +1,12 @@
 import React from 'react';
-import {
-    Avatar,
-    Button,
-    ClickAwayListener,
-    Grow,
-    MenuList,
-    Paper,
-    Popper,
-    Typography,
-} from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import theme from '../../../../theme';
-import { MenuLink } from './MenuLink';
-import { routes } from '../../../../routes/routesMap';
 import { useAppDispatch } from '../../../../hooks/reduxHooks';
 import { setLogout } from '../../../../state/authSlice';
 import { clearPersistedState } from '../../../../app/store';
 import axios from 'axios';
 import { apiUrl } from '../../../../config/api';
 import { ENDPOINTS } from '../../../../services/endpoints/endpoints';
+import { MenuButton } from './MenuButton';
+import { MenuPopper } from './MenuPopper';
 
 interface Props {
     avatarUrl: string;
@@ -26,8 +14,7 @@ interface Props {
     accountUrl: string;
 }
 
-export const MenuBox = (props: Props) => {
-    const { avatarUrl, userName, accountUrl } = props;
+export const MenuBox = ({ avatarUrl, userName, accountUrl }: Props) => {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -38,7 +25,6 @@ export const MenuBox = (props: Props) => {
             method: 'GET',
             withCredentials: true,
         });
-
         dispatch(setLogout());
     };
 
@@ -53,118 +39,32 @@ export const MenuBox = (props: Props) => {
         ) {
             return;
         }
-
         setOpen(false);
     };
 
-    function handleListKeyDown(event: React.KeyboardEvent) {
+    const handleListKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Tab') {
             event.preventDefault();
             setOpen(false);
         } else if (event.key === 'Escape') {
             setOpen(false);
         }
-    }
+    };
 
     const prevOpen = React.useRef(open);
     React.useEffect(() => {
         if (prevOpen.current && !open) {
             anchorRef.current!.focus();
         }
-
         prevOpen.current = open;
     }, [open]);
 
     return (
         <>
-            <Button
-                ref={anchorRef}
-                id="composition-button"
-                aria-controls={open ? 'composition-menu' : undefined}
-                aria-expanded={open ? 'true' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-                sx={{
-                    width: '260px',
-                    height: '80px',
-                    borderRadius: 0,
-                    backgroundColor: theme.palette.grey['800'],
-                    color: theme.palette.grey['800'],
-                    '&:hover': {
-                        backgroundColor: theme.palette.grey['800'],
-                    },
-                }}
-            >
-                <Avatar
-                    alt={userName}
-                    sx={{ width: 45, height: 45 }}
-                    src={avatarUrl}
-                />
-                <Typography
-                    sx={{
-                        color: theme.palette.text.primary,
-                        padding: 1,
-                        fontSize: '18px',
-                        fontWeight: 'light',
-                        textTransform: 'capitalize',
-                    }}
-                >
-                    {userName}
-                    <ArrowDropDownIcon
-                        sx={{
-                            marginLeft: '12px',
-                        }}
-                    />
-                </Typography>
-            </Button>
-            <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                placement="bottom-start"
-                transition
-                disablePortal
-            >
-                {({ TransitionProps, placement }) => (
-                    <Grow
-                        {...TransitionProps}
-                        style={{
-                            transformOrigin:
-                                placement === 'bottom-start'
-                                    ? 'center top'
-                                    : 'center bottom',
-                        }}
-                    >
-                        <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList
-                                    autoFocusItem={open}
-                                    id="composition-menu"
-                                    aria-labelledby="composition-button"
-                                    onKeyDown={handleListKeyDown}
-                                    sx={{
-                                        backgroundColor:
-                                            theme.palette.grey['800'],
-                                        width: '260px',
-                                    }}
-                                >
-                                    <MenuLink
-                                        handleClose={handleClose}
-                                        text={'Konto'}
-                                        url={accountUrl}
-                                    />
-                                    <MenuLink
-                                        onClick={handleLogout}
-                                        handleClose={handleClose}
-                                        text={'Wyloguj'}
-                                        url={routes.home}
-                                    />
-                                </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Grow>
-                )}
-            </Popper>
+            <MenuButton userName={userName} avatarUrl={avatarUrl} onClick={handleToggle} anchorRef={anchorRef}
+                        open={open} />
+            <MenuPopper open={open} accountUrl={accountUrl} handleListKeyDown={handleListKeyDown}
+                        handleLogout={handleLogout} anchorEl={anchorRef.current} handleClose={handleClose} />
         </>
     );
 };

@@ -7,11 +7,12 @@ interface SearchValueContextProps {
 
 export const SearchValueContext = createContext<SearchValueContextProps>({
     searchValue: '',
-    setSearchValue: () => {},
+    setSearchValue: () => {
+    },
 });
 
 export const SearchValueProvider: React.FC<React.PropsWithChildren<{}>> = ({
-                                                                               children
+                                                                               children,
                                                                            }) => {
     const [searchValue, setSearchValue] = useState('');
 

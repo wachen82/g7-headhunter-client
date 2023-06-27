@@ -12,17 +12,17 @@ type DropBoxProps = {
 export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
     return (
         <Paper
-            variant="outlined"
+            variant='outlined'
             square
             onDragEnter={() => {
-                setActive(true)
+                setActive(true);
             }}
             onDragLeave={() => {
-                setActive(false)
+                setActive(false);
             }}
             onDragOver={(e) => {
-                e.preventDefault()
-                setActive(true)
+                e.preventDefault();
+                setActive(true);
 
             }}
             onDrop={handleDrop}
@@ -38,7 +38,7 @@ export const DropBox = ({ active, setActive, handleDrop }: DropBoxProps) => {
                 cursor: 'pointer',
             }}
         >
-            <Typography variant="body1">UPUŚĆ TUTAJ</Typography>
+            <Typography variant='body1'>UPUŚĆ TUTAJ</Typography>
         </Paper>
     );
 };

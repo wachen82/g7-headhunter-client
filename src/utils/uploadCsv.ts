@@ -5,7 +5,7 @@ import { ENDPOINTS } from '../services/endpoints/endpoints';
 
 export const uploadCsvFile = async (
     csvFile: string,
-    setErrors: (errors: ErrorCsv[]) => void
+    setErrors: (errors: ErrorCsv[]) => void,
 ) => {
     const formData = new FormData();
     const fileBlob = new Blob([csvFile], { type: 'text/csv' });

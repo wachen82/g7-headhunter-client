@@ -15,11 +15,13 @@ const style = {
     maxHeight: '80vh',
     overflowY: 'auto',
 };
+
 interface Props {
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
 }
-export const CustomModal = ({open, setOpen}: Props) => {
+
+export const CustomModal = ({ open, setOpen }: Props) => {
 
     const handleClose = () => setOpen(false);
 
@@ -28,13 +30,13 @@ export const CustomModal = ({open, setOpen}: Props) => {
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
             >
                 <Box sx={style}>
-                <FilterBox closeModal={handleClose}/>
+                    <FilterBox closeModal={handleClose} />
                 </Box>
             </Modal>
         </div>
     );
-}
+};

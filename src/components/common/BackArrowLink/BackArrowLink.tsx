@@ -6,7 +6,7 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-    url:string
+    url: string;
 }
 
 export const BackArrowLink = ({ url }: Props) => {
@@ -21,7 +21,7 @@ export const BackArrowLink = ({ url }: Props) => {
                 textDecoration: 'none',
                 height: '27px',
                 marginLeft: '-10%',
-                cursor:'pointer',
+                cursor: 'pointer',
             }}
         >
             <Box

@@ -20,6 +20,7 @@ export const ResetPasswordEmailForm = () => {
         showSnackBar,
         hideSnackBar,
     } = useSnackBar();
+
     const defaultValues = {
         email: '',
     };
@@ -41,28 +42,26 @@ export const ResetPasswordEmailForm = () => {
             });
             showSnackBar(
                 'Wysłano link do resetu hasła na podany email',
-                SnackBarEnum.SUCCESS_MESSAGE
+                SnackBarEnum.SUCCESS_MESSAGE,
             );
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 showSnackBar('Nie znaleziono użytkownika o podanym mailu');
             } else {
-                showSnackBar(
-                    'Wysłanie linku nie powiodło się. Spróbuj ponownie'
-                );
+                showSnackBar('Wysłanie linku nie powiodło się. Spróbuj ponownie');
             }
         }
     };
 
     return (
-        <Box width="400px" maxWidth="90%">
+        <Box width='400px' maxWidth='90%'>
             <CustomBasicForm
                 onSubmit={onSubmit}
                 register={register}
                 handleSubmit={handleSubmit}
                 errors={errors}
                 dataFormArr={resetPasswordEmailData}
-                buttonText="Przypomnij hasło"
+                buttonText='Przypomnij hasło'
             />
             {isSnackBarOpen && (
                 <CustomSnackBar

@@ -7,15 +7,16 @@ export interface FilterProps {
 
 export const FilterDataContext = createContext<FilterProps>({
     params: '',
-    setParams: () => {},
+    setParams: () => {
+    },
 });
 
 export const FilterDataProvider: React.FC<React.PropsWithChildren<{}>> = ({
-                                                                      children
-                                                                  })=> {
-    const [params, setParams] = useState('')
+                                                                              children,
+                                                                          }) => {
+    const [params, setParams] = useState('');
     return (
-        <FilterDataContext.Provider value={{params, setParams}}>
+        <FilterDataContext.Provider value={{ params, setParams }}>
             {children}
         </FilterDataContext.Provider>
     );

@@ -1,20 +1,17 @@
-import React from 'react'
-import { Box, Typography } from '@mui/material'
-import theme from '../../../../theme'
-import { GradeStar } from './GradeStar'
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import theme from '../../../../theme';
+import { GradeStar } from './GradeStar';
 
 interface Props {
-    gradeName: string
-    grade: number
+    gradeName: string;
+    grade: number;
 }
 
-export const SingleGrade = (props: Props) => {
-    const { gradeName, grade } = props
-
+export const SingleGrade = ({ gradeName, grade }: Props) => {
     const stars = (grade: number) => {
-        const redArray = Array.from({ length: grade }, (_, index) => index)
-        const greyArray = Array.from({ length: 5 - grade }, (_, index) => index)
-
+        const redArray = Array.from({ length: grade }, (_, index) => index);
+        const greyArray = Array.from({ length: 5 - grade }, (_, index) => index);
         return (
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 {redArray.map((i) => (
@@ -24,9 +21,8 @@ export const SingleGrade = (props: Props) => {
                     <GradeStar key={i} color={theme.palette.grey['400']} />
                 ))}
             </div>
-        )
-    }
-
+        );
+    };
     return (
         <Box
             sx={{
@@ -82,5 +78,5 @@ export const SingleGrade = (props: Props) => {
                 {stars(grade)}
             </Box>
         </Box>
-    )
-}
+    );
+};

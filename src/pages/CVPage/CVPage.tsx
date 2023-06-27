@@ -39,7 +39,8 @@ export const CVPage: React.FC = () => {
                 <Loading /> :
                 <>
                     <Box sx={{ width: '100vw' }}>
-                    <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName} accountUrl={`/hr/${user._id}/account`} /></Box>
+                        <UsersAppBar avatarUrl={'avatarUrl'} userName={user.fullName}
+                                     accountUrl={`/hr/${user._id}/account`} /></Box>
                     <UserProfile userProfile={userProfile} />
                 </>}
             {isSnackBarOpen && (

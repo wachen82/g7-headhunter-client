@@ -1,4 +1,4 @@
-import { HrInputFormData } from '../../../types/hrFormValues'
+import { HrInputFormData } from '../../../types/hrFormValues';
 
 export const HrDataArr: HrInputFormData[] = [
     {
@@ -25,4 +25,4 @@ export const HrDataArr: HrInputFormData[] = [
         htmlFor: 'maxReservedStudents',
         type: 'maxReservedStudents',
     },
-]
+];
