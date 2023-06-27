@@ -17,7 +17,7 @@ Group project carried out to specification and mock-ups provided. Working in scr
 [designByMilencja / g7-headhunter-server](https://github.com/designByMilencja/g7-headhunter-server)
 
 ## Video
-[![MegaK v2: g7-headhunter: Demo Final](https://github.com/wachen82/g7-headhunter-client/assets/98549349/8dc0c57b-b834-41b0-bc2a-4dd44abe46ff)](https://youtu.be/B_WKuYeoT2Y)
+[![MegaK v2: g7-headhunter: Demo Final](https://github-production-user-asset-6210df.s3.amazonaws.com/98549349/243438815-8dc0c57b-b834-41b0-bc2a-4dd44abe46ff.png)](https://youtu.be/B_WKuYeoT2Y "MegaK v2: g7-headhunter: Demo Final")
 
 ## Screenshots
 ![LoginView](./imagesReadme/Widok%20logowania.png)
